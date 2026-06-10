@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flash card - Belajar Bahasa Jepang</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* BUG FIX: Memperbaiki penulisan CSS body yang sebelumnya terpotong */
+        body { 
+            background-color: #0a0a0a; /* Hitam yang lebih soft agar tidak bikin mata sakit */
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            min-height: 100vh; 
+            overflow-x: hidden;
+        }
+
+        /* Animasi Transisi Halus */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* --- STYLE HALAMAN UTAMA (HOME) --- */
+        #home-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 400px;
+            padding: 40px 20px;
+            touch-action: pan-y; 
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 35px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        .menu-card {
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 110px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .menu-card:active {
+            background-color: #fff;
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
+        .menu-card span { font-size: 11px; color: #888; }
+        .menu-card:active span { color: #333; }
+        
+        /* --- STYLE HALAMAN FLASHCARD --- */
+        #flashcard-page {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+            touch-action: none; 
+            position: fixed; 
+            top: 0;
+            left: 0;
+            background: #0a0a0a;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-align: center;
+            color: #ffd700; /* Aksen warna emas untuk judul deck */
+        }
+
+        #counter { margin-bottom: 25px; font-size: 14px; color: #888; letter-spacing: 2px; font-weight: bold;}
+
+        .card-container { position: relative; width: 300px; height: 400px; perspective: 1000px; }
+        .card { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s; cursor: pointer; visibility: hidden; opacity: 0; }
+        .card.active { visibility: visible; opacity: 1; z-index: 2; }
+        .card.flipped { transform: rotateY(180deg); }
+        
+        .card-face { 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            border-radius: 15px; padding: 20px; text-align: center; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        
+        .card-front { background-color: #1a1a1a; color: #fff; border: 2px solid #444; }
+        .card-back { background-color: #fff; color: #000; transform: rotateY(180deg); border: 2px solid #fff;}
+        
+        .text-main { font-size: 48px; font-weight: bold; margin-bottom: 15px; }
+        .text-sub { font-size: 15px; color: #888; }
+        .card-back .text-sub { color: #555; }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            z-index: 10;
+            max-width: 320px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        button {
+            background-color: #111;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 14px 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            flex: 1 1 40%;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        button.done-btn { border-color: #55ff55; color: #55ff55; }
+        button.done-btn:active { background-color: #55ff55; color: #000; }
+        
+        button.back-btn { border-color: #ff5555; color: #ff5555; width: 100%; flex: 1 1 100%;}
+        button.back-btn:active { background-color: #ff5555; color: #000; }
+        
+        /* Tampilan saat kartu habis */
+        .all-done-msg {
+            text-align: center;
+            margin-top: 150px;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1.5;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="home-page" class="animate-fade">
+        <div class="main-title">Flash Card<br>kelas あかつき🔥🔥</div>
+        <div class="subtitle">
+            Pilih kategori yang ingin dihafal.<br><br>
+            <strong>Cara Main:</strong><br>
+            👆 Usap ke atas buat next soal<br>
+            👇 Usap ke bawah buat soal sebelumnya<br>
+            🃏 Ketuk kartu buat liat jawaban<br>
+            <em>(Usahakan menebak dulu!)</em>
+        </div>
+        
+        <div class="menu-grid">
+            <div class="menu-card" data-category="kanji_n5">
+                <h3>100 Kanji N5</h3><span>Part 1</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p2">
+                <h3>100 Kanji N5</h3><span>Part 2</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p3">
+                <h3>100 Kanji N5</h3><span>Part 3</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p4">
+                <h3>100 Kanji N5</h3><span>Part 4</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p5">
+                <h3>100 Kanji N5</h3><span>Part 5</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p6">
+                <h3>100 Kanji N5</h3><span>Part 6</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p7">
+                <h3>100 Kanji N5</h3><span>Part 7</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p8">
+                <h3>100 Kanji N5</h3><span>Part 8</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p9">
+                <h3>100 Kanji N5</h3><span>Part 9</span>
+            </div>
+            <div class="menu-card" data-category="kanji_n5_p10">
+                <h3>100 Kanji N5</h3><span>Part 10</span>
+            </div>
+        </div>
+    </div>
+    
+              <div id="flashcard-page" class="animate-fade">
+        <div class="title" id="deckTitle">-</div>
+        <div id="counter">1 / 0</div>
+
+        <div class="card-container" id="cardContainer"></div>
+
+        <div class="controls">
+            <button id="shuffleBtn">🎲 Acak Kartu</button>
+            <button id="doneBtn" class="done-btn">✅ Sudah Hafal</button>
+            <button id="backBtn" class="back-btn">⬅ Kembali ke Menu</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATABASE ---
+        // Penamaan kunci database sedikit disesuaikan untuk konsistensi
+        const flashcardData = {
+            kanji_n5: [
+                { front: "私", frontSub: "ketuk untuk jawaban", back: "わたし", backSub: "Aku / Saya" },
+                { front: "人", frontSub: "ketuk untuk jawaban", back: "ひと", backSub: "Orang" },
+                { front: "先", frontSub: "ketuk untuk jawaban", back: "さき", backSub: "Depan / Sebelumnya" },
+                { front: "生", frontSub: "ketuk untuk jawaban", back: "いきる", backSub: "Hidup" },
+                { front: "学", frontSub: "ketuk untuk jawaban", back: "まなぶ", backSub: "Belajar" },
+                { front: "校", frontSub: "ketuk untuk jawaban", back: "こう", backSub: "Sekolah" },
+                { front: "本", frontSub: "ketuk untuk jawaban", back: "ほん", backSub: "Buku" },
+                { front: "名", frontSub: "ketuk untuk jawaban", back: "な", backSub: "Nama" },
+                { front: "国", frontSub: "ketuk untuk jawaban", back: "くに", backSub: "Negara" },
+                { front: "語", frontSub: "ketuk untuk jawaban", back: "ご", backSub: "Bahasa" }
+            ],
+            kanji_n5_p2: [
+                { front: "日", frontSub: "ketuk untuk jawaban", back: "ひ", backSub: "Hari / Matahari" },
+                { front: "月", frontSub: "ketuk untuk jawaban", back: "つき", backSub: "Bulan" },
+                { front: "火", frontSub: "ketuk untuk jawaban", back: "ひ", backSub: "Api" },
+                { front: "水", frontSub: "ketuk untuk jawaban", back: "みず", backSub: "Air" },
+                { front: "木", frontSub: "ketuk untuk jawaban", back: "き", backSub: "Pohon" },
+                { front: "金", frontSub: "ketuk untuk jawaban", back: "かね", backSub: "Uang / Emas" },
+                { front: "土", frontSub: "ketuk untuk jawaban", back: "つち", backSub: "Tanah" },
+                { front: "山", frontSub: "ketuk untuk jawaban", back: "やま", backSub: "Gunung" },
+                { front: "川", frontSub: "ketuk untuk jawaban", back: "かわ", backSub: "Sungai" },
+                { front: "田", frontSub: "ketuk untuk jawaban", back: "た", backSub: "Sawah" }
+            ],
+            kanji_n5_p3: [
+                { front: "口", frontSub: "ketuk untuk jawaban", back: "くち", backSub: "Mulut" },
+                { front: "目", frontSub: "ketuk untuk jawaban", back: "め", backSub: "Mata" },
+                { front: "耳", frontSub: "ketuk untuk jawaban", back: "みみ", backSub: "Telinga" },
+                { front: "手", frontSub: "ketuk untuk jawaban", back: "て", backSub: "Tangan" },
+                { front: "足", frontSub: "ketuk untuk jawaban", back: "あし", backSub: "Kaki" },
+                { front: "力", frontSub: "ketuk untuk jawaban", back: "ちから", backSub: "Kekuatan" },
+                { front: "上", frontSub: "ketuk untuk jawaban", back: "うえ", backSub: "Atas" },
+                { front: "下", frontSub: "ketuk untuk jawaban", back: "した", backSub: "Bawah" },
+                { front: "中", frontSub: "ketuk untuk jawaban", back: "なか", backSub: "Tengah / Dalam" },
+                { front: "外", frontSub: "ketuk untuk jawaban", back: "そと", backSub: "Luar" }
+            ],
+            kanji_n5_p4: [
+                { front: "前", frontSub: "ketuk untuk jawaban", back: "まえ", backSub: "Depan" },
+                { front: "後", frontSub: "ketuk untuk jawaban", back: "あと", backSub: "Belakang / Setelah" },
+                { front: "左", frontSub: "ketuk untuk jawaban", back: "ひだり", backSub: "Kiri" },
+                { front: "右", frontSub: "ketuk untuk jawaban", back: "みぎ", backSub: "Kanan" },
+                { front: "大", frontSub: "ketuk untuk jawaban", back: "おおきい", backSub: "Besar" },
+                { front: "小", frontSub: "ketuk untuk jawaban", back: "ちいさい", backSub: "Kecil" },
+                { front: "多", frontSub: "ketuk untuk jawaban", back: "おおい", backSub: "Banyak" },
+                { front: "少", frontSub: "ketuk untuk jawaban", back: "すくない", backSub: "Sedikit" },
+                { front: "新", frontSub: "ketuk untuk jawaban", back: "あたらしい", backSub: "Baru" },
+                { front: "古", frontSub: "ketuk untuk jawaban", back: "ふるい", backSub: "Lama" }
+            ],
+            kanji_n5_p5: [
+                { front: "長", frontSub: "ketuk untuk jawaban", back: "ながい", backSub: "Panjang" },
+                { front: "白", frontSub: "ketuk untuk jawaban", back: "しろ", backSub: "Putih" },
+                { front: "黒", frontSub: "ketuk untuk jawaban", back: "くろ", backSub: "Hitam" },
+                { front: "赤", frontSub: "ketuk untuk jawaban", back: "あか", backSub: "Merah" },
+                { front: "青", frontSub: "ketuk untuk jawaban", back: "あお", backSub: "Biru" },
+                { front: "雨", frontSub: "ketuk untuk jawaban", back: "あめ", backSub: "Hujan" },
+                { front: "天", frontSub: "ketuk untuk jawaban", back: "てん", backSub: "Langit" },
+                { front: "空", frontSub: "ketuk untuk jawaban", back: "そら", backSub: "Langit / Kosong" },
+                { front: "気", frontSub: "ketuk untuk jawaban", back: "き", backSub: "Udara / Perasaan" },
+                { front: "時", frontSub: "ketuk untuk jawaban", back: "とき", backSub: "Waktu" }
+            ],
+            kanji_n5_p6: [
+                { front: "分", frontSub: "ketuk untuk jawaban", back: "ふん", backSub: "Menit" },
+                { front: "年", frontSub: "ketuk untuk jawaban", back: "とし", backSub: "Tahun" },
+                { front: "今", frontSub: "ketuk untuk jawaban", back: "いま", backSub: "Sekarang" },
+                { front: "来", frontSub: "ketuk untuk jawaban", back: "くる", backSub: "Datang" },
+                { front: "行", frontSub: "ketuk untuk jawaban", back: "いく", backSub: "Pergi" },
+                { front: "見", frontSub: "ketuk untuk jawaban", back: "みる", backSub: "Melihat" },
+                { front: "聞", frontSub: "ketuk untuk jawaban", back: "きく", backSub: "Mendengar" },
+                { front: "話", frontSub: "ketuk untuk jawaban", back: "はなす", backSub: "Berbicara" },
+                { front: "読", frontSub: "ketuk untuk jawaban", back: "よむ", backSub: "Membaca" },
+                { front: "書", frontSub: "ketuk untuk jawaban", back: "かく", backSub: "Menulis" }
+            ],
+            kanji_n5_p7: [
+                { front: "食", frontSub: "ketuk untuk jawaban", back: "たべる", backSub: "Makan" },
+                { front: "飲", frontSub: "ketuk untuk jawaban", back: "のむ", backSub: "Minum" },
+                { front: "買", frontSub: "ketuk untuk jawaban", back: "かう", backSub: "Membeli" },
+                { front: "入", frontSub: "ketuk untuk jawaban", back: "はいる", backSub: "Masuk" },
+                { front: "出", frontSub: "ketuk untuk jawaban", back: "でる", backSub: "Keluar" },
+                { front: "休", frontSub: "ketuk untuk jawaban", back: "やすむ", backSub: "Istirahat" },
+                { front: "会", frontSub: "ketuk untuk jawaban", back: "あう", backSub: "Bertemu" },
+                { front: "友", frontSub: "ketuk untuk jawaban", back: "とも", backSub: "Teman" },
+                { front: "車", frontSub: "ketuk untuk jawaban", back: "くるま", backSub: "Mobil" },
+                { front: "電", frontSub: "ketuk untuk jawaban", back: "でん", backSub: "Listrik" }
+            ],
+            kanji_n5_p8: [
+                { front: "駅", frontSub: "ketuk untuk jawaban", back: "えき", backSub: "Stasiun" },
+                { front: "店", frontSub: "ketuk untuk jawaban", back: "みせ", backSub: "Toko" },
+                { front: "何", frontSub: "ketuk untuk jawaban", back: "なに", backSub: "Apa" },
+                { front: "毎", frontSub: "ketuk untuk jawaban", back: "まい", backSub: "Setiap" },
+                { front: "週", frontSub: "ketuk untuk jawaban", back: "しゅう", backSub: "Minggu" },
+                { front: "半", frontSub: "ketuk untuk jawaban", back: "はん", backSub: "Setengah" },
+                { front: "十", frontSub: "ketuk untuk jawaban", back: "じゅう", backSub: "Sepuluh" },
+                { front: "間", frontSub: "ketuk untuk jawaban", back: "あいだ", backSub: "Antara / Waktu" },
+                { front: "男", frontSub: "ketuk untuk jawaban", back: "おとこ", backSub: "Laki-laki" },
+                { front: "女", frontSub: "ketuk untuk jawaban", back: "おんな", backSub: "Perempuan" }
+            ],
+            kanji_n5_p9: [
+                { front: "子", frontSub: "ketuk untuk jawaban", back: "こ", backSub: "Anak" },
+                { front: "父", frontSub: "ketuk untuk jawaban", back: "ちち", backSub: "Ayah" },
+                { front: "母", frontSub: "ketuk untuk jawaban", back: "はは", backSub: "Ibu" },
+                { front: "兄", frontSub: "ketuk untuk jawaban", back: "あに", backSub: "Kakak laki-laki" },
+                { front: "姉", frontSub: "ketuk untuk jawaban", back: "あね", backSub: "Kakak perempuan" },
+                { front: "弟", frontSub: "ketuk untuk jawaban", back: "おとうと", backSub: "Adik laki-laki" },
+                { front: "妹", frontSub: "ketuk untuk jawaban", back: "いもうと", backSub: "Adik perempuan" },
+                { front: "円", frontSub: "ketuk untuk jawaban", back: "えん", backSub: "Yen" },
+                { front: "百", frontSub: "ketuk untuk jawaban", back: "ひゃく", backSub: "Seratus" },
+                { front: "千", frontSub: "ketuk untuk jawaban", back: "せん", backSub: "Seribu" }
+            ],
+            kanji_n5_p10: [
+                { front: "万", frontSub: "ketuk untuk jawaban", back: "まん", backSub: "Sepuluh ribu" },
+                { front: "一", frontSub: "ketuk untuk jawaban", back: "いち", backSub: "Satu" },
+                { front: "二", frontSub: "ketuk untuk jawaban", back: "に", backSub: "Dua" },
+                { front: "三", frontSub: "ketuk untuk jawaban", back: "さん", backSub: "Tiga" },
+                { front: "四", frontSub: "ketuk untuk jawaban", back: "よん", backSub: "Empat" },
+                { front: "五", frontSub: "ketuk untuk jawaban", back: "ご", backSub: "Lima" },
+                { front: "六", frontSub: "ketuk untuk jawaban", back: "ろく", backSub: "Enam" },
+                { front: "七", frontSub: "ketuk untuk jawaban", back: "なな", backSub: "Tujuh" },
+                { front: "八", frontSub: "ketuk untuk jawaban", back: "はち", backSub: "Delapan" },
+                { front: "九", frontSub: "ketuk untuk jawaban", back: "きゅう", backSub: "Sembilan" }
+            ]
+        };
+                                // DOM Elements
+        const homePage = document.getElementById('home-page');
+        const flashcardPage = document.getElementById('flashcard-page');
+        const container = document.getElementById('cardContainer');
+        const deckTitle = document.getElementById('deckTitle');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const doneBtn = document.getElementById('doneBtn');
+        const backBtn = document.getElementById('backBtn');
+        
+        let activeCards = []; 
+        let currentIndex = 0;
+
+        function loadCategory(categoryKey, titleText, subtitleText) {
+            container.innerHTML = "";
+            const dataSet = flashcardData[categoryKey] || [];
+            
+            if(dataSet.length === 0) {
+                alert("Data untuk kategori ini belum diisi!");
+                return;
+            }
+
+            deckTitle.innerText = `${titleText} - ${subtitleText}`;
+
+            dataSet.forEach(data => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-face card-front">
+                        <div class="text-main">${data.front}</div>
+                        <div class="text-sub">${data.frontSub}</div>
+                    </div>
+                    <div class="card-face card-back">
+                        <div class="text-main">${data.back}</div>
+                        <div class="text-sub">${data.backSub}</div>
+                    </div>
+                `;
+                
+                // Murni menggunakan Click event untuk mendeteksi tap agar lebih aman
+                card.addEventListener('click', () => {
+                    card.classList.toggle('flipped');
+                });
+
+                container.appendChild(card);
+            });
+
+            activeCards = Array.from(container.querySelectorAll('.card'));
+            currentIndex = 0;
+            
+            shuffleBtn.style.display = 'block';
+            doneBtn.style.display = 'block';
+
+            updateDisplay();
+            
+            // Pindah Halaman dengan reset scroll
+            homePage.style.display = 'none';
+            flashcardPage.style.display = 'flex';
+            window.scrollTo(0,0);
+        }
+
+        function updateDisplay() {
+            const allCards = Array.from(container.querySelectorAll('.card'));
+            
+            if (activeCards.length === 0) {
+                container.innerHTML = "<div class='all-done-msg'>すごい🥳🤩🔥!<br><br>Semua kartu di kategori ini sudah kamu hafal!<br>Gas ke part selanjutnya!</div>";
+                document.getElementById('counter').innerText = "0 / 0";
+                shuffleBtn.style.display = 'none';
+                doneBtn.style.display = 'none';
+                return;
+            }
+            
+            allCards.forEach(card => card.classList.remove('active', 'flipped'));
+            activeCards[currentIndex].classList.add('active');
+            document.getElementById('counter').innerText = `${currentIndex + 1} / ${activeCards.length}`;
+        }
+
+        function shuffleCards() {
+            for (let i = activeCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [activeCards[i], activeCards[j]] = [activeCards[j], activeCards[i]];
+            }
+            currentIndex = 0; 
+            updateDisplay();
+        }
+
+        function markAsLearned() {
+            if (activeCards.length === 0) return;
+            activeCards.splice(currentIndex, 1);
+            if (currentIndex >= activeCards.length && activeCards.length > 0) {
+                currentIndex = activeCards.length - 1;
+            }
+            updateDisplay();
+        }
+
+        // --- EVENTS ---
+        
+        // BUG FIX: Menggunakan 'click' bukan 'pointerdown' untuk menghindari ghost-clicks
+        shuffleBtn.addEventListener('click', (e) => { e.preventDefault(); shuffleCards(); });
+        doneBtn.addEventListener('click', (e) => { e.preventDefault(); markAsLearned(); });
+        
+        backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            flashcardPage.style.display = 'none';
+            homePage.style.display = 'flex';
+            window.scrollTo(0,0);
+        });
+
+        // BUG FIX: Menggunakan 'click' biasa untuk menu agar tidak ter-trigger saat sedang di-scroll
+        document.querySelectorAll('.menu-card').forEach(menu => {
+            menu.addEventListener('click', () => {
+                const category = menu.getAttribute('data-category');
+                const title = menu.querySelector('h3').innerText;
+                const subtitle = menu.querySelector('span').innerText;
+                loadCategory(category, title, subtitle);
+            });
+        });
+
+        // Swipe (Hammer.js) dipertahankan untuk experience belajar
+        const h = new Hammer(container);
+        h.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+        h.on('swipeup', () => {
+            if (currentIndex < activeCards.length - 1) {
+                currentIndex++;
+                updateDisplay();
+            }
+        });
+
+        h.on('swipedown', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateDisplay();
+            }
+        });
+    </script>
+</body>
+</html>
