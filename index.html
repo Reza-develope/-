@@ -9,6 +9,19 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             background-color: #000; 
+    background-image: url('home-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
             color: #fff; 
             font-family: 'Courier New', Courier, monospace; 
             display: flex; 
@@ -234,7 +247,7 @@ cara main :<br>
         <div class="controls">
             <button id="shuffleBtn">🎲 Acak Kartu</button>
             <button id="doneBtn" class="done-btn">✅ Saya Sudah Hafal</button>
-            <button id="backBtn" class="back-btn">⬅ Kembali ke Menu</button>
+            <button id="backBtn" class="back-btn">< Kembali ke Menu</button>
         </div>
     </div>
 
@@ -242,7 +255,7 @@ cara main :<br>
         // --- DATABASE 10 KATEGORI ---
         const flashcardData = {
             kanji_n5: [
-            { front: "私", frontSub: "ketuk untuk melihat jawaban", back: "わたし", backSub: "Aku / Saya" },
+             { front: "私", frontSub: "ketuk untuk melihat jawaban", back: "わたし", backSub: "Aku / Saya" },
 { front: "人", frontSub: "ketuk untuk melihat jawaban", back: "ひと", backSub: "Orang" },
 { front: "先", frontSub: "ketuk untuk melihat jawaban", back: "さき", backSub: "Depan / Sebelumnya" },
 { front: "生", frontSub: "ketuk untuk melihat jawaban", back: "いきる", backSub: "Hidup" },
@@ -254,7 +267,7 @@ cara main :<br>
 { front: "語", frontSub: "ketuk untuk melihat jawaban", back: "ご", backSub: "Bahasa" }
             ],
             kanji_n5_p2: [
-                { front: "日", frontSub: "ketuk untuk melihat jawaban", back: "ひ", backSub: "Hari / Matahari" },
+                  { front: "日", frontSub: "ketuk untuk melihat jawaban", back: "ひ", backSub: "Hari / Matahari" },
   { front: "月", frontSub: "ketuk untuk melihat jawaban", back: "つき", backSub: "Bulan" },
   { front: "火", frontSub: "ketuk untuk melihat jawaban", back: "ひ", backSub: "Api" },
   { front: "水", frontSub: "ketuk untuk melihat jawaban", back: "みず", backSub: "Air" },
@@ -266,7 +279,7 @@ cara main :<br>
   { front: "田", frontSub: "ketuk untuk melihat jawaban", back: "た", backSub: "Sawah" }
             ],
             kanji_n5_p3: [
-                  { front: "口", frontSub: "ketuk untuk melihat jawaban", back: "くち", backSub: "Mulut" },
+                   { front: "口", frontSub: "ketuk untuk melihat jawaban", back: "くち", backSub: "Mulut" },
   { front: "目", frontSub: "ketuk untuk melihat jawaban", back: "め", backSub: "Mata" },
   { front: "耳", frontSub: "ketuk untuk melihat jawaban", back: "みみ", backSub: "Telinga" },
   { front: "手", frontSub: "ketuk untuk melihat jawaban", back: "て", backSub: "Tangan" },
@@ -278,7 +291,7 @@ cara main :<br>
   { front: "外", frontSub: "ketuk untuk melihat jawaban", back: "そと", backSub: "Luar" }
             ],
             kanji_n5_p4: [
-                { front: "前", frontSub: "ketuk untuk melihat jawaban", back: "まえ", backSub: "Depan" },
+                 { front: "前", frontSub: "ketuk untuk melihat jawaban", back: "まえ", backSub: "Depan" },
   { front: "後", frontSub: "ketuk untuk melihat jawaban", back: "あと", backSub: "Belakang / Setelah" },
   { front: "左", frontSub: "ketuk untuk melihat jawaban", back: "ひだり", backSub: "Kiri" },
   { front: "右", frontSub: "ketuk untuk melihat jawaban", back: "みぎ", backSub: "Kanan" },
@@ -290,7 +303,7 @@ cara main :<br>
   { front: "古", frontSub: "ketuk untuk melihat jawaban", back: "ふるい", backSub: "Lama" }
             ],
             kanji_n5_p5: [
-                 { front: "長", frontSub: "ketuk untuk melihat jawaban", back: "ながい", backSub: "Panjang" },
+                   { front: "長", frontSub: "ketuk untuk melihat jawaban", back: "ながい", backSub: "Panjang" },
   { front: "白", frontSub: "ketuk untuk melihat jawaban", back: "しろ", backSub: "Putih" },
   { front: "黒", frontSub: "ketuk untuk melihat jawaban", back: "くろ", backSub: "Hitam" },
   { front: "赤", frontSub: "ketuk untuk melihat jawaban", back: "あか", backSub: "Merah" },
@@ -302,7 +315,7 @@ cara main :<br>
   { front: "時", frontSub: "ketuk untuk melihat jawaban", back: "とき", backSub: "Waktu" }
             ],
             kanji_n5_p6: [
-                { front: "分", frontSub: "ketuk untuk melihat jawaban", back: "ふん", backSub: "Menit" },
+                  { front: "分", frontSub: "ketuk untuk melihat jawaban", back: "ふん", backSub: "Menit" },
   { front: "年", frontSub: "ketuk untuk melihat jawaban", back: "とし", backSub: "Tahun" },
   { front: "今", frontSub: "ketuk untuk melihat jawaban", back: "いま", backSub: "Sekarang" },
   { front: "来", frontSub: "ketuk untuk melihat jawaban", back: "くる", backSub: "Datang" },
@@ -314,7 +327,7 @@ cara main :<br>
   { front: "書", frontSub: "ketuk untuk melihat jawaban", back: "かく", backSub: "Menulis" }
             ],
             kanji_n5_p7: [
-                   { front: "食", frontSub: "ketuk untuk melihat jawaban", back: "たべる", backSub: "Makan" },
+                     { front: "食", frontSub: "ketuk untuk melihat jawaban", back: "たべる", backSub: "Makan" },
   { front: "飲", frontSub: "ketuk untuk melihat jawaban", back: "のむ", backSub: "Minum" },
   { front: "買", frontSub: "ketuk untuk melihat jawaban", back: "かう", backSub: "Membeli" },
   { front: "入", frontSub: "ketuk untuk melihat jawaban", back: "はいる", backSub: "Masuk" },
@@ -326,7 +339,7 @@ cara main :<br>
   { front: "電", frontSub: "ketuk untuk melihat jawaban", back: "でん", backSub: "Listrik" }
             ],
             kanji_n5_p8: [
-                  { front: "駅", frontSub: "ketuk untuk melihat jawaban", back: "えき", backSub: "Stasiun" },
+                   { front: "駅", frontSub: "ketuk untuk melihat jawaban", back: "えき", backSub: "Stasiun" },
   { front: "店", frontSub: "ketuk untuk melihat jawaban", back: "みせ", backSub: "Toko" },
   { front: "何", frontSub: "ketuk untuk melihat jawaban", back: "なに", backSub: "Apa" },
   { front: "毎", frontSub: "ketuk untuk melihat jawaban", back: "まい", backSub: "Setiap" },
@@ -338,7 +351,7 @@ cara main :<br>
   { front: "女", frontSub: "ketuk untuk melihat jawaban", back: "おんな", backSub: "Perempuan" }
             ],
             kanji_n5_p9: [
-                  { front: "子", frontSub: "ketuk untuk melihat jawaban", back: "こ", backSub: "Anak" },
+                   { front: "子", frontSub: "ketuk untuk melihat jawaban", back: "こ", backSub: "Anak" },
   { front: "父", frontSub: "ketuk untuk melihat jawaban", back: "ちち", backSub: "Ayah" },
   { front: "母", frontSub: "ketuk untuk melihat jawaban", back: "はは", backSub: "Ibu" },
   { front: "兄", frontSub: "ketuk untuk melihat jawaban", back: "あに", backSub: "Kakak laki-laki" },
@@ -350,7 +363,7 @@ cara main :<br>
   { front: "千", frontSub: "ketuk untuk melihat jawaban", back: "せん", backSub: "Seribu" }
             ],
             kanni_n5_p10: [
-                  { front: "万", frontSub: "ketuk untuk melihat jawaban", back: "まん", backSub: "Sepuluh ribu" },
+                    { front: "万", frontSub: "ketuk untuk melihat jawaban", back: "まん", backSub: "Sepuluh ribu" },
   { front: "一", frontSub: "ketuk untuk melihat jawaban", back: "いち", backSub: "Satu" },
   { front: "二", frontSub: "ketuk untuk melihat jawaban", back: "に", backSub: "Dua" },
   { front: "三", frontSub: "ketuk untuk melihat jawaban", back: "さん", backSub: "Tiga" },
@@ -402,11 +415,4 @@ cara main :<br>
                 
                 card.addEventListener('pointerdown', (e) => {
                     card.dataset.tapStartX = e.clientX;
-                    card.dataset.tapStartY = e.clientY;
-                });
-
-                card.addEventListener('pointerup', (e) => {
-                    const moveX = Math.abs(e.clientX - parseFloat(card.dataset.tapStartX || 0));
-                    const moveY = Math.abs(e.clientY - parseFloat(card.dataset.tapStartY || 0));
-                    if (moveX < 5 && moveY < 5) {
-         
+                    card.dataset.tapS
