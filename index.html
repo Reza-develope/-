@@ -1,175 +1,215 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Madura Store — Resource Tracker (Fix Input)</title>
-  <style>
-    body{font-family:Arial, sans-serif; background:#0f1724; color:#e6eef6; margin:0; padding:20px;}
-    h1{margin:0 0 20px 0;}
-    table{width:100%; border-collapse:collapse; margin-top:20px;}
-    th,td{padding:8px; border-bottom:1px solid rgba(255,255,255,0.1);}
-    th{color:#9aa4b2; text-align:left;}
-    input{width:100px; padding:6px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); background:transparent; color:#fff;}
-    .totals{margin:20px 0; display:flex; gap:12px; flex-wrap:wrap;}
-    .card{background:#182132; padding:12px 16px; border-radius:8px;}
-    .value{font-weight:bold; font-size:16px;}
-    .percent{font-size:12px; color:#9aa4b2;}
-    button{margin:5px; padding:8px 12px; border:none; border-radius:6px; font-weight:bold; cursor:pointer;}
-    .add{background:#1ea7ff; color:#022;}
-    .reset{background:#ff6b6b; color:#022;}
-    .prices{margin:10px 0; display:flex; gap:12px; flex-wrap:wrap;}
-    .price-card{background:#1a2a3a; padding:10px 14px; border-radius:6px; border-left:3px solid #1ea7ff;}
-  </style>
-</head>
-<body>
-  <h1>Madura Store — Resource Tracker</h1>
-
-  <div class="totals">
-    <div class="card">Food: <span id="totalFood" class="value">0</span></div>
-    <div class="card">Wood: <span id="totalWood" class="value">0</span></div>
-    <div class="card">Stone: <span id="totalStone" class="value">0</span></div>
-    <div class="card">Gold: <span id="totalGold" class="value">0</span></div>
-    <div class="card">All: <span id="totalAll" class="value">0</span></div>
-  </div>
-
-  <!-- Baris baru untuk menampilkan harga -->
-  <div class="prices">
-    <div class="price-card">Harga Food: <span id="priceFood" class="value">Rp 0</span></div>
-    <div class="price-card">Harga Wood: <span id="priceWood" class="value">Rp 0</span></div>
-    <div class="price-card">Harga Stone: <span id="priceStone" class="value">Rp 0</span></div>
-    <div class="price-card">Harga Gold: <span id="priceGold" class="value">Rp 0</span></div>
-    <div class="price-card">Total Harga: <span id="priceAll" class="value">Rp 0</span></div>
-  </div>
-
-  <button class="add" id="addMember">+ Tambah Anggota</button>
-  <button class="reset" id="resetData">Reset Semua</button>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Nama</th>
-        <th>Food</th>
-        <th>Wood</th>
-        <th>Stone</th>
-        <th>Gold</th>
-        <th>Total</th>
-        <th>% Kontribusi</th>
-      </tr>
-    </thead>
-    <tbody id="membersBody"></tbody>
-  </table>
-
-  <script>
-    const storageKey = 'ms_resource_v2';
-    let members = load() || [];
-
-    // Harga per unit resource (stone diubah dari 800 ke 700)
-    const PRICES = {
-      food: 700,
-      wood: 700,
-      stone: 700, // Diubah dari 800 ke 700
-      gold: 1000
-    };
-
-    const body = document.getElementById('membersBody');
-
-    function createMember(name="Anggota"){
-      return {id:Date.now()+Math.random(), name, food:0, wood:0, stone:0, gold:0};
-    }
-
-    function save(){ localStorage.setItem(storageKey, JSON.stringify(members)); }
-    function load(){ try{return JSON.parse(localStorage.getItem(storageKey))}catch{return null} }
-
-    function formatRupiah(amount) {
-      return 'Rp ' + amount.toLocaleString('id-ID');
-    }
-
-    function updateTotals(){
-      let tf=0, tw=0, ts=0, tg=0;
-      members.forEach(m=>{
-        tf+=m.food; tw+=m.wood; ts+=m.stone; tg+=m.gold;
-      });
-      const ta = tf+tw+ts+tg;
-      
-      // Update jumlah resource
-      document.getElementById('totalFood').textContent=tf.toLocaleString();
-      document.getElementById('totalWood').textContent=tw.toLocaleString();
-      document.getElementById('totalStone').textContent=ts.toLocaleString();
-      document.getElementById('totalGold').textContent=tg.toLocaleString();
-      document.getElementById('totalAll').textContent=ta.toLocaleString();
-      
-      // Update harga resource
-      document.getElementById('priceFood').textContent=formatRupiah(tf * PRICES.food);
-      document.getElementById('priceWood').textContent=formatRupiah(tw * PRICES.wood);
-      document.getElementById('priceStone').textContent=formatRupiah(ts * PRICES.stone);
-      document.getElementById('priceGold').textContent=formatRupiah(tg * PRICES.gold);
-      document.getElementById('priceAll').textContent=formatRupiah(
-        (tf * PRICES.food) + (tw * PRICES.wood) + (ts * PRICES.stone) + (tg * PRICES.gold)
-      );
-      
-      return {tf,tw,ts,tg,ta};
-    }
-
-    function render(){
-      body.innerHTML="";
-      const totals = updateTotals();
-      members.forEach(m=>{
-        const tr=document.createElement('tr');
-
-        // nama
-        const tdName=document.createElement('td');
-        const inpName=document.createElement('input');
-        inpName.value=m.name;
-        inpName.style.width="120px";
-        inpName.addEventListener('blur',()=>{m.name=inpName.value; save();});
-        tdName.appendChild(inpName);
-        tr.appendChild(tdName);
-
-        // helper num input
-        function makeNumCell(key){
-          const td=document.createElement('td');
-          const inp=document.createElement('input');
-          inp.type="number"; inp.value=m[key]; inp.min=0;
-          inp.addEventListener('blur',()=>{m[key]=parseInt(inp.value)||0; save(); render();});
-          inp.addEventListener('keydown',(e)=>{if(e.key==="Enter") inp.blur();});
-          td.appendChild(inp);
-          return td;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flash Card - Kanji N5</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            overflow: hidden; 
+            touch-action: none; /* Mencegah default scrolling agar swipe lancar */
+        }
+        
+        .title {
+            font-size: 16px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-align: center;
         }
 
-        tr.appendChild(makeNumCell('food'));
-        tr.appendChild(makeNumCell('wood'));
-        tr.appendChild(makeNumCell('stone'));
-        tr.appendChild(makeNumCell('gold'));
+        #counter { margin-bottom: 15px; font-size: 14px; color: #666; letter-spacing: 2px; }
 
-        // total per member
-        const total=m.food+m.wood+m.stone+m.gold;
-        const tdTot=document.createElement('td');
-        tdTot.textContent=total.toLocaleString();
-        tr.appendChild(tdTot);
+        .card-container { position: relative; width: 300px; height: 400px; perspective: 1000px; }
+        .card { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s; cursor: pointer; visibility: hidden; opacity: 0; }
+        .card.active { visibility: visible; opacity: 1; z-index: 2; }
+        .card.flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 2px solid #fff; border-radius: 15px; padding: 20px; text-align: center; }
+        
+        .card-front { background-color: #000; color: #fff; }
+        .card-back { background-color: #fff; color: #000; transform: rotateY(180deg); }
+        .text-main { font-size: 40px; font-weight: bold; margin-bottom: 10px; }
+        .text-sub { font-size: 16px; color: #888; }
+        .card-back .text-sub { color: #555; }
 
-        // persen kontribusi
-        const tdPerc=document.createElement('td');
-        const perc=totals.ta?((total/totals.ta)*100).toFixed(2):0;
-        tdPerc.textContent=perc+"%";
-        tr.appendChild(tdPerc);
+        /* Area Tombol Kontrol */
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+            z-index: 10; /* Memastikan tombol berada di lapisan paling atas */
+        }
 
-        body.appendChild(tr);
-      });
-    }
+        button {
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 12px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+            touch-action: manipulation; /* Menghilangkan delay 300ms di browser mobile lama */
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    document.getElementById('addMember').onclick=()=>{
-      if(members.length>=20) return alert("Maksimal 20 anggota!");
-      members.push(createMember("Anggota "+(members.length+1)));
-      save(); render();
-    }
+        button:active {
+            background-color: #fff;
+            color: #000;
+        }
 
-    document.getElementById('resetData').onclick=()=>{
-      if(confirm("Reset semua data?")){members=[]; save(); render();}
-    }
+        button.done-btn {
+            border-color: #55ff55;
+            color: #55ff55;
+        }
+        button.done-btn:active {
+            background-color: #55ff55;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
 
-    if(members.length===0){ members=[createMember("Admin"), createMember("Anggota 1")]; save(); }
-    render();
-  </script>
+    <div class="title">Kanji N5 by Akatsuki no kurasu</div>
+    <div id="counter">1 / 0</div>
+
+    <div class="card-container" id="cardContainer">
+        
+        <div class="card">
+            <div class="card-face card-front"><div class="text-main">私</div><div class="text-sub">Kanji</div></div>
+            <div class="card-face card-back"><div class="text-main">わたし</div><div class="text-sub">Aku / Saya</div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-face card-front"><div class="text-main">先生</div><div class="text-sub">Kanji</div></div>
+            <div class="card-face card-back"><div class="text-main">せんせい</div><div class="text-sub">Guru</div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-face card-front"><div class="text-main">猫</div><div class="text-sub">Kanji</div></div>
+            <div class="card-face card-back"><div class="text-main">ねこ</div><div class="text-sub">Kucing</div></div>
+        </div>
+
+        <div class="card">
+            <div class="card-face card-front"><div class="text-main">水</div><div class="text-sub">Kanji</div></div>
+            <div class="card-face card-back"><div class="text-main">みず</div><div class="text-sub">Air</div></div>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button id="shuffleBtn">🎲 Acak Kartu</button>
+        <button id="doneBtn" class="done-btn">✅ Saya Sudah Hafal</button>
+    </div>
+
+    <script>
+        const container = document.getElementById('cardContainer');
+        const shuffleBtn = document.getElementById('shuffleBtn');
+        const doneBtn = document.getElementById('doneBtn');
+        
+        let allCards = Array.from(document.querySelectorAll('.card'));
+        let activeCards = [...allCards]; 
+        let currentIndex = 0;
+
+        function updateDisplay() {
+            if (activeCards.length === 0) {
+                container.innerHTML = "<div style='text-align:center; margin-top:150px; font-weight:bold;'>🎉 すごい! Semua kartu sudah kamu hapal!, next ke part 2 letsgo🔥</div>";
+                document.getElementById('counter').innerText = "0 / 0";
+                shuffleBtn.style.display = 'none';
+                doneBtn.style.display = 'none';
+                return;
+            }
+            
+            allCards.forEach(card => card.classList.remove('active', 'flipped'));
+            activeCards[currentIndex].classList.add('active');
+            document.getElementById('counter').innerText = `${currentIndex + 1} / ${activeCards.length}`;
+        }
+
+        // Logika Balik Kartu (Menggunakan Pointer Event untuk respons instan)
+        allCards.forEach(card => {
+            card.addEventListener('pointerdown', (e) => {
+                // Mencegah trigger jika tidak sengaja tertekan saat swipe
+                card.dataset.tapStartX = e.clientX;
+                card.dataset.tapStartY = e.clientY;
+            });
+
+            card.addEventListener('pointerup', (e) => {
+                const moveX = Math.abs(e.clientX - parseFloat(card.dataset.tapStartX || 0));
+                const moveY = Math.abs(e.clientY - parseFloat(card.dataset.tapStartY || 0));
+                
+                // Jika posisi ketukan bergeser kurang dari 5px, anggap sebagai klik murni
+                if (moveX < 5 && moveY < 5) {
+                    card.classList.toggle('flipped');
+                }
+            });
+        });
+
+        // Logika Acak Urutan Kartu (Shuffle)
+        function shuffleCards() {
+            for (let i = activeCards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [activeCards[i], activeCards[j]] = [activeCards[j], activeCards[i]];
+            }
+            currentIndex = 0; 
+            updateDisplay();
+        }
+
+        // Logika Tombol "Saya Sudah Hafal"
+        function markAsLearned() {
+            if (activeCards.length === 0) return;
+            
+            activeCards.splice(currentIndex, 1);
+            
+            if (currentIndex >= activeCards.length && activeCards.length > 0) {
+                currentIndex = activeCards.length - 1;
+            }
+            
+            updateDisplay();
+        }
+
+        // --- SOLUSI ANTI DELAY: Menggunakan Pointer Events untuk Tombol ---
+        // 'pointerdown' memicu fungsi langsung saat jari menyentuh layar, menghilangkan lag 300ms
+        shuffleBtn.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            shuffleCards();
+        });
+
+        doneBtn.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            markAsLearned();
+        });
+
+        // Inisialisasi awal
+        updateDisplay();
+
+        // Logika Swipe menggunakan Hammer.js
+        const h = new Hammer(container);
+        h.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+        h.on('swipeup', () => {
+            if (currentIndex < activeCards.length - 1) {
+                currentIndex++;
+                updateDisplay();
+            }
+        });
+
+        h.on('swipedown', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateDisplay();
+            }
+        });
+    </script>
 </body>
-  </html>
+</html>
