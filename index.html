@@ -36,7 +36,7 @@
             flex-direction: column;
             align-items: center;
             width: 100%;
-            max-width: 1200px; /* Diubah: Biar bisa melar di PC/Tablet */
+            max-width: 1200px;
             padding: 40px 20px;
             touch-action: pan-y; 
         }
@@ -68,7 +68,7 @@
             border-radius: 8px; 
             border: 1px solid #444;
             width: 100%;
-            max-width: 400px; /* Biar toggle nggak kepanjangan di PC */
+            max-width: 400px;
             display: flex;
             justify-content: center;
         }
@@ -85,7 +85,6 @@
 
         .menu-grid {
             display: grid;
-            /* Diubah: Responsive grid, ngisi otomatis sesuai lebar layar */
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             width: 100%;
@@ -106,6 +105,7 @@
             align-items: center;
             min-height: 110px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative; /* Penting untuk posisi badge */
         }
 
         .menu-card:active {
@@ -117,6 +117,52 @@
         .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
         .menu-card span { font-size: 11px; color: #888; }
         .menu-card:active span { color: #333; }
+
+        /* --- ANIMASI & STYLE BADGE PRO LUXURY / MEWAH --- */
+        @keyframes goldShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            
+            /* Gradasi Warna Emas Mengalir */
+            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
+            background-size: 300% 300%;
+            animation: goldShimmer 4s ease infinite;
+            
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            
+            /* Efek Border Emas Glow Menyala */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
+            
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .pro-badge .lock-icon {
+            display: inline-block;
+            animation: lockPulse 2s infinite ease-in-out;
+        }
         
         /* --- STYLE HALAMAN FLASHCARD --- */
         #flashcard-page {
@@ -144,7 +190,6 @@
 
         #counter { margin-bottom: 25px; font-size: 14px; color: #888; letter-spacing: 2px; font-weight: bold;}
 
-        /* Diubah: Ukuran kartu jadi dinamis (relatif sama layar) */
         .card-container { 
             position: relative; 
             width: 85vw; 
@@ -158,7 +203,6 @@
         .card.active { visibility: visible; opacity: 1; z-index: 2; }
         .card.flipped { transform: rotateY(180deg); }
         
-        /* Diubah: Nambahin word-break biar teks panjang ga nembus kotak */
         .card-face { 
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
             display: flex; flex-direction: column; justify-content: center; align-items: center; 
@@ -172,7 +216,6 @@
         .card-front { background-color: #1a1a1a; color: #fff; border: 2px solid #444; }
         .card-back { background-color: #fff; color: #000; transform: rotateY(180deg); border: 2px solid #fff;}
         
-        /* Diubah: Pakai clamp() biar ukuran font menyesuaikan kotak otomatis */
         .text-main { 
             font-size: clamp(24px, 10vw, 48px); 
             font-weight: bold; 
@@ -219,7 +262,6 @@
         button.back-btn { border-color: #ff5555; color: #ff5555; width: 100%; flex: 1 1 100%;}
         button.back-btn:active { background-color: #ff5555; color: #000; }
         
-        /* Tampilan saat kartu habis */
         .all-done-msg {
             text-align: center;
             margin-top: 150px;
@@ -2193,12 +2235,308 @@
 { front: "どんなこと", frontSub: "ketuk untuk jawaban", back: "どんなこと", backSub: "hal seperti apa" },
             ],
             Irodori_A2_11: [
+            { front: "バーベキュー", frontSub: "ketuk untuk jawaban", back: "バーベキュー", backSub: "barbeku; BBQ" },
+{ front: "肉", frontSub: "ketuk untuk jawaban", back: "にく", backSub: "daging" },
+{ front: "牛肉", frontSub: "ketuk untuk jawaban", back: "ぎゅうにく", backSub: "daging sapi" },
+{ front: "豚肉", frontSub: "ketuk untuk jawaban", back: "ぶたにく", backSub: "daging babi" },
+{ front: "鶏肉", frontSub: "ketuk untuk jawaban", back: "とりにく", backSub: "daging ayam" },
+{ front: "ソーセージ", frontSub: "ketuk untuk jawaban", back: "ソーセージ", backSub: "sosis" },
+{ front: "シーフード", frontSub: "ketuk untuk jawaban", back: "シーフード", backSub: "makanan laut; seafood" },
+{ front: "魚", frontSub: "ketuk untuk jawaban", back: "さかな", backSub: "ikan" },
+{ front: "エビ", frontSub: "ketuk untuk jawaban", back: "エビ", backSub: "udang" },
+{ front: "イカ", frontSub: "ketuk untuk jawaban", back: "イカ", backSub: "cumi-cumi" },
+{ front: "ホタテ", frontSub: "ketuk untuk jawaban", back: "ホタテ", backSub: "kerang; simping" },
+{ front: "りんご", frontSub: "ketuk untuk jawaban", back: "りんご", backSub: "apel" },
+{ front: "バナナ", frontSub: "ketuk untuk jawaban", back: "バナナ", backSub: "pisang" },
+{ front: "焼きそば", frontSub: "ketuk untuk jawaban", back: "やきそば", backSub: "yakisoba (mie goreng)" },
+{ front: "おにぎり", frontSub: "ketuk untuk jawaban", back: "おにぎり", backSub: "onigiri (nasi kepal)" },
+{ front: "焼肉", frontSub: "ketuk untuk jawaban", back: "やきにく", backSub: "yakiniku (daging panggang khas Jepang)" },
+{ front: "たれ", frontSub: "ketuk untuk jawaban", back: "たれ", backSub: "tare (saus celup; saus cocol)" },
+{ front: "ソース", frontSub: "ketuk untuk jawaban", back: "ソース", backSub: "saus" },
+{ front: "お菓子", frontSub: "ketuk untuk jawaban", back: "おかし", backSub: "kue" },
+{ front: "ソフトドリンク", frontSub: "ketuk untuk jawaban", back: "ソフトドリンク", backSub: "soft drink; minuman ringan (tanpa alkohol)" },
+{ front: "お茶", frontSub: "ketuk untuk jawaban", back: "おちゃ", backSub: "teh; teh khas Jepang" },
+{ front: "ジュース", frontSub: "ketuk untuk jawaban", back: "ジュース", backSub: "jus" },
+{ front: "お酒", frontSub: "ketuk untuk jawaban", back: "おさけ", backSub: "alkohol" },
+{ front: "ビール", frontSub: "ketuk untuk jawaban", back: "ビール", backSub: "bir" },
+{ front: "ワイン", frontSub: "ketuk untuk jawaban", back: "ワイン", backSub: "anggur" },
+{ front: "日本酒", frontSub: "ketuk untuk jawaban", back: "にほんしゅ", backSub: "sake (minuman beralkohol khas Jepang hasil fermentasi beras)" },
+{ front: "焼酎", frontSub: "ketuk untuk jawaban", back: "しょうちゅう", backSub: "shochu (minuman beralkohol khas Jepang yang dibuat dengan proses penyulingan)" },
+{ front: "コップ", frontSub: "ketuk untuk jawaban", back: "コップ", backSub: "cangkir" },
+{ front: "お皿", frontSub: "ketuk untuk jawaban", back: "おさら", backSub: "piring" },
+{ front: "わりばし", frontSub: "ketuk untuk jawaban", back: "わりばし", backSub: "sumpit kayu sekali pakai" },
+{ front: "ごみ袋", frontSub: "ketuk untuk jawaban", back: "ごみぶくろ", backSub: "kantong sampah" },
+{ front: "準備", frontSub: "ketuk untuk jawaban", back: "じゅんび", backSub: "persiapan" },
+{ front: "持って行く", frontSub: "ketuk untuk jawaban", back: "もっていく", backSub: "membawa; pergi dengan membawa~" },
+{ front: "手伝う", frontSub: "ketuk untuk jawaban", back: "てつだう", backSub: "membantu" },
+{ front: "飲み物", frontSub: "ketuk untuk jawaban", back: "のみもの", backSub: "minuman" },
+{ front: "バーベキュー場", frontSub: "ketuk untuk jawaban", back: "バーベキューじょう", backSub: "area pesta barbeku" },
+{ front: "デザート", frontSub: "ketuk untuk jawaban", back: "デザート", backSub: "makanan pencuci mulut" },
+{ front: "焼く", frontSub: "ketuk untuk jawaban", back: "やく", backSub: "bakar; panggang" },
+{ front: "からあげ", frontSub: "ketuk untuk jawaban", back: "からあげ", backSub: "karaage (ayam goreng khas Jepang)" },
+{ front: "焼き鳥", frontSub: "ketuk untuk jawaban", back: "やきとり", backSub: "yakitori (sate ayam khas Jepang)" },
+{ front: "塩", frontSub: "ketuk untuk jawaban", back: "しお", backSub: "garam" },
+{ front: "紅茶", frontSub: "ketuk untuk jawaban", back: "こうちゃ", backSub: "teh hitam" },
+{ front: "ウーロン茶", frontSub: "ketuk untuk jawaban", back: "ウーロンちゃ", backSub: "teh oolong" },
+{ front: "チョコレートケーキ", frontSub: "ketuk untuk jawaban", back: "チョコレートケーキ", backSub: "kue cokelat" },
+{ front: "チーズケーキ", frontSub: "ketuk untuk jawaban", back: "チーズケーキ", backSub: "kue keju" },
+{ front: "どっち", frontSub: "ketuk untuk jawaban", back: "どっち", backSub: "yang mana (2 pilihan)" },
+{ front: "どれ", frontSub: "ketuk untuk jawaban", back: "どれ", backSub: "yang mana (3 pilihan atau lebih)" },
+{ front: "うる", frontSub: "ketuk untuk jawaban", back: "うる", backSub: "menjual" },
+{ front: "両方", frontSub: "ketuk untuk jawaban", back: "りょうほう", backSub: "keduanya" },
+{ front: "アレルギー", frontSub: "ketuk untuk jawaban", back: "アレルギー", backSub: "alergi" },
+{ front: "エビ", frontSub: "ketuk untuk jawaban", back: "エビ", backSub: "udang" },
+{ front: "カニ", frontSub: "ketuk untuk jawaban", back: "カニ", backSub: "kepiting" },
+{ front: "卵", frontSub: "ketuk untuk jawaban", back: "たまご", backSub: "telur" },
+{ front: "ピーナッツ", frontSub: "ketuk untuk jawaban", back: "ピーナッツ", backSub: "kacang-kacangan" },
+{ front: "落花生", frontSub: "ketuk untuk jawaban", back: "らっかせい", backSub: "kacang tanah" },
+{ front: "そば粉", frontSub: "ketuk untuk jawaban", back: "そばこ", backSub: "tepung soba" },
+{ front: "小麦", frontSub: "ketuk untuk jawaban", back: "こむぎ", backSub: "gandum" },
+{ front: "小麦粉", frontSub: "ketuk untuk jawaban", back: "こむぎこ", backSub: "tepung gandum; tepung terigu" },
+{ front: "乳製品", frontSub: "ketuk untuk jawaban", back: "にゅうせいひん", backSub: "produk susu" },
+{ front: "牛乳", frontSub: "ketuk untuk jawaban", back: "ぎゅうにゅう", backSub: "susu" },
+{ front: "バター", frontSub: "ketuk untuk jawaban", back: "バター", backSub: "mentega" },
+{ front: "チーズ", frontSub: "ketuk untuk jawaban", back: "チーズ", backSub: "keju" },
+{ front: "ヨーグルト", frontSub: "ketuk untuk jawaban", back: "ヨーグルト", backSub: "yoghurt" },
+{ front: "材料", frontSub: "ketuk untuk jawaban", back: "ざいりょう", backSub: "bahan" },
+{ front: "ハラル", frontSub: "ketuk untuk jawaban", back: "ハラル", backSub: "halal" },
+{ front: "消費期限", frontSub: "ketuk untuk jawaban", back: "しょうひきげん", backSub: "tanggal kedaluwarsa" },
+{ front: "ピザ", frontSub: "ketuk untuk jawaban", back: "ピザ", backSub: "piza" },
+{ front: "入っている", frontSub: "ketuk untuk jawaban", back: "はいっている", backSub: "mengandung" },
+{ front: "よかったら", frontSub: "ketuk untuk jawaban", back: "よかったら", backSub: "kalau (Anda) mau" },
+{ front: "もつ", frontSub: "ketuk untuk jawaban", back: "もつ", backSub: "tahan; awet" },
+{ front: "今日中に", frontSub: "ketuk untuk jawaban", back: "きょうじゅうに", backSub: "hari ini" },
+{ front: "コーナー", frontSub: "ketuk untuk jawaban", back: "コーナー", backSub: "bagian; pojok" },
+{ front: "商品", frontSub: "ketuk untuk jawaban", back: "しょうひん", backSub: "produk" },
+{ front: "すべて", frontSub: "ketuk untuk jawaban", back: "すべて", backSub: "semua" },
+{ front: "レトルト", frontSub: "ketuk untuk jawaban", back: "レトルト", backSub: "makanan siap santap dalam kemasan" },
+{ front: "乳成分", frontSub: "ketuk untuk jawaban", back: "にゅうせいぶん", backSub: "kandungan susu" },
+{ front: "大豆", frontSub: "ketuk untuk jawaban", back: "だいず", backSub: "kedelai" },
+{ front: "名称", frontSub: "ketuk untuk jawaban", back: "めいしょう", backSub: "nama" },
+{ front: "原材料名", frontSub: "ketuk untuk jawaban", back: "げんざいりょうめい", backSub: "bahan baku" },
+{ front: "殺菌方法", frontSub: "ketuk untuk jawaban", back: "さっきんほうほう", backSub: "cara sterilisasi" },
+{ front: "内容量", frontSub: "ketuk untuk jawaban", back: "ないようりょう", backSub: "berat bersih" },
+{ front: "賞味期限", frontSub: "ketuk untuk jawaban", back: "しょうみきげん", backSub: "tanggal layak konsumsi" },
+{ front: "保存方法", frontSub: "ketuk untuk jawaban", back: "ほぞんほうほう", backSub: "cara menyimpan" },
+{ front: "販売者", frontSub: "ketuk untuk jawaban", back: "はんばいしゃ", backSub: "penjual" },
+{ front: "本品", frontSub: "ketuk untuk jawaban", back: "ほんぴん", backSub: "produk ini" },
+{ front: "含まれる", frontSub: "ketuk untuk jawaban", back: "ふくまれる", backSub: "terkandung" },
+{ front: "アレルギー物質", frontSub: "ketuk untuk jawaban", back: "アレルギーぶっしつ", backSub: "alergen (bahan penyebab alergi)" },
+{ front: "おにぎり", frontSub: "ketuk untuk jawaban", back: "おにぎり", backSub: "onigiri (nasi kepal khas Jepang)" },
+{ front: "エビピラフ", frontSub: "ketuk untuk jawaban", back: "エビピラフ", backSub: "pilaf udang" },
+{ front: "製造者", frontSub: "ketuk untuk jawaban", back: "せいぞうしゃ", backSub: "pembuat; produsen" },
+{ front: "チョコレート", frontSub: "ketuk untuk jawaban", back: "チョコレート", backSub: "cokelat" },
+{ front: "～品目（27品目）", frontSub: "ketuk untuk jawaban", back: "～ひんもく（にじゅうななひんもく）", backSub: "～ bahan (contoh: 27 bahan)" },
             ],
             Irodori_A2_12: [
+            { front: "味", frontSub: "ketuk untuk jawaban", back: "あじ", backSub: "rasa" },
+{ front: "甘い", frontSub: "ketuk untuk jawaban", back: "あまい", backSub: "manis" },
+{ front: "辛い", frontSub: "ketuk untuk jawaban", back: "からい", backSub: "pedas" },
+{ front: "すっぱい", frontSub: "ketuk untuk jawaban", back: "すっぱい", backSub: "asam" },
+{ front: "しょっぱい", frontSub: "ketuk untuk jawaban", back: "しょっぱい", backSub: "asin" },
+{ front: "苦い", frontSub: "ketuk untuk jawaban", back: "にがい", backSub: "pahit" },
+{ front: "こい（味がこい）", frontSub: "ketuk untuk jawaban", back: "こい（あじがこい）", backSub: "kental; kuat (rasanya kuat)" },
+{ front: "うすい（味がうすい）", frontSub: "ketuk untuk jawaban", back: "うすい（あじがうすい）", backSub: "hambar (rasanya hambar)" },
+{ front: "まずい", frontSub: "ketuk untuk jawaban", back: "まずい", backSub: "tidak enak; tidak lezat" },
+{ front: "お弁当", frontSub: "ketuk untuk jawaban", back: "おべんとう", backSub: "bekal" },
+{ front: "チョコレートバニラクリームラテ", frontSub: "ketuk untuk jawaban", back: "チョコレートバニラクリームラテ", backSub: "minuman chocolate vanilla cream latte" },
+{ front: "みかん", frontSub: "ketuk untuk jawaban", back: "みかん", backSub: "jeruk" },
+{ front: "庭", frontSub: "ketuk untuk jawaban", back: "にわ", backSub: "halaman; pekarangan; taman" },
+{ front: "とれる", frontSub: "ketuk untuk jawaban", back: "とれる", backSub: "petik; memetik" },
+{ front: "そんなことない", frontSub: "ketuk untuk jawaban", back: "そんなことない", backSub: "sebenarnya tidak begitu" },
+{ front: "卵焼き", frontSub: "ketuk untuk jawaban", back: "たまごやき", backSub: "tamago-yaki (telur dadar gulung)" },
+{ front: "お好み焼き", frontSub: "ketuk untuk jawaban", back: "おこのみやき", backSub: "okonomiyaki (panekuk khas Jepang)" },
+{ front: "梅干し", frontSub: "ketuk untuk jawaban", back: "うめぼし", backSub: "umeboshi (asinan buah prem Jepang)" },
+{ front: "すき焼き", frontSub: "ketuk untuk jawaban", back: "すきやき", backSub: "sukiyaki (hidangan rebus khas Jepang)" },
+{ front: "生", frontSub: "ketuk untuk jawaban", back: "なま", backSub: "mentah" },
+{ front: "もう一つ", frontSub: "ketuk untuk jawaban", back: "もうひとつ", backSub: "satu lagi" },
+{ front: "バインセオ", frontSub: "ketuk untuk jawaban", back: "バインセオ", backSub: "banh xeo (panekuk gurih khas Vietnam)" },
+{ front: "お腹がいっぱい（な）", frontSub: "ketuk untuk jawaban", back: "おなかがいっぱい（な）", backSub: "kenyang" },
+{ front: "苦手（な）", frontSub: "ketuk untuk jawaban", back: "にがて（な）", backSub: "tidak suka" },
+{ front: "どんどん", frontSub: "ketuk untuk jawaban", back: "どんどん", backSub: "tambah lagi; terus-menerus" },
+{ front: "茶碗蒸し", frontSub: "ketuk untuk jawaban", back: "ちゃわんむし", backSub: "chawanmushi (telur kukus khas Jepang)" },
+{ front: "プリン", frontSub: "ketuk untuk jawaban", back: "プリン", backSub: "puding" },
+{ front: "だし", frontSub: "ketuk untuk jawaban", back: "だし", backSub: "dashi (kaldu)" },
+{ front: "まあ", frontSub: "ketuk untuk jawaban", back: "まあ", backSub: "ya mungkin; hmm" },
+{ front: "スープ", frontSub: "ketuk untuk jawaban", back: "スープ", backSub: "sup" },
+{ front: "きのこ", frontSub: "ketuk untuk jawaban", back: "きのこ", backSub: "jamur" },
+{ front: "銀杏", frontSub: "ketuk untuk jawaban", back: "ぎんなん", backSub: "kacang gingko" },
+{ front: "入れる", frontSub: "ketuk untuk jawaban", back: "いれる", backSub: "memasukkan" },
+{ front: "いいにおい", frontSub: "ketuk untuk jawaban", back: "いいにおい", backSub: "aroma yang lezat" },
+{ front: "調理方法", frontSub: "ketuk untuk jawaban", back: "ちょうりほうほう", backSub: "cara memasak" },
+{ front: "フタ", frontSub: "ketuk untuk jawaban", back: "フタ", backSub: "tutup" },
+{ front: "取り出す", frontSub: "ketuk untuk jawaban", back: "とりだす", backSub: "mengeluarkan" },
+{ front: "めん", frontSub: "ketuk untuk jawaban", back: "めん", backSub: "mie" },
+{ front: "熱湯", frontSub: "ketuk untuk jawaban", back: "ねっとう", backSub: "air mendidih" },
+{ front: "注ぐ", frontSub: "ketuk untuk jawaban", back: "そそぐ", backSub: "menuangkan" },
+{ front: "お湯", frontSub: "ketuk untuk jawaban", back: "おゆ", backSub: "air panas" },
+{ front: "捨てる", frontSub: "ketuk untuk jawaban", back: "すてる", backSub: "membuang" },
+{ front: "かける", frontSub: "ketuk untuk jawaban", back: "かける", backSub: "menaburkan" },
+{ front: "混ぜる", frontSub: "ketuk untuk jawaban", back: "まぜる", backSub: "mengaduk" },
+{ front: "はがす", frontSub: "ketuk untuk jawaban", back: "はがす", backSub: "melepas" },
+{ front: "かやく", frontSub: "ketuk untuk jawaban", back: "かやく", backSub: "bahan pelengkap" },
+{ front: "ふりかけ", frontSub: "ketuk untuk jawaban", back: "ふりかけ", backSub: "taburan; topping kering" },
+{ front: "あける", frontSub: "ketuk untuk jawaban", back: "あける", backSub: "mengosongkan isi; memasukkan seluruhnya" },
+{ front: "内側", frontSub: "ketuk untuk jawaban", back: "うちがわ", backSub: "bagian dalam" },
+{ front: "線", frontSub: "ketuk untuk jawaban", back: "せん", backSub: "garis" },
+{ front: "フタをする", frontSub: "ketuk untuk jawaban", back: "フタをする", backSub: "menutup (penutup)" },
+{ front: "湯切り口", frontSub: "ketuk untuk jawaban", back: "ゆきりぐち", backSub: "lubang untuk membuang air panas" },
+{ front: "できあがり", frontSub: "ketuk untuk jawaban", back: "できあがり", backSub: "selesai; siap untuk disantap" },
             ],
             Irodori_A2_13: [
+{ front: "電気", frontSub: "ketuk untuk jawaban", back: "でんき", backSub: "lampu; listrik" },
+{ front: "つく（電気がつく）", frontSub: "ketuk untuk jawaban", back: "つく（でんきがつく）", backSub: "menyala (lampu menyala)" },
+{ front: "変（な）", frontSub: "ketuk untuk jawaban", back: "へん（な）", backSub: "aneh" },
+{ front: "音", frontSub: "ketuk untuk jawaban", back: "おと", backSub: "bunyi" },
+{ front: "音がする", frontSub: "ketuk untuk jawaban", back: "おとがする", backSub: "berbunyi" },
+{ front: "動く", frontSub: "ketuk untuk jawaban", back: "うごく", backSub: "bergerak; beroperasi" },
+{ front: "トイレットペーパー", frontSub: "ketuk untuk jawaban", back: "トイレットペーパー", backSub: "tisu toilet" },
+{ front: "なくなる", frontSub: "ketuk untuk jawaban", back: "なくなる", backSub: "habis" },
+{ front: "業者", frontSub: "ketuk untuk jawaban", back: "ぎょうしゃ", backSub: "dealer; vendor" },
+{ front: "電話する", frontSub: "ketuk untuk jawaban", back: "でんわする", backSub: "menelepon" },
+{ front: "再起動する", frontSub: "ketuk untuk jawaban", back: "さいきどうする", backSub: "memulai ulang; restart" },
+{ front: "管理室", frontSub: "ketuk untuk jawaban", back: "かんりしつ", backSub: "ruang manajemen; ruang kontrol" },
+{ front: "連絡する", frontSub: "ketuk untuk jawaban", back: "れんらくする", backSub: "menghubungi" },
+{ front: "倉庫", frontSub: "ketuk untuk jawaban", back: "そうこ", backSub: "gudang" },
+{ front: "取って来る", frontSub: "ketuk untuk jawaban", back: "とってくる", backSub: "mengambil (lalu kembali)" },
+{ front: "コーヒーマシーン", frontSub: "ketuk untuk jawaban", back: "コーヒーマシーン", backSub: "mesin pembuat kopi" },
+{ front: "パソコン", frontSub: "ketuk untuk jawaban", back: "パソコン", backSub: "PC; komputer" },
+{ front: "とりあえず", frontSub: "ketuk untuk jawaban", back: "とりあえず", backSub: "untuk saat ini; sementara ini" },
+{ front: "やり方", frontSub: "ketuk untuk jawaban", back: "やりかた", backSub: "cara melakukan" },
+{ front: "終わる", frontSub: "ketuk untuk jawaban", back: "おわる", backSub: "selesai" },
+{ front: "もうすぐ", frontSub: "ketuk untuk jawaban", back: "もうすぐ", backSub: "segera; hampir" },
+{ front: "できる", frontSub: "ketuk untuk jawaban", back: "できる", backSub: "selesai; rampung" },
+{ front: "コピー機", frontSub: "ketuk untuk jawaban", back: "コピーき", backSub: "mesin fotokopi" },
+{ front: "原稿", frontSub: "ketuk untuk jawaban", back: "げんこう", backSub: "naskah; dokumen" },
+{ front: "セットする", frontSub: "ketuk untuk jawaban", back: "セットする", backSub: "mengeset" },
+{ front: "枚数", frontSub: "ketuk untuk jawaban", back: "まいすう", backSub: "jumlah lembar" },
+{ front: "数字", frontSub: "ketuk untuk jawaban", back: "すうじ", backSub: "bilangan; angka" },
+{ front: "入れる", frontSub: "ketuk untuk jawaban", back: "いれる", backSub: "memasukkan" },
+{ front: "スタート", frontSub: "ketuk untuk jawaban", back: "スタート", backSub: "mulai" },
+{ front: "ボタン", frontSub: "ketuk untuk jawaban", back: "ボタン", backSub: "tombol" },
+{ front: "押す", frontSub: "ketuk untuk jawaban", back: "おす", backSub: "menekan" },
+{ front: "両面", frontSub: "ketuk untuk jawaban", back: "りょうめん", backSub: "dua sisi" },
+{ front: "片面", frontSub: "ketuk untuk jawaban", back: "かためん", backSub: "satu sisi" },
+{ front: "カラー", frontSub: "ketuk untuk jawaban", back: "カラー", backSub: "berwarna" },
+{ front: "できるだけ", frontSub: "ketuk untuk jawaban", back: "できるだけ", backSub: "sedapat mungkin" },
+{ front: "白黒", frontSub: "ketuk untuk jawaban", back: "しろくろ", backSub: "hitam putih" },
+{ front: "スキャナ", frontSub: "ketuk untuk jawaban", back: "スキャナ", backSub: "pemindai" },
+{ front: "ファックス", frontSub: "ketuk untuk jawaban", back: "ファックス", backSub: "faks; faksimile" },
+{ front: "自動選択", frontSub: "ketuk untuk jawaban", back: "じどうせんたく", backSub: "pemilihan otomatis" },
+{ front: "フルカラー", frontSub: "ketuk untuk jawaban", back: "フルカラー", backSub: "full color" },
+{ front: "2色", frontSub: "ketuk untuk jawaban", back: "にしょく", backSub: "dua warna" },
+{ front: "単色", frontSub: "ketuk untuk jawaban", back: "たんしょく", backSub: "monokrom; warna tunggal" },
+{ front: "自動濃度", frontSub: "ketuk untuk jawaban", back: "じどうのうど", backSub: "tingkat saturasi warna otomatis" },
+{ front: "用紙", frontSub: "ketuk untuk jawaban", back: "ようし", backSub: "kertas" },
+{ front: "手差し", frontSub: "ketuk untuk jawaban", back: "てざし", backSub: "memasukkan kertas secara manual" },
+{ front: "倍率", frontSub: "ketuk untuk jawaban", back: "ばいりつ", backSub: "pengaturan skala" },
+{ front: "等倍", frontSub: "ketuk untuk jawaban", back: "とうばい", backSub: "ukuran sama" },
+{ front: "変倍", frontSub: "ketuk untuk jawaban", back: "へんばい", backSub: "ukuran berbeda" },
+{ front: "拡大", frontSub: "ketuk untuk jawaban", back: "かくだい", backSub: "pembesaran" },
+{ front: "縮小", frontSub: "ketuk untuk jawaban", back: "しゅくしょう", backSub: "pengecilan" },
+{ front: "ソート", frontSub: "ketuk untuk jawaban", back: "ソート", backSub: "susunan; urutan" },
+{ front: "ホチキス止め", frontSub: "ketuk untuk jawaban", back: "ホチキスどめ", backSub: "staples" },
+{ front: "資料", frontSub: "ketuk untuk jawaban", back: "しりょう", backSub: "dokumen" },
+{ front: "キャビネット", frontSub: "ketuk untuk jawaban", back: "キャビネット", backSub: "lemari dokumen" },
+{ front: "戻す", frontSub: "ketuk untuk jawaban", back: "もどす", backSub: "mengembalikan" },
+{ front: "扉", frontSub: "ketuk untuk jawaban", back: "とびら", backSub: "pintu" },
+{ front: "開ける", frontSub: "ketuk untuk jawaban", back: "あける", backSub: "membuka" },
+{ front: "棚", frontSub: "ketuk untuk jawaban", back: "たな", backSub: "rak" },
+{ front: "並べる", frontSub: "ketuk untuk jawaban", back: "ならべる", backSub: "menata; menyusun" },
+{ front: "丸い", frontSub: "ketuk untuk jawaban", back: "まるい", backSub: "bundar" },
+{ front: "出す", frontSub: "ketuk untuk jawaban", back: "だす", backSub: "mengeluarkan" },
+{ front: "～列（3列）", frontSub: "ketuk untuk jawaban", back: "～れつ（さんれつ）", backSub: "～ baris (tiga baris)" },
+{ front: "後ろ", frontSub: "ketuk untuk jawaban", back: "うしろ", backSub: "belakang" },
+{ front: "スペース", frontSub: "ketuk untuk jawaban", back: "スペース", backSub: "ruang; jarak" },
+{ front: "あける", frontSub: "ketuk untuk jawaban", back: "あける", backSub: "menyediakan (ruang; jarak)" },
+{ front: "入口", frontSub: "ketuk untuk jawaban", back: "いりぐち", backSub: "pintu masuk" },
+{ front: "四角い", frontSub: "ketuk untuk jawaban", back: "しかくい", backSub: "persegi empat" },
+{ front: "置く", frontSub: "ketuk untuk jawaban", back: "おく", backSub: "meletakkan; menaruh" },
+{ front: "会議", frontSub: "ketuk untuk jawaban", back: "かいぎ", backSub: "rapat" },
+{ front: "セッティング", frontSub: "ketuk untuk jawaban", back: "セッティング", backSub: "penataan" },
+{ front: "コの字", frontSub: "ketuk untuk jawaban", back: "コのじ", backSub: "berbentuk huruf-U" },
+{ front: "準備する", frontSub: "ketuk untuk jawaban", back: "じゅんびする", backSub: "mempersiapkan; menyiapkan" },
+{ front: "人数分", frontSub: "ketuk untuk jawaban", back: "にんずうぶん", backSub: "sebanyak jumlah orang" },
+{ front: "～部（1部）", frontSub: "ketuk untuk jawaban", back: "～ぶ（いちぶ）", backSub: "～ bundel fotokopi" },
+{ front: "頼む", frontSub: "ketuk untuk jawaban", back: "たのむ", backSub: "meminta; memesan" },
+{ front: "いいです", frontSub: "ketuk untuk jawaban", back: "いいです", backSub: "tidak usah; tidak perlu" },
+{ front: "件名", frontSub: "ketuk untuk jawaban", back: "けんめい", backSub: "perihal" },
+{ front: "変更", frontSub: "ketuk untuk jawaban", back: "へんこう", backSub: "perubahan" },
+{ front: "お知らせ", frontSub: "ketuk untuk jawaban", back: "おしらせ", backSub: "pemberitahuan; notifikasi" },
+{ front: "都合が悪い", frontSub: "ketuk untuk jawaban", back: "つごうがわるい", backSub: "berhalangan" },
+{ front: "注意（する）", frontSub: "ketuk untuk jawaban", back: "ちゅうい（する）", backSub: "memperhatikan" },
+{ front: "社内メール", frontSub: "ketuk untuk jawaban", back: "しゃないメール", backSub: "surel internal perusahaan" },
+{ front: "打ち合わせ", frontSub: "ketuk untuk jawaban", back: "うちあわせ", backSub: "pertemuan; rapat" },
+{ front: "日程", frontSub: "ketuk untuk jawaban", back: "にってい", backSub: "jadwal" },
+{ front: "差出人", frontSub: "ketuk untuk jawaban", back: "さしだしにん", backSub: "pengirim" },
+{ front: "日付", frontSub: "ketuk untuk jawaban", back: "ひづけ", backSub: "tanggal" },
+{ front: "皆様", frontSub: "ketuk untuk jawaban", back: "みなさま", backSub: "Anda sekalian (bentuk sopan)" },
+{ front: "なお", frontSub: "ketuk untuk jawaban", back: "なお", backSub: "untuk itu; oleh karena itu" },
+{ front: "お知らせします", frontSub: "ketuk untuk jawaban", back: "おしらせします", backSub: "menyampaikan pemberitahuan" },
+{ front: "ご連絡ください", frontSub: "ketuk untuk jawaban", back: "ごれんらくください", backSub: "mohon hubungi~" },
+{ front: "ご注意ください", frontSub: "ketuk untuk jawaban", back: "ごちゅういください", backSub: "mohon perhatikan~" },
             ],
             Irodori_A2_14: [
+            { front: "混んでいる", frontSub: "ketuk untuk jawaban", back: "こんでいる", backSub: "macet" },
+{ front: "せき", frontSub: "ketuk untuk jawaban", back: "せき", backSub: "batuk" },
+{ front: "ひどい", frontSub: "ketuk untuk jawaban", back: "ひどい", backSub: "parah" },
+{ front: "熱", frontSub: "ketuk untuk jawaban", back: "ねつ", backSub: "demam" },
+{ front: "熱がある", frontSub: "ketuk untuk jawaban", back: "ねつがある", backSub: "demam" },
+{ front: "財布", frontSub: "ketuk untuk jawaban", back: "さいふ", backSub: "dompet" },
+{ front: "忘れる", frontSub: "ketuk untuk jawaban", back: "わすれる", backSub: "lupa" },
+{ front: "病院", frontSub: "ketuk untuk jawaban", back: "びょういん", backSub: "rumah sakit" },
+{ front: "家", frontSub: "ketuk untuk jawaban", back: "いえ", backSub: "rumah" },
+{ front: "帰る", frontSub: "ketuk untuk jawaban", back: "かえる", backSub: "pulang" },
+{ front: "これから", frontSub: "ketuk untuk jawaban", back: "これから", backSub: "sekarang; setelah ini" },
+{ front: "取る", frontSub: "ketuk untuk jawaban", back: "とる", backSub: "mengambil" },
+{ front: "それで", frontSub: "ketuk untuk jawaban", back: "それで", backSub: "oleh karena itu" },
+{ front: "遅くなる", frontSub: "ketuk untuk jawaban", back: "おそくなる", backSub: "terlambat" },
+{ front: "みなさん", frontSub: "ketuk untuk jawaban", back: "みなさん", backSub: "semua orang" },
+{ front: "伝える", frontSub: "ketuk untuk jawaban", back: "つたえる", backSub: "menyampaikan" },
+{ front: "遅刻する", frontSub: "ketuk untuk jawaban", back: "ちこくする", backSub: "terlambat" },
+{ front: "あとで", frontSub: "ketuk untuk jawaban", back: "あとで", backSub: "nanti" },
+{ front: "休む", frontSub: "ketuk untuk jawaban", back: "やすむ", backSub: "cuti; tidak masuk kerja; libur" },
+{ front: "申し訳ありません", frontSub: "ketuk untuk jawaban", back: "もうしわけありません", backSub: "Saya mohon maaf." },
+{ front: "具合が悪い", frontSub: "ketuk untuk jawaban", back: "ぐあいがわるい", backSub: "kurang fit; tidak enak badan" },
+{ front: "お祈り", frontSub: "ketuk untuk jawaban", back: "おいのり", backSub: "sembahyang; doa" },
+{ front: "たばこ", frontSub: "ketuk untuk jawaban", back: "たばこ", backSub: "rokok; merokok" },
+{ front: "行って来る", frontSub: "ketuk untuk jawaban", back: "いってくる", backSub: "pergi (lalu kembali)" },
+{ front: "休憩（する）", frontSub: "ketuk untuk jawaban", back: "きゅうけい（する）", backSub: "rehat; istirahat sejenak" },
+{ front: "戻る", frontSub: "ketuk untuk jawaban", back: "もどる", backSub: "kembali" },
+{ front: "早退する", frontSub: "ketuk untuk jawaban", back: "そうたいする", backSub: "pulang lebih awal" },
+{ front: "休みを取る", frontSub: "ketuk untuk jawaban", back: "やすみをとる", backSub: "mengambil cuti" },
+{ front: "社長", frontSub: "ketuk untuk jawaban", back: "しゃちょう", backSub: "direktur utama" },
+{ front: "役所", frontSub: "ketuk untuk jawaban", back: "やくしょ", backSub: "balai kota" },
+{ front: "早く", frontSub: "ketuk untuk jawaban", back: "はやく", backSub: "lebih awal" },
+{ front: "用事", frontSub: "ketuk untuk jawaban", back: "ようじ", backSub: "urusan" },
+{ front: "済む", frontSub: "ketuk untuk jawaban", back: "すむ", backSub: "selesai" },
+{ front: "主任", frontSub: "ketuk untuk jawaban", back: "しゅにん", backSub: "kepala; ketua (staf)" },
+{ front: "来月", frontSub: "ketuk untuk jawaban", back: "らいげつ", backSub: "bulan depan" },
+{ front: "できたら", frontSub: "ketuk untuk jawaban", back: "できたら", backSub: "kalau memungkinkan; kalau bisa" },
+{ front: "ちょっと、いいでしょうか？", frontSub: "ketuk untuk jawaban", back: "ちょっと、いいでしょうか？", backSub: "Maaf, bisa minta waktunya sebentar?" },
+{ front: "別にかまいません", frontSub: "ketuk untuk jawaban", back: "べつにかまいません", backSub: "Tidak masalah." },
+{ front: "休暇届", frontSub: "ketuk untuk jawaban", back: "きゅうかとどけ", backSub: "formulir cuti" },
+{ front: "出す", frontSub: "ketuk untuk jawaban", back: "だす", backSub: "mengumpulkan; menyerahkan" },
+{ front: "フォーム", frontSub: "ketuk untuk jawaban", back: "フォーム", backSub: "formulir" },
+{ front: "所属", frontSub: "ketuk untuk jawaban", back: "しょぞく", backSub: "bagian; divisi; tempat kerja" },
+{ front: "チーム", frontSub: "ketuk untuk jawaban", back: "チーム", backSub: "tim" },
+{ front: "総務", frontSub: "ketuk untuk jawaban", back: "そうむ", backSub: "bagian umum" },
+{ front: "氏名", frontSub: "ketuk untuk jawaban", back: "しめい", backSub: "nama lengkap" },
+{ front: "ハンコ", frontSub: "ketuk untuk jawaban", back: "ハンコ", backSub: "stempel" },
+{ front: "持っている", frontSub: "ketuk untuk jawaban", back: "もっている", backSub: "memiliki" },
+{ front: "持つ", frontSub: "ketuk untuk jawaban", back: "もつ", backSub: "memiliki" },
+{ front: "で", frontSub: "ketuk untuk jawaban", back: "で", backSub: "maka; jadi; oleh karena itu" },
+{ front: "期間", frontSub: "ketuk untuk jawaban", back: "きかん", backSub: "jangka waktu; periode" },
+{ front: "理由", frontSub: "ketuk untuk jawaban", back: "りゆう", backSub: "alasan" },
+{ front: "普通", frontSub: "ketuk untuk jawaban", back: "ふつう", backSub: "biasa" },
+{ front: "私用", frontSub: "ketuk untuk jawaban", back: "しよう", backSub: "urusan pribadi" },
+{ front: "～中（休み中）", frontSub: "ketuk untuk jawaban", back: "～ちゅう（やすみちゅう）", backSub: "sedang ～ (sedang cuti)" },
+{ front: "連絡先", frontSub: "ketuk untuk jawaban", back: "れんらくさき", backSub: "alamat yang dapat dihubungi" },
+{ front: "備考", frontSub: "ketuk untuk jawaban", back: "びこう", backSub: "catatan" },
+{ front: "いる", frontSub: "ketuk untuk jawaban", back: "いる", backSub: "perlu" },
+{ front: "承認印", frontSub: "ketuk untuk jawaban", back: "しょうにんいん", backSub: "stempel konfirmasi" },
+{ front: "事前に", frontSub: "ketuk untuk jawaban", back: "じぜんに", backSub: "sebelumnya" },
+{ front: "提出する", frontSub: "ketuk untuk jawaban", back: "ていしゅつする", backSub: "menyerahkan" },
             ],
             Irodori_A2_15: [
             ],
@@ -3872,6 +4210,12 @@
             ]
         };
         
+        // --- PENGATURAN PASSWORD DECK ---
+        const deckPasswords = {
+            Irodori_A2_10: "xyz", 
+            
+        };
+
         // DOM Elements
         const homePage = document.getElementById('home-page');
         const flashcardPage = document.getElementById('flashcard-page');
@@ -3884,6 +4228,17 @@
         let activeCards = []; 
         let currentIndex = 0;
 
+        // CEK DECK YANG DIKUNCI DAN ATUR BADGE PRO 🔒 LUXURY
+        document.querySelectorAll('.menu-card').forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (deckPasswords[category]) {
+                const badge = document.createElement('div');
+                badge.className = 'pro-badge';
+                badge.innerHTML = 'PRO <span class="lock-icon">🔒</span>';
+                card.appendChild(badge);
+            }
+        });
+
         function loadCategory(categoryKey, titleText, subtitleText) {
             container.innerHTML = "";
             const dataSet = flashcardData[categoryKey] || [];
@@ -3895,14 +4250,11 @@
 
             deckTitle.innerText = `${titleText} - ${subtitleText}`;
 
-            // CEK STATUS CHECKBOX MODE BALIK
             const isReverse = document.getElementById('reverse-mode').checked;
 
             dataSet.forEach(data => {
-                // LOGIKA TUKAR ISI KARTU
-                // Jika reverse: depan jadi arti (Indo), belakang jadi huruf jepangnya
                 let displayFrontMain = isReverse ? data.backSub : data.front;
-                let displayFrontSub = data.frontSub; // tetap "ketuk untuk jawaban"
+                let displayFrontSub = data.frontSub; 
                 
                 let displayBackMain = isReverse ? data.front : data.back;
                 let displayBackSub = isReverse ? data.back : data.backSub;
@@ -3920,7 +4272,6 @@
                     </div>
                 `;
                 
-                // Murni menggunakan Click event untuk mendeteksi tap agar lebih aman
                 card.addEventListener('click', () => {
                     card.classList.toggle('flipped');
                 });
@@ -3936,7 +4287,6 @@
 
             updateDisplay();
             
-            // Pindah Halaman dengan reset scroll
             homePage.style.display = 'none';
             flashcardPage.style.display = 'flex';
             window.scrollTo(0,0);
@@ -3977,8 +4327,6 @@
         }
 
         // --- EVENTS ---
-        
-        // BUG FIX: Menggunakan 'click' bukan 'pointerdown' untuk menghindari ghost-clicks
         shuffleBtn.addEventListener('click', (e) => { e.preventDefault(); shuffleCards(); });
         doneBtn.addEventListener('click', (e) => { e.preventDefault(); markAsLearned(); });
         
@@ -3987,22 +4335,28 @@
             flashcardPage.style.display = 'none';
             homePage.style.display = 'flex';
             window.scrollTo(0,0);
-            
-            // Opsional: uncheck mode balik saat kembali ke menu biar reset
-            // document.getElementById('reverse-mode').checked = false; 
         });
 
-        // BUG FIX: Menggunakan 'click' biasa untuk menu agar tidak ter-trigger saat sedang di-scroll
         document.querySelectorAll('.menu-card').forEach(menu => {
             menu.addEventListener('click', () => {
                 const category = menu.getAttribute('data-category');
                 const title = menu.querySelector('h3').innerText;
                 const subtitle = menu.querySelector('span').innerText;
-                loadCategory(category, title, subtitle);
+                
+                if (deckPasswords[category]) {
+                    const userInput = prompt(`Deck "${title}" digembok buat sauqi ajah😝, minta password ke : fadir,Razan,arival:`);
+                    
+                    if (userInput === deckPasswords[category]) {
+                        loadCategory(category, title, subtitle);
+                    } else if (userInput !== null) {
+                        alert("Yah, passwordnya salah! Coba inget-inget lagi deh.");
+                    }
+                } else {
+                    loadCategory(category, title, subtitle);
+                }
             });
         });
 
-        // Swipe (Hammer.js) dipertahankan untuk experience belajar
         const h = new Hammer(container);
         h.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 
