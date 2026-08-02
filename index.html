@@ -439,6 +439,145 @@
         }
 
     
+        /* --- SEARCH BOX DECK --- */
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 13px 16px;
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .search-input::placeholder { color: #666; }
+
+        .no-results-msg {
+            display: none;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            padding: 30px 10px;
+        }
+
+        /* --- MODAL PASSWORD CUSTOM (ganti prompt() bawaan) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(3px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 320px;
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 14px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .modal-box h3 {
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .modal-box p {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0a0a0a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .modal-box input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .modal-error {
+            min-height: 16px;
+            font-size: 11px;
+            color: #ff5555;
+            margin-bottom: 10px !important;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 10px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #modalCancelBtn {
+            background: transparent;
+            border: 2px solid #555;
+            color: #aaa;
+        }
+
+        #modalCancelBtn:active { background: #333; }
+
+        #modalSubmitBtn {
+            background: #ffd700;
+            border: 2px solid #ffd700;
+            color: #000;
+        }
+
+        #modalSubmitBtn:active { background: #e0c000; }
+
+        @keyframes shakeInput {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .modal-box input.shake { animation: shakeInput 0.3s ease; border-color: #ff5555; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
@@ -1021,6 +1160,20 @@
 </head>
 <body>
 
+    <!-- MODAL PASSWORD CUSTOM -->
+    <div id="password-modal-overlay" class="modal-overlay">
+        <div class="modal-box">
+            <h3 id="modalTitle">🔒 Deck Terkunci</h3>
+            <p id="modalSubtitle">Masukkan password buat akses deck ini.</p>
+            <input type="password" id="modalPasswordInput" placeholder="Password..." autocomplete="off">
+            <p class="modal-error" id="modalError"></p>
+            <div class="modal-actions">
+                <button id="modalCancelBtn">Batal</button>
+                <button id="modalSubmitBtn">Buka 🔓</button>
+            </div>
+        </div>
+    </div>
+
     <div id="mode-select-page" class="animate-fade">
         <div class="main-title">Belajar Bahasa Jepang<br>kelas 赤月🔥🔥</div>
         <div class="subtitle">Pilih mode belajar yang kamu mau dulu ya!</div>
@@ -1058,7 +1211,12 @@
             </label>
         </div>
         
-        <div class="menu-grid">
+        <div class="search-container">
+            <input type="text" id="fcSearchInput" class="search-input" placeholder="🔍 Cari deck... (misal: kanji, kata kerja, bab 5)">
+        </div>
+        <div class="no-results-msg" id="fcNoResults">Deck ga ketemu nih 😅 Coba kata kunci lain.</div>
+
+        <div class="menu-grid" id="fcMenuGrid">
             <div class="menu-card" data-category="pribadi_admin">
                 <h3>KAMUS PRIBADI</h3><span>💀 ADMIN 💀</span>
             </div>
@@ -1300,7 +1458,12 @@
             pilih jawaban yang bener di bawah!
         </div>
         
-        <div class="menu-grid">
+        <div class="search-container">
+            <input type="text" id="mcSearchInput" class="search-input" placeholder="🔍 Cari deck...">
+        </div>
+        <div class="no-results-msg" id="mcNoResults">Deck ga ketemu nih 😅 Coba kata kunci lain.</div>
+
+        <div class="menu-grid" id="mcMenuGrid">
             <div class="menu-card" data-category="kanji_n5">
                 <h3>Shiken kanji</h3><span>bab 9</span>
             </div>
@@ -1369,6 +1532,79 @@
             homePageMcEl.style.display = 'flex';
             window.scrollTo(0,0);
         }
+
+        // --- MODAL PASSWORD CUSTOM (dipakai bareng sama mode FC & MC) ---
+        // Return Promise<boolean>: true kalo password bener, false kalo dibatalin.
+        function askDeckPassword(title, tierText, correctPassword) {
+            return new Promise(resolve => {
+                const overlay = document.getElementById('password-modal-overlay');
+                const input = document.getElementById('modalPasswordInput');
+                const errorEl = document.getElementById('modalError');
+                const submitBtn = document.getElementById('modalSubmitBtn');
+                const cancelBtn = document.getElementById('modalCancelBtn');
+
+                document.getElementById('modalTitle').innerText = `🔒 ${title}`;
+                document.getElementById('modalSubtitle').innerText = tierText;
+                input.value = '';
+                errorEl.innerText = '';
+                overlay.style.display = 'flex';
+                setTimeout(() => input.focus(), 50);
+
+                function cleanup(result) {
+                    overlay.style.display = 'none';
+                    submitBtn.removeEventListener('click', onSubmit);
+                    cancelBtn.removeEventListener('click', onCancel);
+                    input.removeEventListener('keydown', onKey);
+                    resolve(result);
+                }
+
+                function onSubmit() {
+                    if (input.value === correctPassword) {
+                        cleanup(true);
+                    } else {
+                        errorEl.innerText = 'Yah, passwordnya salah! Coba inget-inget lagi deh.';
+                        input.classList.add('shake');
+                        input.value = '';
+                        input.focus();
+                        setTimeout(() => input.classList.remove('shake'), 300);
+                    }
+                }
+                function onCancel() { cleanup(false); }
+                function onKey(e) {
+                    if (e.key === 'Enter') onSubmit();
+                    if (e.key === 'Escape') onCancel();
+                }
+
+                submitBtn.addEventListener('click', onSubmit);
+                cancelBtn.addEventListener('click', onCancel);
+                input.addEventListener('keydown', onKey);
+            });
+        }
+
+        // --- SEARCH/FILTER DECK (dipakai bareng sama mode FC & MC) ---
+        function setupDeckSearch(inputId, gridId, noResultsId) {
+            const searchInput = document.getElementById(inputId);
+            const noResultsMsg = document.getElementById(noResultsId);
+            if (!searchInput) return;
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                const cards = document.querySelectorAll(`#${gridId} .menu-card`);
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    const match = text.includes(query);
+                    card.style.display = match ? '' : 'none';
+                    if (match) visibleCount++;
+                });
+
+                noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+            });
+        }
+
+        setupDeckSearch('fcSearchInput', 'fcMenuGrid', 'fcNoResults');
+        setupDeckSearch('mcSearchInput', 'mcMenuGrid', 'mcNoResults');
     </script>
 
     <script>
@@ -1629,6 +1865,8 @@
         let mcCurrentDeck = [];
         let mcCurrentIndex = 0;
         let mcCurrentCorrectAnswer = "";
+        let mcScoreCorrect = 0;
+        let mcScoreWrong = 0;
 
         function mcLoadCategory(categoryKey, titleText, subtitleText) {
             const dataSet = mcFlashcardData[categoryKey] || [];
@@ -1640,6 +1878,8 @@
 
             mcCurrentDeck = [...dataSet];
             mcCurrentIndex = 0;
+            mcScoreCorrect = 0;
+            mcScoreWrong = 0;
 
             mcDeckTitle.innerText = `${titleText} - ${subtitleText}`;
             
@@ -1652,10 +1892,22 @@
 
         function mcRenderQuestion() {
             if (mcCurrentIndex >= mcCurrentDeck.length) {
-                mcQuestionBox.innerHTML = "<div style='font-size:24px'>すごい🥳🤩🔥!<br><br>Kuis Selesai!</div>";
+                const total = mcScoreCorrect + mcScoreWrong;
+                const percent = total > 0 ? Math.round((mcScoreCorrect / total) * 100) : 0;
+
+                let feedback = 'Gas ulang lagi biar makin nempel! 💪';
+                if (percent === 100) feedback = 'Sempurna banget, gokil! 🔥🔥';
+                else if (percent >= 80) feedback = 'Mantap, dikit lagi sempurna!';
+                else if (percent >= 60) feedback = 'Lumayan nih, terus diulang ya!';
+
+                mcQuestionBox.innerHTML = `
+                    <div style="font-size:22px">すごい🥳🤩🔥!<br>Kuis Selesai!</div>
+                    <div style="font-size:17px;margin-top:14px;color:#ffd700;">Skor: ${mcScoreCorrect} / ${total} (${percent}%)</div>
+                    <div style="font-size:11px;margin-top:8px;color:#aaa;">${feedback}</div>
+                `;
                 mcOptionsGrid.innerHTML = "";
                 mcPromptText.style.display = 'none';
-                mcCounterEl.innerText = "0 / 0";
+                mcCounterEl.innerText = "Selesai";
                 
                 mcPrevBtn.disabled = false;
                 return;
@@ -1695,8 +1947,10 @@
 
             if (selectedAns === mcCurrentCorrectAnswer) {
                 btn.classList.add('correct');
+                mcScoreCorrect++;
             } else {
                 btn.classList.add('wrong');
+                mcScoreWrong++;
                 allBtns.forEach(b => {
                     if (b.innerText === mcCurrentCorrectAnswer) {
                         b.classList.add('correct');
@@ -1716,6 +1970,8 @@
             if (mcCurrentDeck.length > 0) {
                 mcCurrentDeck = mcCurrentDeck.sort(() => 0.5 - Math.random());
                 mcCurrentIndex = 0;
+                mcScoreCorrect = 0;
+                mcScoreWrong = 0;
                 mcRenderQuestion();
             }
         });
@@ -1758,25 +2014,17 @@
         });
 
         document.querySelectorAll('#home-page-mc .menu-card').forEach(menu => {
-            menu.addEventListener('click', () => {
+            menu.addEventListener('click', async () => {
                 const category = menu.getAttribute('data-category');
                 const title = menu.querySelector('h3').innerText;
                 const subtitle = menu.querySelector('span').innerText;
 
                 if (mcExclusivePasswords[category]) {
-                    const userInput = prompt(`digembok buat sauqi ajah😝, minta password ke : fadir,Razan,arival:`);
-                    if (userInput === mcExclusivePasswords[category]) {
-                        mcLoadCategory(category, title, subtitle);
-                    } else if (userInput !== null) {
-                        alert("Yah, passwordnya salah! Coba inget-inget lagi deh.");
-                    }
+                    const ok = await askDeckPassword(title, 'Deck ini EXCLUSIVE 💎, minta password ke: fadir, Razan, arival', mcExclusivePasswords[category]);
+                    if (ok) mcLoadCategory(category, title, subtitle);
                 } else if (mcDeckPasswords[category]) {
-                    const userInput = prompt(`Deck "${title}" digembok, minta password ke : fadir,Razan,arival:`);
-                    if (userInput === mcDeckPasswords[category]) {
-                        mcLoadCategory(category, title, subtitle);
-                    } else if (userInput !== null) {
-                        alert("Yah, passwordnya salah! Coba inget-inget lagi deh.");
-                    }
+                    const ok = await askDeckPassword(title, 'Deck ini digembok, minta password ke: fadir, Razan, arival', mcDeckPasswords[category]);
+                    if (ok) mcLoadCategory(category, title, subtitle);
                 } else {
                     mcLoadCategory(category, title, subtitle);
                 }
@@ -1788,6 +2036,8 @@
         // ======================= MODE: FLASH CARD =======================
 // --- DATABASE ---
         const fcFlashcardData = {
+                 pribadi_admin: [
+                 ],
             kanji_n5: [
                 { front: "私", frontSub: "ketuk untuk jawaban", back: "わたし", backSub: "Aku / Saya" },
                 { front: "人", frontSub: "ketuk untuk jawaban", back: "ひと", backSub: "Orang" },
@@ -1907,8 +2157,8 @@
                 { front: "七", frontSub: "ketuk untuk jawaban", back: "なな", backSub: "Tujuh" },
                 { front: "八", frontSub: "ketuk untuk jawaban", back: "はち", backSub: "Delapan" },
                 { front: "九", frontSub: "ketuk untuk jawaban", back: "きゅう", backSub: "Sembilan" }
-                  ],
-                 aneka_memakai: [
+            ],
+                             aneka_memakai: [
                 { front: "着る", frontSub: "ketuk untuk jawaban", back: "き(る)", backSub: "memakai baju; kaos; kemeja; jaket; mantel" },
 { front: "履く", frontSub: "ketuk untuk jawaban", back: "は(く)", backSub: "memakai celana; rok; sepatu; sandal; kaus kaki" },
 { front: "被る", frontSub: "ketuk untuk jawaban", back: "かぶ(る)", backSub: "memakai topi; helm; tudung" },
@@ -2025,8 +2275,8 @@
 { front: "足の指", frontSub: "ketuk untuk jawaban", back: "あしのゆび", backSub: "jari kaki" },
 { front: "かかと", frontSub: "ketuk untuk jawaban", back: "かかと", backSub: "tumit" },
 { front: "皮膚", frontSub: "ketuk untuk jawaban", back: "ひふ", backSub: "kulit" },
-                 ],
-                Irodori_A1_6: [
+            ],
+                            Irodori_A1_6: [
 { front: "お伺いします", frontSub: "ketuk untuk jawaban", back: "おうかがいします", backSub: "Mau pesan apa? (ragam hormat)" },
 { front: "こちらでお召し上がりですか？", frontSub: "ketuk untuk jawaban", back: "こちらでおめしあがりですか？", backSub: "Apa Anda ingin makan di tempat? (ragam hormat)" },
 { front: "お持ち帰りですね", frontSub: "ketuk untuk jawaban", back: "おもちかえりですね", backSub: "Pesanannya untuk dibawa pulang, ya. (ragam hormat)" },
@@ -2189,8 +2439,8 @@
 { front: "停止", frontSub: "ketuk untuk jawaban", back: "ていし", backSub: "stop" },
 { front: "タイマー", frontSub: "ketuk untuk jawaban", back: "タイマー", backSub: "pewaktu (timer)" },
 { front: "取消", frontSub: "ketuk untuk jawaban", back: "とりけし", backSub: "batal (cancel)" },
-                ],
-                Irodori_A1_8: [
+            ],
+                            Irodori_A1_8: [
                 { front: "更衣室", frontSub: "ketuk untuk jawaban", back: "こういしつ", backSub: "ruang ganti" },
 { front: "食堂", frontSub: "ketuk untuk jawaban", back: "しょくどう", backSub: "kantin" },
 { front: "給湯室", frontSub: "ketuk untuk jawaban", back: "きゅうとうしつ", backSub: "pantri (pantry)" },
@@ -2376,8 +2626,8 @@
 { front: "バスタオル", frontSub: "ketuk untuk jawaban", back: "バスタオル", backSub: "handuk mandi" },
 { front: "トイレットペーパー", frontSub: "ketuk untuk jawaban", back: "トイレットペーパー", backSub: "tisu toilet" },
 { front: "バスルーム", frontSub: "ketuk untuk jawaban", back: "バスルーム", backSub: "kamar mandi" },
-                 ],
-                Irodori_A1_11: [
+            ],
+                            Irodori_A1_11: [
                 { front: "趣味", frontSub: "ketuk untuk jawaban", back: "しゅみ", backSub: "hobi" },
 { front: "スポーツ", frontSub: "ketuk untuk jawaban", back: "スポーツ", backSub: "olahraga" },
 { front: "音楽", frontSub: "ketuk untuk jawaban", back: "おんがく", backSub: "musik" },
@@ -2569,8 +2819,8 @@
 { front: "待合室", frontSub: "ketuk untuk jawaban", back: "まちあいしつ", backSub: "ruang tunggu" },
 { front: "バス乗り場", frontSub: "ketuk untuk jawaban", back: "バスのりば", backSub: "halte bus" },
 { front: "タクシー乗り場", frontSub: "ketuk untuk jawaban", back: "タクシーのりば", backSub: "pangkalan taksi; tempat naik taksi" },
-                ],
-                Irodori_A1_14: [
+            ],
+                            Irodori_A1_14: [
                 { front: "トイレ", frontSub: "ketuk untuk jawaban", back: "トイレ", backSub: "toilet" },
 { front: "コインロッカー", frontSub: "ketuk untuk jawaban", back: "コインロッカー", backSub: "loker koin" },
 { front: "自動販売機", frontSub: "ketuk untuk jawaban", back: "じどうはんばいき", backSub: "mesin penjual otomatis" },
@@ -2999,7 +3249,7 @@
 { front: "学生", frontSub: "ketuk untuk jawaban", back: "がくせい", backSub: "siswa" },
 { front: "プログラミング", frontSub: "ketuk untuk jawaban", back: "プログラミング", backSub: "pemrograman" },
             ],
-            Irodori_A2_2: [
+                        Irodori_A2_2: [
             { front: "趣味", frontSub: "ketuk untuk jawaban", back: "しゅみ", backSub: "hobi" },
 { front: "音楽", frontSub: "ketuk untuk jawaban", back: "おんがく", backSub: "musik" },
 { front: "聞く", frontSub: "ketuk untuk jawaban", back: "きく", backSub: "mendengar" },
@@ -3209,7 +3459,7 @@
 { front: "展望台", frontSub: "ketuk untuk jawaban", back: "てんぼうだい", backSub: "observatorium" },
 { front: "静か", frontSub: "ketuk untuk jawaban", back: "しずか", backSub: "sepi/tenang" },
             ],
-            Irodori_A2_6: [
+                        Irodori_A2_6: [
             { front: "ある", frontSub: "ketuk untuk jawaban", back: "ある", backSub: "ada (berbagai hal; sesuatu yang ada di kota)" },
 { front: "もの", frontSub: "ketuk untuk jawaban", back: "もの", backSub: "hal; sesuatu; benda" },
 { front: "信号", frontSub: "ketuk untuk jawaban", back: "しんごう", backSub: "lampu lalu lintas" },
@@ -3414,7 +3664,7 @@
             ],
             Irodori_A2_10: [
             { front: "曜日", frontSub: "ketuk untuk jawaban", back: "ようび", backSub: "hari" },
-{ front: "時間", frontSub: "ketuk untuk jawaban", back: "じかん", backSub: "waktu; jam" },
+            { front: "時間", frontSub: "ketuk untuk jawaban", back: "じかん", backSub: "waktu; jam" },
 { front: "費用", frontSub: "ketuk untuk jawaban", back: "ひよう", backSub: "biaya" },
 { front: "毎月", frontSub: "ketuk untuk jawaban", back: "まいつき", backSub: "setiap bulan" },
 { front: "第～", frontSub: "ketuk untuk jawaban", back: "だい～", backSub: "ke~ (menyatakan urutan ke-1, ke-2, ke-3 dan seterusnya.)" },
@@ -3787,8 +4037,7 @@
 { front: "事前に", frontSub: "ketuk untuk jawaban", back: "じぜんに", backSub: "sebelumnya" },
 { front: "提出する", frontSub: "ketuk untuk jawaban", back: "ていしゅつする", backSub: "menyerahkan" }
             ],
-            Irodori_A2_15: [
-            ],
+            Irodori_A2_15: [],
             Irodori_A2_16: [],
             Irodori_A2_17: [],
             Irodori_A2_18: [],
@@ -3839,7 +4088,7 @@
         // --- PENGATURAN PASSWORD DECK ADMIN (tier tertinggi, di atas Exclusive) ---
         // Cara pakai: tambahin data-category deck ke sini, contoh:
         const fcAdminPasswords = {
-            pribadi_admin: "wokwok", // <-- CONTOH DEMO, ganti/hapus sesuai kebutuhan
+            pribadi_admin: "wokwok" , // <-- CONTOH DEMO, ganti/hapus sesuai kebutuhan
         };
 
         // DOM Elements
@@ -3982,35 +4231,20 @@
         });
 
         document.querySelectorAll('#home-page-fc .menu-card').forEach(menu => {
-            menu.addEventListener('click', () => {
+            menu.addEventListener('click', async () => {
                 const category = menu.getAttribute('data-category');
                 const title = menu.querySelector('h3').innerText;
                 const subtitle = menu.querySelector('span').innerText;
                 
                 if (fcAdminPasswords[category]) {
-                    const userInput = prompt(`NGAPAIN!?💀`);
-
-                    if (userInput === fcAdminPasswords[category]) {
-                        fcLoadCategory(category, title, subtitle);
-                    } else if (userInput !== null) {
-                        alert("無理だよ");
-                    }
+                    const ok = await askDeckPassword(title, 'NGAPAIN!?💀', fcAdminPasswords[category]);
+                    if (ok) fcLoadCategory(category, title, subtitle);
                 } else if (fcExclusivePasswords[category]) {
-                    const userInput = prompt(`digembok buat sauqi ajah😝, minta password ke : fadir,Razan,arival:`);
-
-                    if (userInput === fcExclusivePasswords[category]) {
-                        fcLoadCategory(category, title, subtitle);
-                    } else if (userInput !== null) {
-                        alert("Yah, passwordnya salah! Coba inget-inget lagi deh.");
-                    }
+                    const ok = await askDeckPassword(title, 'Deck ini EXCLUSIVE 💎, minta password ke: fadir, Razan, arival', fcExclusivePasswords[category]);
+                    if (ok) fcLoadCategory(category, title, subtitle);
                 } else if (fcDeckPasswords[category]) {
-                    const userInput = prompt(`satu deck ini hanya 5k aja..., payment nanti belum di update`);
-                    
-                    if (userInput === fcDeckPasswords[category]) {
-                        fcLoadCategory(category, title, subtitle);
-                    } else if (userInput !== null) {
-                        alert("Yah, passwordnya salah! Coba inget-inget lagi deh.");
-                    }
+                    const ok = await askDeckPassword(title, 'Deck ini digembok buat sauqi ajah😝, minta password ke: fadir, Razan, arival', fcDeckPasswords[category]);
+                    if (ok) fcLoadCategory(category, title, subtitle);
                 } else {
                     fcLoadCategory(category, title, subtitle);
                 }
