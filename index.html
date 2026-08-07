@@ -691,6 +691,1204 @@
         .menu-card span { font-size: 11px; color: #888; }
         .menu-card:active span { color: #333; }
 
+        /* --- ANIMASI & STYLE BADGE PRO LUXURY --- */
+        @keyframes goldShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
+            background-size: 300% 300%;
+            animation: goldShimmer 4s ease infinite;
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .pro-badge .lock-icon {
+            display: inline-block;
+            animation: lockPulse 2s infinite ease-in-out;
+        }
+
+        /* --- ANIMASI & STYLE BADGE EXCLUSIVE (LEBIH MEWAH DARI PRO) --- */
+        @keyframes purpleShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes exclusiveGlow {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(186, 85, 255, 0.6), 0 0 18px rgba(138, 43, 226, 0.5), 0 2px 5px rgba(0,0,0,0.8);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(224, 170, 255, 1), 0 0 38px rgba(186, 85, 255, 0.8), 0 2px 8px rgba(0,0,0,0.9);
+            }
+        }
+
+        @keyframes gemSpin {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-2px) rotate(6deg); }
+        }
+
+        @keyframes textShimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
+            50% { opacity: 1; transform: scale(1) translateY(-3px); }
+        }
+
+        .exclusive-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            padding: 2px;
+            border-radius: 8px;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .exclusive-badge::after {
+            content: "✨";
+            position: absolute;
+            top: -10px;
+            left: -8px;
+            font-size: 11px;
+            animation: sparkleFloat 1.8s ease-in-out infinite;
+        }
+
+        .exclusive-badge-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, #2d004d, #8a2be2, #c77dff, #e0aaff, #6a00b3, #ba55ff);
+            background-size: 400% 400%;
+            animation: purpleShimmer 3s ease infinite, exclusiveGlow 2.2s ease-in-out infinite;
+            border: 1px solid rgba(230, 190, 255, 0.9);
+        }
+
+        .exclusive-badge .badge-text {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+        }
+
+        .exclusive-badge .crown-icon {
+            display: inline-block;
+            font-size: 10px;
+            animation: crownFloat 1.6s ease-in-out infinite;
+        }
+
+        .exclusive-badge .gem-icon {
+            display: inline-block;
+            animation: gemSpin 3s infinite ease-in-out;
+        }
+
+        .menu-card.is-exclusive {
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#111, #111) padding-box,
+                linear-gradient(135deg, #ffd700, #8a2be2, #6a00b3, #e0aaff) border-box;
+            box-shadow: 0 0 6px rgba(186, 85, 255, 0.5);
+        }
+
+        .menu-card.is-exclusive h3,
+        .menu-card.is-exclusive span {
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        
+        /* --- STYLE HALAMAN KUIS (PILIHAN GANDA) --- */
+        #quiz-page {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            background: #0a0a0a;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-align: center;
+            color: #ffd700;
+        }
+
+        #quizCounter { 
+            margin-bottom: 25px; 
+            font-size: 10px; 
+            color: #888; 
+            letter-spacing: 2px; 
+            font-weight: bold;
+        }
+
+        .question-box {
+            width: 100%;
+            max-width: 320px;
+            min-height: 140px;
+            background-color: #1a1a1a;
+            border: 2px solid #fff;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .prompt-text {
+            color: #ffd700;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 40px;
+        }
+
+        .option-btn {
+            background-color: #111;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            padding: 25px 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
+        }
+
+        .option-btn:active {
+            transform: scale(0.95);
+        }
+
+        .option-btn.correct {
+            border-color: #55ff55;
+            background-color: rgba(85, 255, 85, 0.15);
+            color: #55ff55;
+        }
+
+        .option-btn.wrong {
+            border-color: #ff5555;
+            background-color: rgba(255, 85, 85, 0.15);
+            color: #ff5555;
+        }
+
+        #quiz-page .controls {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #quiz-page button.prev-btn {
+            background-color: transparent;
+            border: 2px solid #ffd700; 
+            color: #ffd700;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #quiz-page button.prev-btn:active {
+            background-color: #ffd700;
+            color: #000;
+        }
+
+        #quiz-page button.prev-btn:disabled {
+            border-color: #555;
+            color: #555;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        #quiz-page button.shuffle-btn {
+            background-color: transparent;
+            border: 2px solid #55aaff;
+            color: #55aaff;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #quiz-page button.shuffle-btn:active {
+            background-color: #55aaff;
+            color: #000;
+        }
+
+        #quiz-page button.back-btn { 
+            background-color: transparent;
+            border: 2px solid #ff5555; 
+            color: #ff5555; 
+            width: 100%; 
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        #quiz-page button.back-btn:active { 
+            background-color: #ff5555; 
+            color: #000; 
+        }
+
+        /* --- RESPONSIVE: TABLET & LAPTOP/PC --- */
+        @media (min-width: 700px) {
+            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+                max-width: 480px;
+            }
+            .question-box {
+                font-size: 26px;
+                min-height: 180px;
+            }
+            .option-btn {
+                font-size: 20px;
+                padding: 30px 10px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+                max-width: 600px;
+            }
+            .question-box {
+                font-size: 30px;
+                min-height: 220px;
+            }
+        }
+
+    
+        /* --- SEARCH BOX DECK --- */
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 13px 16px;
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .search-input::placeholder { color: #666; }
+
+        .no-results-msg {
+            display: none;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            padding: 30px 10px;
+        }
+
+        /* --- MODAL PASSWORD CUSTOM (ganti prompt() bawaan) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(3px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 320px;
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 14px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .modal-box h3 {
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .modal-box p {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0a0a0a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .modal-box input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .modal-error {
+            min-height: 16px;
+            font-size: 11px;
+            color: #ff5555;
+            margin-bottom: 10px !important;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 10px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #modalCancelBtn {
+            background: transparent;
+            border: 2px solid #555;
+            color: #aaa;
+        }
+
+        #modalCancelBtn:active { background: #333; }
+
+        #modalSubmitBtn {
+            background: #ffd700;
+            border: 2px solid #ffd700;
+            color: #000;
+        }
+
+        #modalSubmitBtn:active { background: #e0c000; }
+
+        @keyframes shakeInput {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .modal-box input.shake { animation: shakeInput 0.3s ease; border-color: #ff5555; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: #0a0a0a; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            min-height: 100vh; 
+            overflow-x: hidden;
+        }
+
+        /* Animasi Transisi Halus */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* --- STYLE HALAMAN UTAMA (HOME) --- */
+        #home-page-fc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            touch-action: pan-y; 
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 25px; 
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* STYLE CHECKBOX MODE BALIK */
+        .reverse-toggle-container {
+            margin-bottom: 30px; 
+            background: #222; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            border: 1px solid #444;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .reverse-toggle-container label {
+            font-size: 14px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        .menu-card {
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 110px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative; /* Penting untuk posisi badge */
+        }
+
+        .menu-card:active {
+            background-color: #fff;
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
+        .menu-card span { font-size: 11px; color: #888; }
+        .menu-card:active span { color: #333; }
+
+        /* --- ANIMASI & STYLE BADGE PRO LUXURY / MEWAH --- */
+        @keyframes goldShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            
+            /* Gradasi Warna Emas Mengalir */
+            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
+            background-size: 300% 300%;
+            animation: goldShimmer 4s ease infinite;
+            
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            
+            /* Efek Border Emas Glow Menyala */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
+            
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .pro-badge .lock-icon {
+            display: inline-block;
+            animation: lockPulse 2s infinite ease-in-out;
+        }
+
+        /* --- ANIMASI & STYLE BADGE EXCLUSIVE (LEBIH MEWAH DARI PRO) --- */
+        @keyframes purpleShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes exclusiveGlow {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(186, 85, 255, 0.6), 0 0 18px rgba(138, 43, 226, 0.5), 0 2px 5px rgba(0,0,0,0.8);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(224, 170, 255, 1), 0 0 38px rgba(186, 85, 255, 0.8), 0 2px 8px rgba(0,0,0,0.9);
+            }
+        }
+
+        @keyframes gemSpin {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-2px) rotate(6deg); }
+        }
+
+        @keyframes textShimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
+            50% { opacity: 1; transform: scale(1) translateY(-3px); }
+        }
+
+        .exclusive-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            padding: 2px;
+            border-radius: 8px;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .exclusive-badge::after {
+            content: "✨";
+            position: absolute;
+            top: -10px;
+            left: -8px;
+            font-size: 11px;
+            animation: sparkleFloat 1.8s ease-in-out infinite;
+        }
+
+        .exclusive-badge-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, #2d004d, #8a2be2, #c77dff, #e0aaff, #6a00b3, #ba55ff);
+            background-size: 400% 400%;
+            animation: purpleShimmer 3s ease infinite, exclusiveGlow 2.2s ease-in-out infinite;
+            border: 1px solid rgba(230, 190, 255, 0.9);
+        }
+
+        .exclusive-badge .badge-text {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+        }
+
+        .exclusive-badge .crown-icon {
+            display: inline-block;
+            font-size: 10px;
+            animation: crownFloat 1.6s ease-in-out infinite;
+        }
+
+        .exclusive-badge .gem-icon {
+            display: inline-block;
+            animation: gemSpin 3s infinite ease-in-out;
+        }
+
+        .menu-card.is-exclusive {
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#111, #111) padding-box,
+                linear-gradient(135deg, #ffd700, #8a2be2, #6a00b3, #e0aaff) border-box;
+            box-shadow: 0 0 6px rgba(186, 85, 255, 0.5);
+        }
+
+        .menu-card.is-exclusive h3,
+        .menu-card.is-exclusive span {
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        
+        /* --- STYLE HALAMAN KUIS (PILIHAN GANDA) --- */
+        #quiz-page {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            background: #0a0a0a;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-align: center;
+            color: #ffd700;
+        }
+
+        #quizCounter { 
+            margin-bottom: 25px; 
+            font-size: 10px; 
+            color: #888; 
+            letter-spacing: 2px; 
+            font-weight: bold;
+        }
+
+        .question-box {
+            width: 100%;
+            max-width: 320px;
+            min-height: 140px;
+            background-color: #1a1a1a;
+            border: 2px solid #fff;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .prompt-text {
+            color: #ffd700;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 40px;
+        }
+
+        .option-btn {
+            background-color: #111;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            padding: 25px 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
+        }
+
+        .option-btn:active {
+            transform: scale(0.95);
+        }
+
+        .option-btn.correct {
+            border-color: #55ff55;
+            background-color: rgba(85, 255, 85, 0.15);
+            color: #55ff55;
+        }
+
+        .option-btn.wrong {
+            border-color: #ff5555;
+            background-color: rgba(255, 85, 85, 0.15);
+            color: #ff5555;
+        }
+
+        #quiz-page .controls {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #quiz-page button.prev-btn {
+            background-color: transparent;
+            border: 2px solid #ffd700; 
+            color: #ffd700;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #quiz-page button.prev-btn:active {
+            background-color: #ffd700;
+            color: #000;
+        }
+
+        #quiz-page button.prev-btn:disabled {
+            border-color: #555;
+            color: #555;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        #quiz-page button.shuffle-btn {
+            background-color: transparent;
+            border: 2px solid #55aaff;
+            color: #55aaff;
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #quiz-page button.shuffle-btn:active {
+            background-color: #55aaff;
+            color: #000;
+        }
+
+        #quiz-page button.back-btn { 
+            background-color: transparent;
+            border: 2px solid #ff5555; 
+            color: #ff5555; 
+            width: 100%; 
+            padding: 14px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        #quiz-page button.back-btn:active { 
+            background-color: #ff5555; 
+            color: #000; 
+        }
+
+        /* --- RESPONSIVE: TABLET & LAPTOP/PC --- */
+        @media (min-width: 700px) {
+            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+                max-width: 480px;
+            }
+            .question-box {
+                font-size: 26px;
+                min-height: 180px;
+            }
+            .option-btn {
+                font-size: 20px;
+                padding: 30px 10px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+                max-width: 600px;
+            }
+            .question-box {
+                font-size: 30px;
+                min-height: 220px;
+            }
+        }
+
+    
+        /* --- SEARCH BOX DECK --- */
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 13px 16px;
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .search-input::placeholder { color: #666; }
+
+        .no-results-msg {
+            display: none;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            padding: 30px 10px;
+        }
+
+        /* --- MODAL PASSWORD CUSTOM (ganti prompt() bawaan) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(3px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 320px;
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 14px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .modal-box h3 {
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .modal-box p {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0a0a0a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .modal-box input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .modal-error {
+            min-height: 16px;
+            font-size: 11px;
+            color: #ff5555;
+            margin-bottom: 10px !important;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 10px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #modalCancelBtn {
+            background: transparent;
+            border: 2px solid #555;
+            color: #aaa;
+        }
+
+        #modalCancelBtn:active { background: #333; }
+
+        #modalSubmitBtn {
+            background: #ffd700;
+            border: 2px solid #ffd700;
+            color: #000;
+        }
+
+        #modalSubmitBtn:active { background: #e0c000; }
+
+        @keyframes shakeInput {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .modal-box input.shake { animation: shakeInput 0.3s ease; border-color: #ff5555; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: #0a0a0a; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            min-height: 100vh; 
+            overflow-x: hidden;
+        }
+
+        /* Animasi Transisi Halus */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* --- STYLE HALAMAN UTAMA (HOME) --- */
+        #home-page-fc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            touch-action: pan-y; 
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 25px; 
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* STYLE CHECKBOX MODE BALIK */
+        .reverse-toggle-container {
+            margin-bottom: 30px; 
+            background: #222; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            border: 1px solid #444;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .reverse-toggle-container label {
+            font-size: 14px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        .menu-card {
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 110px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative; /* Penting untuk posisi badge */
+        }
+
+        .menu-card:active {
+            background-color: #fff;
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
+        .menu-card span { font-size: 11px; color: #888; }
+        .menu-card:active span { color: #333; }
+
         /* --- ANIMASI & STYLE BADGE PRO LUXURY / MEWAH --- */
         @keyframes goldShimmer {
             0% { background-position: 0% 50%; }
@@ -1178,10 +2376,25 @@
         <div class="main-title">Belajar Bahasa Jepang<br>kelas 赤月🔥🔥</div>
         <div class="subtitle">Pilih mode belajar yang kamu mau dulu ya!</div>
         <div class="mode-grid">
-            <div class="mode-card" onclick="showModeFC()">
-                <span class="mode-icon">🃏</span>
-                <h2>Flash Card</h2>
-                <p>Hafalan santai, geser kartu buat liat jawaban</p>
+            <div class="mode-card" onclick="showModeFC('A1')">
+                <span class="mode-icon">📕</span>
+                <h2>Irodori A1</h2>
+                <p>Flash card materi Irodori A1</p>
+            </div>
+            <div class="mode-card" onclick="showModeFC('A2')">
+                <span class="mode-icon">📙</span>
+                <h2>Irodori A2</h2>
+                <p>Flash card materi Irodori A2</p>
+            </div>
+            <div class="mode-card" onclick="showModeFC('A2.2')">
+                <span class="mode-icon">📒</span>
+                <h2>Irodori A2.2</h2>
+                <p>Flash card materi Irodori A2.2</p>
+            </div>
+            <div class="mode-card" onclick="showModeFC('lainnya')">
+                <span class="mode-icon">💬</span>
+                <h2>Lainnya</h2>
+                <p>Kanji, kata sifat, kata kerja, dan deck lainnya</p>
             </div>
             <div class="mode-card" onclick="showModeMC()">
                 <span class="mode-icon">✅</span>
@@ -1212,7 +2425,7 @@
         </div>
         
         <div class="search-container">
-            <input type="text" id="fcSearchInput" class="search-input" placeholder="🔍 Cari deck... (misal: bab, kanji, kata kerja)">
+            <input type="text" id="fcSearchInput" class="search-input" placeholder="🔍 Cari deck... (misal: kanji, kata kerja, bab 5)">
         </div>
         <div class="no-results-msg" id="fcNoResults">Deck ga ketemu nih 😅 Coba kata kunci lain.</div>
 
@@ -1359,7 +2572,10 @@
                 <h3>Irodori A2</h3><span>Bab 12 part 2</span>
             </div>
             <div class="menu-card" data-category="Irodori_A2_13">
-                <h3>Irodori A2</h3><span>Bab 13</span>
+                <h3>Irodori A2</h3><span>Bab 13 full</span>
+              </div>
+            <div class="menu-card" data-category="Irodori_A2_13_1">
+                <h3>Irodori A2</h3><span>Bab 13 part 1</span>
               </div>
             <div class="menu-card" data-category="Irodori_A2_13_2">
                 <h3>Irodori A2</h3><span>Bab 13 part 2</span>
@@ -1552,10 +2768,50 @@
             modeSelectPage.style.display = 'flex';
             window.scrollTo(0,0);
         }
-        function showModeFC() {
+        // Judul yang ditampilkan di halaman deck FC sesuai grup yang dipilih
+        const fcGroupTitles = {
+            'A1': 'Irodori A1',
+            'A2': 'Irodori A2',
+            'A2.2': 'Irodori A2.2',
+            'lainnya': 'Lainnya'
+        };
+        let fcCurrentGroup = 'A1';
+
+        function showModeFC(group) {
+            fcCurrentGroup = group || 'A1';
             modeSelectPage.style.display = 'none';
             homePageFcEl.style.display = 'flex';
+
+            const fcMainTitleEl = homePageFcEl.querySelector('.main-title');
+            if (fcMainTitleEl) {
+                fcMainTitleEl.innerHTML = `${fcGroupTitles[fcCurrentGroup] || 'Flash Card'}<br>kelas 赤月🔥🔥`;
+            }
+
+            const fcSearchEl = document.getElementById('fcSearchInput');
+            if (fcSearchEl) fcSearchEl.value = '';
+
+            applyFcGroupFilter();
             window.scrollTo(0,0);
+        }
+
+        // Filter deck FC berdasarkan grup (A1/A2/A2.2/lainnya) + kata kunci pencarian
+        function applyFcGroupFilter() {
+            const searchInput = document.getElementById('fcSearchInput');
+            const noResultsMsg = document.getElementById('fcNoResults');
+            const query = searchInput ? searchInput.value.trim().toLowerCase() : '';
+            const cards = document.querySelectorAll('#fcMenuGrid .menu-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const inGroup = card.getAttribute('data-group') === fcCurrentGroup;
+                const text = card.innerText.toLowerCase();
+                const matchesSearch = query === '' || text.includes(query);
+                const show = inGroup && matchesSearch;
+                card.style.display = show ? '' : 'none';
+                if (show) visibleCount++;
+            });
+
+            if (noResultsMsg) noResultsMsg.style.display = visibleCount === 0 ? 'block' : 'none';
         }
         function showModeMC() {
             modeSelectPage.style.display = 'none';
@@ -1611,6 +2867,20 @@
             });
         }
 
+        // --- PENGELOMPOKAN DECK FC: Irodori A1 / A2 / A2.2 / Lainnya ---
+        document.querySelectorAll('#fcMenuGrid .menu-card').forEach(card => {
+            const cat = card.getAttribute('data-category') || '';
+            let group = 'lainnya';
+            if (cat.startsWith('Irodori_A1')) {
+                group = 'A1';
+            } else if (cat.startsWith('Irodori_A2_')) {
+                group = 'A2';
+            } else if (cat.startsWith('Irodori_A3')) {
+                group = 'A2.2';
+            }
+            card.setAttribute('data-group', group);
+        });
+
         // --- SEARCH/FILTER DECK (dipakai bareng sama mode FC & MC) ---
         function setupDeckSearch(inputId, gridId, noResultsId) {
             const searchInput = document.getElementById(inputId);
@@ -1633,7 +2903,10 @@
             });
         }
 
-        setupDeckSearch('fcSearchInput', 'fcMenuGrid', 'fcNoResults');
+        const fcSearchInputEl = document.getElementById('fcSearchInput');
+        if (fcSearchInputEl) {
+            fcSearchInputEl.addEventListener('input', applyFcGroupFilter);
+        }
         setupDeckSearch('mcSearchInput', 'mcMenuGrid', 'mcNoResults');
     </script>
 
@@ -4069,6 +5342,99 @@
 { front: "できあがり", frontSub: "ketuk untuk jawaban", back: "できあがり", backSub: "selesai; siap untuk disantap" },
             ],
             Irodori_A2_13: [
+            { front: "電気", frontSub: "ketuk untuk jawaban", back: "でんき", backSub: "lampu; listrik" },
+{ front: "つく（電気がつく）", frontSub: "ketuk untuk jawaban", back: "つく（でんきがつく）", backSub: "menyala (lampu menyala)" },
+{ front: "変（な）", frontSub: "ketuk untuk jawaban", back: "へん（な）", backSub: "aneh" },
+{ front: "音", frontSub: "ketuk untuk jawaban", back: "おと", backSub: "bunyi" },
+{ front: "音がする", frontSub: "ketuk untuk jawaban", back: "おとがする", backSub: "berbunyi" },
+{ front: "動く", frontSub: "ketuk untuk jawaban", back: "うごく", backSub: "bergerak; beroperasi" },
+{ front: "トイレットペーパー", frontSub: "ketuk untuk jawaban", back: "トイレットペーパー", backSub: "tisu toilet" },
+{ front: "なくなる", frontSub: "ketuk untuk jawaban", back: "なくなる", backSub: "habis" },
+{ front: "業者", frontSub: "ketuk untuk jawaban", back: "ぎょうしゃ", backSub: "dealer; vendor" },
+{ front: "電話する", frontSub: "ketuk untuk jawaban", back: "でんわする", backSub: "menelepon" },
+{ front: "再起動する", frontSub: "ketuk untuk jawaban", back: "さいきどうする", backSub: "memulai ulang; restart" },
+{ front: "管理室", frontSub: "ketuk untuk jawaban", back: "かんりしつ", backSub: "ruang manajemen; ruang kontrol" },
+{ front: "連絡する", frontSub: "ketuk untuk jawaban", back: "れんらくする", backSub: "menghubungi" },
+{ front: "倉庫", frontSub: "ketuk untuk jawaban", back: "そうこ", backSub: "gudang" },
+{ front: "取って来る", frontSub: "ketuk untuk jawaban", back: "とってくる", backSub: "mengambil (lalu kembali)" },
+{ front: "コーヒーマシーン", frontSub: "ketuk untuk jawaban", back: "コーヒーマシーン", backSub: "mesin pembuat kopi" },
+{ front: "パソコン", frontSub: "ketuk untuk jawaban", back: "パソコン", backSub: "PC; komputer" },
+{ front: "とりあえず", frontSub: "ketuk untuk jawaban", back: "とりあえず", backSub: "untuk saat ini; sementara ini" },
+{ front: "やり方", frontSub: "ketuk untuk jawaban", back: "やりかた", backSub: "cara melakukan" },
+{ front: "終わる", frontSub: "ketuk untuk jawaban", back: "おわる", backSub: "selesai" },
+{ front: "もうすぐ", frontSub: "ketuk untuk jawaban", back: "もうすぐ", backSub: "segera; hampir" },
+{ front: "できる", frontSub: "ketuk untuk jawaban", back: "できる", backSub: "selesai; rampung" },
+{ front: "コピー機", frontSub: "ketuk untuk jawaban", back: "コピーき", backSub: "mesin fotokopi" },
+{ front: "原稿", frontSub: "ketuk untuk jawaban", back: "げんこう", backSub: "naskah; dokumen" },
+{ front: "セットする", frontSub: "ketuk untuk jawaban", back: "セットする", backSub: "mengeset" },
+{ front: "枚数", frontSub: "ketuk untuk jawaban", back: "まいすう", backSub: "jumlah lembar" },
+{ front: "数字", frontSub: "ketuk untuk jawaban", back: "すうじ", backSub: "bilangan; angka" },
+{ front: "入れる", frontSub: "ketuk untuk jawaban", back: "いれる", backSub: "memasukkan" },
+{ front: "スタート", frontSub: "ketuk untuk jawaban", back: "スタート", backSub: "mulai" },
+{ front: "ボタン", frontSub: "ketuk untuk jawaban", back: "ボタン", backSub: "tombol" },
+            { front: "押す", frontSub: "ketuk untuk jawaban", back: "おす", backSub: "menekan" },
+{ front: "両面", frontSub: "ketuk untuk jawaban", back: "りょうめん", backSub: "dua sisi" },
+{ front: "片面", frontSub: "ketuk untuk jawaban", back: "かためん", backSub: "satu sisi" },
+{ front: "カラー", frontSub: "ketuk untuk jawaban", back: "カラー", backSub: "berwarna" },
+{ front: "できるだけ", frontSub: "ketuk untuk jawaban", back: "できるだけ", backSub: "sedapat mungkin" },
+{ front: "白黒", frontSub: "ketuk untuk jawaban", back: "しろくろ", backSub: "hitam putih" },
+{ front: "スキャナ", frontSub: "ketuk untuk jawaban", back: "スキャナ", backSub: "pemindai" },
+{ front: "ファックス", frontSub: "ketuk untuk jawaban", back: "ファックス", backSub: "faks; faksimile" },
+{ front: "自動選択", frontSub: "ketuk untuk jawaban", back: "じどうせんたく", backSub: "pemilihan otomatis" },
+{ front: "フルカラー", frontSub: "ketuk untuk jawaban", back: "フルカラー", backSub: "full color" },
+{ front: "2色", frontSub: "ketuk untuk jawaban", back: "にしょく", backSub: "dua warna" },
+{ front: "単色", frontSub: "ketuk untuk jawaban", back: "たんしょく", backSub: "monokrom; warna tunggal" },
+{ front: "自動濃度", frontSub: "ketuk untuk jawaban", back: "じどうのうど", backSub: "tingkat saturasi warna otomatis" },
+{ front: "用紙", frontSub: "ketuk untuk jawaban", back: "ようし", backSub: "kertas" },
+{ front: "手差し", frontSub: "ketuk untuk jawaban", back: "てざし", backSub: "memasukkan kertas secara manual" },
+{ front: "倍率", frontSub: "ketuk untuk jawaban", back: "ばいりつ", backSub: "pengaturan skala" },
+{ front: "等倍", frontSub: "ketuk untuk jawaban", back: "とうばい", backSub: "ukuran sama" },
+{ front: "変倍", frontSub: "ketuk untuk jawaban", back: "へんばい", backSub: "ukuran berbeda" },
+{ front: "拡大", frontSub: "ketuk untuk jawaban", back: "かくだい", backSub: "pembesaran" },
+{ front: "縮小", frontSub: "ketuk untuk jawaban", back: "しゅくしょう", backSub: "pengecilan" },
+{ front: "ソート", frontSub: "ketuk untuk jawaban", back: "ソート", backSub: "susunan; urutan" },
+{ front: "ホチキス止め", frontSub: "ketuk untuk jawaban", back: "ホチキスどめ", backSub: "staples" },
+{ front: "資料", frontSub: "ketuk untuk jawaban", back: "しりょう", backSub: "dokumen" },
+{ front: "キャビネット", frontSub: "ketuk untuk jawaban", back: "キャビネット", backSub: "lemari dokumen" },
+{ front: "戻す", frontSub: "ketuk untuk jawaban", back: "もどす", backSub: "mengembalikan" },
+{ front: "扉", frontSub: "ketuk untuk jawaban", back: "とびら", backSub: "pintu" },
+{ front: "開ける", frontSub: "ketuk untuk jawaban", back: "あける", backSub: "membuka" },
+{ front: "棚", frontSub: "ketuk untuk jawaban", back: "たな", backSub: "rak" },
+{ front: "並べる", frontSub: "ketuk untuk jawaban", back: "ならべる", backSub: "menata; menyusun" },
+{ front: "丸い", frontSub: "ketuk untuk jawaban", back: "まるい", backSub: "bundar" },
+            { front: "出す", frontSub: "ketuk untuk jawaban", back: "だす", backSub: "mengeluarkan" },
+{ front: "～列（3列）", frontSub: "ketuk untuk jawaban", back: "～れつ（さんれつ）", backSub: "～ baris (tiga baris)" },
+{ front: "後ろ", frontSub: "ketuk untuk jawaban", back: "うしろ", backSub: "belakang" },
+{ front: "スペース", frontSub: "ketuk untuk jawaban", back: "スペース", backSub: "ruang; jarak" },
+{ front: "あける", frontSub: "ketuk untuk jawaban", back: "あける", backSub: "menyediakan (ruang; jarak)" },
+{ front: "入口", frontSub: "ketuk untuk jawaban", back: "いりぐち", backSub: "pintu masuk" },
+{ front: "四角い", frontSub: "ketuk untuk jawaban", back: "しかくい", backSub: "persegi empat" },
+{ front: "置く", frontSub: "ketuk untuk jawaban", back: "おく", backSub: "meletakkan; menaruh" },
+{ front: "会議", frontSub: "ketuk untuk jawaban", back: "かいぎ", backSub: "rapat" },
+{ front: "セッティング", frontSub: "ketuk untuk jawaban", back: "セッティング", backSub: "penataan" },
+{ front: "コの字", frontSub: "ketuk untuk jawaban", back: "コのじ", backSub: "berbentuk huruf-U" },
+{ front: "準備する", frontSub: "ketuk untuk jawaban", back: "じゅんびする", backSub: "mempersiapkan; menyiapkan" },
+{ front: "人数分", frontSub: "ketuk untuk jawaban", back: "にんずうぶん", backSub: "sebanyak jumlah orang" },
+{ front: "～部（1部）", frontSub: "ketuk untuk jawaban", back: "～ぶ（いちぶ）", backSub: "～ bundel fotokopi" },
+{ front: "頼む", frontSub: "ketuk untuk jawaban", back: "たのむ", backSub: "meminta; memesan" },
+{ front: "いいです", frontSub: "ketuk untuk jawaban", back: "いいです", backSub: "tidak usah; tidak perlu" },
+{ front: "件名", frontSub: "ketuk untuk jawaban", back: "けんめい", backSub: "perihal" },
+{ front: "変更", frontSub: "ketuk untuk jawaban", back: "へんこう", backSub: "perubahan" },
+{ front: "お知らせ", frontSub: "ketuk untuk jawaban", back: "おしらせ", backSub: "pemberitahuan; notifikasi" },
+{ front: "都合が悪い", frontSub: "ketuk untuk jawaban", back: "つごうがわるい", backSub: "berhalangan" },
+{ front: "注意（する）", frontSub: "ketuk untuk jawaban", back: "ちゅうい（する）", backSub: "memperhatikan" },
+{ front: "社内メール", frontSub: "ketuk untuk jawaban", back: "しゃないメール", backSub: "surel internal perusahaan" },
+{ front: "打ち合わせ", frontSub: "ketuk untuk jawaban", back: "うちあわせ", backSub: "pertemuan; rapat" },
+{ front: "日程", frontSub: "ketuk untuk jawaban", back: "にってい", backSub: "jadwal" },
+{ front: "差出人", frontSub: "ketuk untuk jawaban", back: "さしだしにん", backSub: "pengirim" },
+{ front: "日付", frontSub: "ketuk untuk jawaban", back: "ひづけ", backSub: "tanggal" },
+{ front: "皆様", frontSub: "ketuk untuk jawaban", back: "みなさま", backSub: "Anda sekalian (bentuk sopan)" },
+{ front: "なお", frontSub: "ketuk untuk jawaban", back: "なお", backSub: "untuk itu; oleh karena itu" },
+{ front: "お知らせします", frontSub: "ketuk untuk jawaban", back: "おしらせします", backSub: "menyampaikan pemberitahuan" },
+{ front: "ご連絡ください", frontSub: "ketuk untuk jawaban", back: "ごれんらくください", backSub: "mohon hubungi~" },
+{ front: "ご注意ください", frontSub: "ketuk untuk jawaban", back: "ごちゅういください", backSub: "mohon perhatikan~" },
+            ],
+            Irodori_A2_13_1: [
 { front: "電気", frontSub: "ketuk untuk jawaban", back: "でんき", backSub: "lampu; listrik" },
 { front: "つく（電気がつく）", frontSub: "ketuk untuk jawaban", back: "つく（でんきがつく）", backSub: "menyala (lampu menyala)" },
 { front: "変（な）", frontSub: "ketuk untuk jawaban", back: "へん（な）", backSub: "aneh" },
