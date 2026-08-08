@@ -247,1296 +247,461 @@
             animation: textShimmer 2.5s linear infinite;
         }
         
-        /* --- STYLE HALAMAN KUIS (PILIHAN GANDA) --- */
-        #quiz-page {
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 100vh;
-            padding: 20px;
-            background: #0a0a0a;
-        }
+        /* ======================================================
+           STYLE HALAMAN KUIS (PILIHAN GANDA) — VERSI PROFESIONAL
+           ====================================================== */
 
-        .title {
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            text-align: center;
-            color: #ffd700;
-        }
-
-        #quizCounter { 
-            margin-bottom: 25px; 
-            font-size: 10px; 
-            color: #888; 
-            letter-spacing: 2px; 
-            font-weight: bold;
-        }
-
-        .question-box {
-            width: 100%;
-            max-width: 320px;
-            min-height: 140px;
-            background-color: #1a1a1a;
-            border: 2px solid #fff;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .prompt-text {
-            color: #ffd700;
-            font-size: 14px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-            max-width: 320px;
-            margin-bottom: 40px;
-        }
-
-        .option-btn {
-            background-color: #111;
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 10px;
-            padding: 25px 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            font-family: inherit;
-        }
-
-        .option-btn:active {
-            transform: scale(0.95);
-        }
-
-        .option-btn.correct {
-            border-color: #55ff55;
-            background-color: rgba(85, 255, 85, 0.15);
-            color: #55ff55;
-        }
-
-        .option-btn.wrong {
-            border-color: #ff5555;
-            background-color: rgba(255, 85, 85, 0.15);
-            color: #ff5555;
-        }
-
-        #quiz-page .controls {
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        #quiz-page button.prev-btn {
-            background-color: transparent;
-            border: 2px solid #ffd700; 
-            color: #ffd700;
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #quiz-page button.prev-btn:active {
-            background-color: #ffd700;
-            color: #000;
-        }
-
-        #quiz-page button.prev-btn:disabled {
-            border-color: #555;
-            color: #555;
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        #quiz-page button.shuffle-btn {
-            background-color: transparent;
-            border: 2px solid #55aaff;
-            color: #55aaff;
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #quiz-page button.shuffle-btn:active {
-            background-color: #55aaff;
-            color: #000;
-        }
-
-        #quiz-page button.back-btn { 
-            background-color: transparent;
-            border: 2px solid #ff5555; 
-            color: #ff5555; 
-            width: 100%; 
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        #quiz-page button.back-btn:active { 
-            background-color: #ff5555; 
-            color: #000; 
-        }
-
-        /* --- RESPONSIVE: TABLET & LAPTOP/PC --- */
-        @media (min-width: 700px) {
-            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
-                max-width: 480px;
-            }
-            .question-box {
-                font-size: 26px;
-                min-height: 180px;
-            }
-            .option-btn {
-                font-size: 20px;
-                padding: 30px 10px;
-            }
-        }
-
-        @media (min-width: 1100px) {
-            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
-                max-width: 600px;
-            }
-            .question-box {
-                font-size: 30px;
-                min-height: 220px;
-            }
-        }
-
-    
-        /* --- SEARCH BOX DECK --- */
-        .search-container {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 10px;
-            z-index: 10;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 13px 16px;
-            background-color: #111;
-            border: 2px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 14px;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
-        .search-input::placeholder { color: #666; }
-
-        .no-results-msg {
-            display: none;
-            width: 100%;
-            text-align: center;
-            color: #888;
-            font-size: 13px;
-            padding: 30px 10px;
-        }
-
-        /* --- MODAL PASSWORD CUSTOM (ganti prompt() bawaan) --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(3px);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-box {
-            width: 100%;
-            max-width: 320px;
-            background: #111;
-            border: 2px solid #333;
-            border-radius: 14px;
-            padding: 24px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
-
-        .modal-box h3 {
-            font-size: 15px;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .modal-box p {
-            font-size: 12px;
-            color: #aaa;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 12px 14px;
-            background: #0a0a0a;
-            border: 2px solid #444;
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 14px;
-            margin-bottom: 6px;
-        }
-
-        .modal-box input:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
-        .modal-error {
-            min-height: 16px;
-            font-size: 11px;
-            color: #ff5555;
-            margin-bottom: 10px !important;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-actions button {
-            flex: 1;
-            padding: 12px 10px;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #modalCancelBtn {
-            background: transparent;
-            border: 2px solid #555;
-            color: #aaa;
-        }
-
-        #modalCancelBtn:active { background: #333; }
-
-        #modalSubmitBtn {
-            background: #ffd700;
-            border: 2px solid #ffd700;
-            color: #000;
-        }
-
-        #modalSubmitBtn:active { background: #e0c000; }
-
-        @keyframes shakeInput {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
-        }
-
-        .modal-box input.shake { animation: shakeInput 0.3s ease; border-color: #ff5555; }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background-color: #0a0a0a; 
-            color: #fff; 
-            font-family: 'Courier New', Courier, monospace; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: flex-start;
-            min-height: 100vh; 
-            overflow-x: hidden;
-        }
-
-        /* Animasi Transisi Halus */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes quizFadeIn {
+            from { opacity: 0; transform: translateY(14px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .animate-fade {
-            animation: fadeIn 0.4s ease forwards;
-        }
-        
-        /* --- STYLE HALAMAN UTAMA (HOME) --- */
-        #home-page-fc {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            padding: 40px 20px;
-            touch-action: pan-y; 
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
-        .main-title {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-align: center;
-            text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: #aaa;
-            margin-bottom: 25px; 
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        /* STYLE CHECKBOX MODE BALIK */
-        .reverse-toggle-container {
-            margin-bottom: 30px; 
-            background: #222; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            border: 1px solid #444;
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .reverse-toggle-container label {
-            font-size: 14px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            width: 100%;
-            padding-bottom: 40px;
-        }
-
-        .menu-card {
-            background-color: #111;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 20px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 110px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            position: relative; /* Penting untuk posisi badge */
-        }
-
-        .menu-card:active {
-            background-color: #fff;
-            color: #000;
-            transform: scale(0.95);
-        }
-
-        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
-        .menu-card span { font-size: 11px; color: #888; }
-        .menu-card:active span { color: #333; }
-
-        /* --- ANIMASI & STYLE BADGE PRO LUXURY --- */
-        @keyframes goldShimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes lockPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        .pro-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
-            background-size: 300% 300%;
-            animation: goldShimmer 4s ease infinite;
-            color: #000;
-            font-size: 10px;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 6px;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            text-transform: uppercase;
-            z-index: 5;
-        }
-
-        .pro-badge .lock-icon {
-            display: inline-block;
-            animation: lockPulse 2s infinite ease-in-out;
-        }
-
-        /* --- ANIMASI & STYLE BADGE EXCLUSIVE (LEBIH MEWAH DARI PRO) --- */
-        @keyframes purpleShimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes exclusiveGlow {
-            0%, 100% {
-                box-shadow: 0 0 8px rgba(186, 85, 255, 0.6), 0 0 18px rgba(138, 43, 226, 0.5), 0 2px 5px rgba(0,0,0,0.8);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(224, 170, 255, 1), 0 0 38px rgba(186, 85, 255, 0.8), 0 2px 8px rgba(0,0,0,0.9);
-            }
-        }
-
-        @keyframes gemSpin {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.3) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
-        }
-
-        @keyframes crownFloat {
-            0%, 100% { transform: translateY(0) rotate(-6deg); }
-            50% { transform: translateY(-2px) rotate(6deg); }
-        }
-
-        @keyframes textShimmer {
-            0% { background-position: -100% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        @keyframes sparkleFloat {
-            0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
-            50% { opacity: 1; transform: scale(1) translateY(-3px); }
-        }
-
-        .exclusive-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            padding: 2px;
-            border-radius: 8px;
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .exclusive-badge::after {
-            content: "✨";
-            position: absolute;
-            top: -10px;
-            left: -8px;
-            font-size: 11px;
-            animation: sparkleFloat 1.8s ease-in-out infinite;
-        }
-
-        .exclusive-badge-inner {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 9px;
-            border-radius: 7px;
-            background: linear-gradient(135deg, #2d004d, #8a2be2, #c77dff, #e0aaff, #6a00b3, #ba55ff);
-            background-size: 400% 400%;
-            animation: purpleShimmer 3s ease infinite, exclusiveGlow 2.2s ease-in-out infinite;
-            border: 1px solid rgba(230, 190, 255, 0.9);
-        }
-
-        .exclusive-badge .badge-text {
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textShimmer 2.5s linear infinite;
-            text-shadow: 0 0 8px rgba(255,255,255,0.4);
-        }
-
-        .exclusive-badge .crown-icon {
-            display: inline-block;
-            font-size: 10px;
-            animation: crownFloat 1.6s ease-in-out infinite;
-        }
-
-        .exclusive-badge .gem-icon {
-            display: inline-block;
-            animation: gemSpin 3s infinite ease-in-out;
-        }
-
-        .menu-card.is-exclusive {
-            border: 2px solid transparent;
-            background:
-                linear-gradient(#111, #111) padding-box,
-                linear-gradient(135deg, #ffd700, #8a2be2, #6a00b3, #e0aaff) border-box;
-            box-shadow: 0 0 6px rgba(186, 85, 255, 0.5);
-        }
-
-        .menu-card.is-exclusive h3,
-        .menu-card.is-exclusive span {
-            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textShimmer 2.5s linear infinite;
-        }
-        
-        /* --- STYLE HALAMAN KUIS (PILIHAN GANDA) --- */
-        #quiz-page {
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            min-height: 100vh;
-            padding: 20px;
-            background: #0a0a0a;
-        }
-
-        .title {
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            text-align: center;
-            color: #ffd700;
-        }
-
-        #quizCounter { 
-            margin-bottom: 25px; 
-            font-size: 10px; 
-            color: #888; 
-            letter-spacing: 2px; 
-            font-weight: bold;
-        }
-
-        .question-box {
-            width: 100%;
-            max-width: 320px;
-            min-height: 140px;
-            background-color: #1a1a1a;
-            border: 2px solid #fff;
-            border-radius: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 30px;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .prompt-text {
-            color: #ffd700;
-            font-size: 14px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            width: 100%;
-            max-width: 320px;
-            margin-bottom: 40px;
-        }
-
-        .option-btn {
-            background-color: #111;
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 10px;
-            padding: 25px 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            font-family: inherit;
-        }
-
-        .option-btn:active {
-            transform: scale(0.95);
-        }
-
-        .option-btn.correct {
-            border-color: #55ff55;
-            background-color: rgba(85, 255, 85, 0.15);
-            color: #55ff55;
-        }
-
-        .option-btn.wrong {
-            border-color: #ff5555;
-            background-color: rgba(255, 85, 85, 0.15);
-            color: #ff5555;
-        }
-
-        #quiz-page .controls {
-            width: 100%;
-            max-width: 320px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        #quiz-page button.prev-btn {
-            background-color: transparent;
-            border: 2px solid #ffd700; 
-            color: #ffd700;
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #quiz-page button.prev-btn:active {
-            background-color: #ffd700;
-            color: #000;
-        }
-
-        #quiz-page button.prev-btn:disabled {
-            border-color: #555;
-            color: #555;
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        #quiz-page button.shuffle-btn {
-            background-color: transparent;
-            border: 2px solid #55aaff;
-            color: #55aaff;
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #quiz-page button.shuffle-btn:active {
-            background-color: #55aaff;
-            color: #000;
-        }
-
-        #quiz-page button.back-btn { 
-            background-color: transparent;
-            border: 2px solid #ff5555; 
-            color: #ff5555; 
-            width: 100%; 
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        #quiz-page button.back-btn:active { 
-            background-color: #ff5555; 
-            color: #000; 
-        }
-
-        /* --- RESPONSIVE: TABLET & LAPTOP/PC --- */
-        @media (min-width: 700px) {
-            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
-                max-width: 480px;
-            }
-            .question-box {
-                font-size: 26px;
-                min-height: 180px;
-            }
-            .option-btn {
-                font-size: 20px;
-                padding: 30px 10px;
-            }
-        }
-
-        @media (min-width: 1100px) {
-            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
-                max-width: 600px;
-            }
-            .question-box {
-                font-size: 30px;
-                min-height: 220px;
-            }
-        }
-
-    
-        /* --- SEARCH BOX DECK --- */
-        .search-container {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 10px;
-            z-index: 10;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 13px 16px;
-            background-color: #111;
-            border: 2px solid #333;
-            border-radius: 10px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 14px;
-            transition: border-color 0.2s ease;
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
-        .search-input::placeholder { color: #666; }
-
-        .no-results-msg {
-            display: none;
-            width: 100%;
-            text-align: center;
-            color: #888;
-            font-size: 13px;
-            padding: 30px 10px;
-        }
-
-        /* --- MODAL PASSWORD CUSTOM (ganti prompt() bawaan) --- */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(3px);
-            z-index: 100;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-box {
-            width: 100%;
-            max-width: 320px;
-            background: #111;
-            border: 2px solid #333;
-            border-radius: 14px;
-            padding: 24px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
-
-        .modal-box h3 {
-            font-size: 15px;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .modal-box p {
-            font-size: 12px;
-            color: #aaa;
-            line-height: 1.5;
-            margin-bottom: 16px;
-        }
-
-        .modal-box input {
-            width: 100%;
-            padding: 12px 14px;
-            background: #0a0a0a;
-            border: 2px solid #444;
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 14px;
-            margin-bottom: 6px;
-        }
-
-        .modal-box input:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
-        .modal-error {
-            min-height: 16px;
-            font-size: 11px;
-            color: #ff5555;
-            margin-bottom: 10px !important;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-actions button {
-            flex: 1;
-            padding: 12px 10px;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        #modalCancelBtn {
-            background: transparent;
-            border: 2px solid #555;
-            color: #aaa;
-        }
-
-        #modalCancelBtn:active { background: #333; }
-
-        #modalSubmitBtn {
-            background: #ffd700;
-            border: 2px solid #ffd700;
-            color: #000;
-        }
-
-        #modalSubmitBtn:active { background: #e0c000; }
-
-        @keyframes shakeInput {
+        @keyframes shakeWrong {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            75% { transform: translateX(6px); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
         }
 
-        .modal-box input.shake { animation: shakeInput 0.3s ease; border-color: #ff5555; }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
-        body { 
-            background-color: #0a0a0a; 
-            color: #fff; 
-            font-family: 'Courier New', Courier, monospace; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: flex-start;
-            min-height: 100vh; 
-            overflow-x: hidden;
+        @keyframes correctPulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.5); }
+            70% { box-shadow: 0 0 0 14px rgba(46, 213, 115, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
         }
 
-        /* Animasi Transisi Halus */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes progressGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.35); }
         }
 
-        .animate-fade {
-            animation: fadeIn 0.4s ease forwards;
-        }
-        
-        /* --- STYLE HALAMAN UTAMA (HOME) --- */
-        #home-page-fc {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            padding: 40px 20px;
-            touch-action: pan-y; 
-        }
-
-        .main-title {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            text-align: center;
-            text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: #aaa;
-            margin-bottom: 25px; 
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        /* STYLE CHECKBOX MODE BALIK */
-        .reverse-toggle-container {
-            margin-bottom: 30px; 
-            background: #222; 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            border: 1px solid #444;
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .reverse-toggle-container label {
-            font-size: 14px; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            width: 100%;
-            padding-bottom: 40px;
-        }
-
-        .menu-card {
-            background-color: #111;
-            border: 2px solid #333;
-            border-radius: 12px;
-            padding: 20px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 110px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            position: relative; /* Penting untuk posisi badge */
-        }
-
-        .menu-card:active {
-            background-color: #fff;
-            color: #000;
-            transform: scale(0.95);
-        }
-
-        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
-        .menu-card span { font-size: 11px; color: #888; }
-        .menu-card:active span { color: #333; }
-
-        /* --- ANIMASI & STYLE BADGE PRO LUXURY / MEWAH --- */
-        @keyframes goldShimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes lockPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-        }
-
-        .pro-badge {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            
-            /* Gradasi Warna Emas Mengalir */
-            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
-            background-size: 300% 300%;
-            animation: goldShimmer 4s ease infinite;
-            
-            color: #000;
-            font-size: 10px;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 6px;
-            letter-spacing: 1px;
-            
-            /* Efek Border Emas Glow Menyala */
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
-            
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            text-transform: uppercase;
-            z-index: 5;
-        }
-
-        .pro-badge .lock-icon {
-            display: inline-block;
-            animation: lockPulse 2s infinite ease-in-out;
-        }
-
-        /* --- ANIMASI & STYLE BADGE EXCLUSIVE (LEBIH MEWAH DARI PRO) --- */
-        @keyframes purpleShimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        @keyframes exclusiveGlow {
-            0%, 100% {
-                box-shadow: 0 0 8px rgba(186, 85, 255, 0.6), 0 0 18px rgba(138, 43, 226, 0.5), 0 2px 5px rgba(0,0,0,0.8);
-            }
-            50% {
-                box-shadow: 0 0 18px rgba(224, 170, 255, 1), 0 0 38px rgba(186, 85, 255, 0.8), 0 2px 8px rgba(0,0,0,0.9);
-            }
-        }
-
-        @keyframes gemSpin {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.3) rotate(180deg); }
-            100% { transform: scale(1) rotate(360deg); }
-        }
-
-        @keyframes crownFloat {
-            0%, 100% { transform: translateY(0) rotate(-6deg); }
-            50% { transform: translateY(-2px) rotate(6deg); }
-        }
-
-        @keyframes textShimmer {
-            0% { background-position: -100% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        @keyframes sparkleFloat {
-            0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
-            50% { opacity: 1; transform: scale(1) translateY(-3px); }
-        }
-
-        .exclusive-badge {
-            position: absolute;
-            top: 6px;
-            right: 6px;
-            padding: 2px;
-            border-radius: 8px;
-            z-index: 5;
-            pointer-events: none;
-        }
-
-        .exclusive-badge::after {
-            content: "✨";
-            position: absolute;
-            top: -10px;
-            left: -8px;
-            font-size: 11px;
-            animation: sparkleFloat 1.8s ease-in-out infinite;
-        }
-
-        .exclusive-badge-inner {
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 9px;
-            border-radius: 7px;
-            background: linear-gradient(135deg, #2d004d, #8a2be2, #c77dff, #e0aaff, #6a00b3, #ba55ff);
-            background-size: 400% 400%;
-            animation: purpleShimmer 3s ease infinite, exclusiveGlow 2.2s ease-in-out infinite;
-            border: 1px solid rgba(230, 190, 255, 0.9);
-        }
-
-        .exclusive-badge .badge-text {
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textShimmer 2.5s linear infinite;
-            text-shadow: 0 0 8px rgba(255,255,255,0.4);
-        }
-
-        .exclusive-badge .crown-icon {
-            display: inline-block;
-            font-size: 10px;
-            animation: crownFloat 1.6s ease-in-out infinite;
-        }
-
-        .exclusive-badge .gem-icon {
-            display: inline-block;
-            animation: gemSpin 3s infinite ease-in-out;
-        }
-
-        .menu-card.is-exclusive {
-            border: 2px solid transparent;
-            background:
-                linear-gradient(#111, #111) padding-box,
-                linear-gradient(135deg, #ffd700, #8a2be2, #6a00b3, #e0aaff) border-box;
-            box-shadow: 0 0 6px rgba(186, 85, 255, 0.5);
-        }
-
-        .menu-card.is-exclusive h3,
-        .menu-card.is-exclusive span {
-            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: textShimmer 2.5s linear infinite;
-        }
-        
-        /* --- STYLE HALAMAN KUIS (PILIHAN GANDA) --- */
         #quiz-page {
-            display: none; 
+            display: none;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             width: 100%;
             min-height: 100vh;
-            padding: 20px;
-            background: #0a0a0a;
+            padding: 28px 20px 40px;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.06), transparent 55%),
+                #0a0a0a;
+        }
+
+        #quiz-page .quiz-header {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 18px;
+        }
+
+        #quiz-page .quiz-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
 
         .title {
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
-            text-align: center;
-            color: #ffd700;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: left;
+            color: #f4d160;
+            text-transform: uppercase;
+            max-width: 70%;
+            line-height: 1.3;
         }
 
-        #quizCounter { 
-            margin-bottom: 25px; 
-            font-size: 10px; 
-            color: #888; 
-            letter-spacing: 2px; 
-            font-weight: bold;
+        .quiz-score-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 5px 11px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ddd;
+            white-space: nowrap;
+        }
+
+        .quiz-score-pill .dot-correct { color: #2ed573; }
+        .quiz-score-pill .dot-wrong { color: #ff4d5e; }
+
+        #quizCounter {
+            font-size: 10px;
+            color: #888;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .quiz-progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ffd700, #ff9d00);
+            transition: width 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+            animation: progressGlow 2.4s ease-in-out infinite;
         }
 
         .question-box {
             width: 100%;
             max-width: 320px;
-            min-height: 140px;
-            background-color: #1a1a1a;
-            border: 2px solid #fff;
-            border-radius: 15px;
+            min-height: 150px;
+            background: linear-gradient(160deg, #16161a, #0f0f11);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 18px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 30px;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 22px;
             text-align: center;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            padding: 24px;
+            box-shadow: 0 14px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+            animation: quizFadeIn 0.35s ease;
+            position: relative;
+        }
+
+        .question-box::before {
+            content: "問題";
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: #666;
+            font-weight: 700;
         }
 
         .prompt-text {
-            color: #ffd700;
-            font-size: 14px;
-            margin-bottom: 15px;
+            color: #999;
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
             text-align: center;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            grid-template-columns: 1fr;
+            gap: 12px;
             width: 100%;
             max-width: 320px;
-            margin-bottom: 40px;
+            margin-bottom: 28px;
         }
 
         .option-btn {
-            background-color: #111;
-            color: #fff;
-            border: 2px solid #fff;
-            border-radius: 10px;
-            padding: 25px 10px;
-            font-size: 18px;
-            font-weight: bold;
+            position: relative;
+            background-color: #121214;
+            color: #eee;
+            border: 1.5px solid rgba(255, 255, 255, 0.16);
+            border-radius: 12px;
+            padding: 20px 14px 20px 38px;
+            font-size: 17px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
             touch-action: manipulation;
             -webkit-tap-highlight-color: transparent;
             font-family: inherit;
+            text-align: left;
+            animation: popIn 0.3s ease backwards;
         }
 
-        .option-btn:active {
-            transform: scale(0.95);
+        .option-btn:nth-child(1) { animation-delay: 0.03s; }
+        .option-btn:nth-child(2) { animation-delay: 0.08s; }
+        .option-btn:nth-child(3) { animation-delay: 0.13s; }
+        .option-btn:nth-child(4) { animation-delay: 0.18s; }
+
+        .option-btn::before {
+            content: attr(data-option-label);
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+            color: #aaa;
+            transition: all 0.15s ease;
+        }
+
+        .option-btn:not(:disabled):hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background-color: #17171a;
+        }
+
+        .option-btn:not(:disabled):active {
+            transform: scale(0.96);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
         }
 
         .option-btn.correct {
-            border-color: #55ff55;
-            background-color: rgba(85, 255, 85, 0.15);
-            color: #55ff55;
+            border-color: #2ed573;
+            background-color: rgba(46, 213, 115, 0.12);
+            color: #2ed573;
+            animation: correctPulse 0.7s ease;
+        }
+
+        .option-btn.correct::before {
+            content: "✓";
+            background: #2ed573;
+            border-color: #2ed573;
+            color: #04140a;
         }
 
         .option-btn.wrong {
-            border-color: #ff5555;
-            background-color: rgba(255, 85, 85, 0.15);
-            color: #ff5555;
+            border-color: #ff4d5e;
+            background-color: rgba(255, 77, 94, 0.12);
+            color: #ff4d5e;
+            animation: shakeWrong 0.4s ease;
+        }
+
+        .option-btn.wrong::before {
+            content: "✕";
+            background: #ff4d5e;
+            border-color: #ff4d5e;
+            color: #1a0405;
+        }
+
+        .option-btn.dimmed {
+            opacity: 0.35;
+        }
+
+        .quiz-result-card {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: quizFadeIn 0.4s ease;
+        }
+
+        .quiz-score-number {
+            font-size: 34px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .quiz-score-number .max {
+            font-size: 18px;
+            color: #777;
+            font-weight: 700;
+        }
+
+        .quiz-pass-tag {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .quiz-pass-tag.pass {
+            background: rgba(46, 213, 115, 0.15);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.4);
+        }
+
+        .quiz-pass-tag.fail {
+            background: rgba(255, 77, 94, 0.15);
+            color: #ff4d5e;
+            border: 1px solid rgba(255, 77, 94, 0.4);
+        }
+
+        .quiz-gauge-wrap {
+            width: 100%;
+            max-width: 260px;
+            margin-bottom: 4px;
+        }
+
+        .quiz-gauge-track {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ff4d5e 0%, #ffd700 50%, #2ed573 100%);
+            margin-top: 22px;
+        }
+
+        .quiz-gauge-pass-marker {
+            position: absolute;
+            top: -8px;
+            width: 2px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .quiz-gauge-pass-marker::after {
+            content: "Batas Lulus";
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            white-space: nowrap;
+            color: #aaa;
+            letter-spacing: 0.5px;
+        }
+
+        .quiz-gauge-dot {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #16161a;
+            box-shadow: 0 0 0 2px currentColor, 0 4px 8px rgba(0,0,0,0.5);
+            transform: translate(-50%, -50%);
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .quiz-gauge-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .quiz-result-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .quiz-result-score {
+            font-size: 13px;
+            color: #ffd700;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .quiz-result-feedback {
+            font-size: 11px;
+            color: #999;
+            margin-top: 6px;
+            text-align: center;
+            max-width: 260px;
+        }
+
+        /* --- EVALUASI PILIHAN YANG SALAH (REVIEW SETELAH KUIS) --- */
+        .quiz-review-list {
+            width: 100%;
+            margin-top: 26px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: quizFadeIn 0.4s ease;
+        }
+
+        .quiz-review-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #f4d160;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .quiz-review-item {
+            width: 100%;
+            background: linear-gradient(160deg, #16161a, #0f0f11);
+            border: 1px solid rgba(255, 77, 94, 0.25);
+            border-radius: 12px;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .quiz-review-question {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .quiz-review-answer {
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+            padding: 3px 0;
+        }
+
+        .quiz-review-answer > span:first-child {
+            color: #888;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .quiz-review-answer > span:last-child {
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .quiz-review-answer.wrong > span:last-child {
+            color: #ff4d5e;
+            font-weight: 700;
+            text-decoration: line-through;
+            text-decoration-color: rgba(255, 77, 94, 0.6);
+        }
+
+        .quiz-review-answer.correct > span:last-child {
+            color: #2ed573;
+            font-weight: 700;
+        }
+
+        .quiz-review-empty {
+            width: 100%;
+            font-size: 12px;
+            color: #2ed573;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
         }
 
         #quiz-page .controls {
@@ -1544,21 +709,36 @@
             max-width: 320px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+        }
+
+        #quiz-page .controls-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #quiz-page .controls-row button {
+            flex: 1;
+        }
+
+        #quiz-page button.prev-btn,
+        #quiz-page button.shuffle-btn,
+        #quiz-page button.back-btn {
+            background-color: rgba(255, 255, 255, 0.03);
+            width: 100%;
+            padding: 13px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
         }
 
         #quiz-page button.prev-btn {
-            background-color: transparent;
-            border: 2px solid #ffd700; 
+            border: 1.5px solid rgba(255, 215, 0, 0.5);
             color: #ffd700;
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
         }
 
         #quiz-page button.prev-btn:active {
@@ -1567,24 +747,15 @@
         }
 
         #quiz-page button.prev-btn:disabled {
-            border-color: #555;
+            border-color: #3a3a3a;
             color: #555;
             cursor: not-allowed;
             opacity: 0.5;
         }
 
         #quiz-page button.shuffle-btn {
-            background-color: transparent;
-            border: 2px solid #55aaff;
+            border: 1.5px solid rgba(85, 170, 255, 0.5);
             color: #55aaff;
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
         }
 
         #quiz-page button.shuffle-btn:active {
@@ -1592,42 +763,33 @@
             color: #000;
         }
 
-        #quiz-page button.back-btn { 
-            background-color: transparent;
-            border: 2px solid #ff5555; 
-            color: #ff5555; 
-            width: 100%; 
-            padding: 14px 15px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: bold;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        #quiz-page button.back-btn {
+            border: 1.5px solid rgba(255, 85, 85, 0.5);
+            color: #ff5555;
         }
-        
-        #quiz-page button.back-btn:active { 
-            background-color: #ff5555; 
-            color: #000; 
+
+        #quiz-page button.back-btn:active {
+            background-color: #ff5555;
+            color: #000;
         }
 
         /* --- RESPONSIVE: TABLET & LAPTOP/PC --- */
         @media (min-width: 700px) {
-            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+            #quiz-page .quiz-header, #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
                 max-width: 480px;
             }
             .question-box {
-                font-size: 26px;
-                min-height: 180px;
+                font-size: 27px;
+                min-height: 190px;
             }
             .option-btn {
-                font-size: 20px;
-                padding: 30px 10px;
+                font-size: 19px;
+                padding: 26px 14px 26px 42px;
             }
         }
 
         @media (min-width: 1100px) {
-            #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+            #quiz-page .quiz-header, #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
                 max-width: 600px;
             }
             .question-box {
@@ -2428,6 +1590,7 @@
             <input type="text" id="fcSearchInput" class="search-input" placeholder="🔍 Cari deck... (misal: kanji, kata kerja, bab 5)">
         </div>
         <div class="no-results-msg" id="fcNoResults">Deck ga ketemu nih 😅 Coba kata kunci lain.</div>
+    
 
         <div class="menu-grid" id="fcMenuGrid">
             <div class="menu-card" data-category="pribadi_admin">
@@ -2710,35 +1873,57 @@
         <div class="no-results-msg" id="mcNoResults">Deck ga ketemu nih 😅 Coba kata kunci lain.</div>
 
         <div class="menu-grid" id="mcMenuGrid">
+                    <div class="menu-card" data-category="Irodori_A2_07">
+                <h3>Shiken kanji</h3><span>Irodori A2 bab 07</span>
+            </div>
+                    <div class="menu-card" data-category="Irodori_A2_08">
+                <h3>Shiken kanji</h3><span>Irodori A2 bab 08</span>
+            </div>
             <div class="menu-card" data-category="kanji_n5">
-                <h3>Shiken kanji</h3><span>bab 9</span>
+                <h3>Shiken kanji</h3><span>Irodori A2 bab 09</span>
             </div>
             <div class="menu-card" data-category="kanji_n5_p2">
-                <h3>Shiken bunpou</h3><span>bab 9</span>
+                <h3>Shiken bunpou</h3><span>Irodori A2 bab 09</span>
                </div>
-            <div class="menu-card" data-category="shiken_kanji_b10">
-                <h3>Shiken kanji</h3><span>bab 10</span>
+            <div class="menu-card" data-category="Irodori_A2_10">
+                <h3>Shiken kanji</h3><span>Irodori A2 bab 10</span>
+            </div>
+                        <div class="menu-card" data-category="Irodori_A2_11">
+                <h3>Shiken kanji</h3><span>Irodori A2 bab 11</span>
+            </div>
+                <div class="menu-card" data-category="Irodori_A2_12">
+                <h3>Shiken kanji</h3><span>Irodori A2 bab 12</span>
             </div>
         </div>
     </div>
 
     <div id="quiz-page" class="animate-fade">
-        <div class="title" id="quizDeckTitle">-</div>
-        <div id="quizCounter">1 / 0</div>
+        <div class="quiz-header">
+            <div class="quiz-topbar">
+                <div class="title" id="quizDeckTitle">-</div>
+                <div class="quiz-score-pill">
+                    <span class="dot-correct">●</span><span id="quizScoreCorrect">0</span>
+                    <span style="color:#444;">/</span>
+                    <span class="dot-wrong">●</span><span id="quizScoreWrong">0</span>
+                </div>
+            </div>
+            <div id="quizCounter">1 / 0</div>
+            <div class="quiz-progress-track">
+                <div class="quiz-progress-fill" id="quizProgressFill"></div>
+            </div>
+        </div>
 
         <div class="question-box" id="questionBox">
             <!-- Pertanyaan muncul di sini -->
         </div>
 
-        <div class="prompt-text">jawaban yang bener?</div>
+        <div class="prompt-text">Pilih jawaban yang benar</div>
 
         <div class="options-grid" id="optionsGrid">
             <!-- Pilihan ganda di-generate lewat JS -->
         </div>
 
         <div class="controls">
-            <button id="quizPrevBtn" class="prev-btn">⏮ Soal Sebelumnya</button>
-            <button id="quizShuffleBtn" class="shuffle-btn">🎲 Acak Urutan Soal</button>
             <button id="quizBackBtn" class="back-btn">⬅ Kembali ke Menu</button>
         </div>
     </div>
@@ -2990,7 +2175,7 @@
   { "question": "ちょっと じしょを [ ] もらえませんか？", "correct": "かして", "wrong": ["かし", "かす", "かした"] },
   { "question": "にほんごは ぶんぽうは かんたんです。[ ] かんじは むずかしいです。", "correct": "でも", "wrong": ["それで", "そして", "だから"] }
              ],
-            shiken_kanji_b10: [ 
+            Irodori_A2_10: [ 
   {
     "question": "「ようび」の正しい漢字はどれですか？",
     "correct": "曜日",
@@ -3141,8 +2326,640 @@
     "correct": "動きやすい",
     "wrong": ["働きやすい", "重きやすい", "勘きやすい"]
   }
-         
             ],
+            Irodori_A2_07: [
+  {
+    "question": "「えき」の正しい漢字はどれですか？",
+    "correct": "駅",
+    "wrong": ["駐", "験", "馳"]
+  },
+  {
+    "question": "「うけつけ」の正しい漢字はどれですか？",
+    "correct": "受付",
+    "wrong": ["授付", "受附", "受府"]
+  },
+  {
+    "question": "「かいしゃ」の正しい漢字はどれですか？",
+    "correct": "会社",
+    "wrong": ["合社", "会杜", "会車"]
+  },
+  {
+    "question": "「もん」の正しい漢字はどれですか？",
+    "correct": "門",
+    "wrong": ["問", "間", "開"]
+  },
+  {
+    "question": "「しゅうごう（する）」の正しい漢字はどれですか？",
+    "correct": "集合",
+    "wrong": ["習合", "集会", "集号"]
+  },
+  {
+    "question": "「あんないする」の正しい漢字はどれですか？",
+    "correct": "案内",
+    "wrong": ["安内", "案外", "按内"]
+  },
+  {
+    "question": "「まちあわせ」の正しい漢字はどれですか？",
+    "correct": "待ち合わせ",
+    "wrong": ["持ち合わせ", "待ち会わせ", "待ち合せ"]
+  },
+  {
+    "question": "「はじまる」の正しい漢字はどれですか？",
+    "correct": "始まる",
+    "wrong": ["治まる", "台まる", "怠まる"]
+  },
+  {
+    "question": "「～まえ」の正しい漢字はどれですか？",
+    "correct": "前",
+    "wrong": ["削", "剪", "煎"]
+  },
+  {
+    "question": "「まちあわせする」の正しい漢字はどれですか？",
+    "correct": "待ち合わせする",
+    "wrong": ["持ち合わせする", "待ち会わせする", "待ち合せする"]
+  },
+  {
+    "question": "「へいわ」の正しい漢字はどれですか？",
+    "correct": "平和",
+    "wrong": ["平話", "評和", "半和"]
+  },
+  {
+    "question": "「とり」の正しい漢字はどれですか？",
+    "correct": "鳥",
+    "wrong": ["島", "烏", "鳴"]
+  },
+  {
+    "question": "「ぞう」の正しい漢字はどれですか？",
+    "correct": "像",
+    "wrong": ["象", "橡", "増"]
+  },
+  {
+    "question": "「それ、なんですか？」の「なん」の正しい漢字はどれですか？",
+    "correct": "何",
+    "wrong": ["荷", "河", "可"]
+  },
+  {
+    "question": "「じこ」の正しい漢字はどれですか？",
+    "correct": "事故",
+    "wrong": ["自己", "事古", "事固"]
+  },
+  {
+    "question": "「とまる」の正しい漢字はどれですか？",
+    "correct": "止まる",
+    "wrong": ["泊まる", "留まる", "停まる"]
+  },
+  {
+    "question": "「れんらくする」の正しい漢字はどれですか？",
+    "correct": "連絡",
+    "wrong": ["運絡", "連路", "速絡"]
+  },
+  {
+    "question": "「いまから」の正しい漢字はどれですか？",
+    "correct": "今から",
+    "wrong": ["令から", "会から", "合から"]
+  },
+  {
+    "question": "「いそぐ」の正しい漢字はどれですか？",
+    "correct": "急ぐ",
+    "wrong": ["忌ぐ", "怠ぐ", "念ぐ"]
+  },
+  {
+    "question": "「さきに」の正しい漢字はどれですか？",
+    "correct": "先に",
+    "wrong": ["洗に", "光に", "尖に"]
+  },
+  {
+    "question": "「はじめる」の正しい漢字はどれですか？",
+    "correct": "始める",
+    "wrong": ["治める", "怠める", "姶める"]
+  },
+  {
+    "question": "「みちにまよう」の正しい漢字はどれですか？",
+    "correct": "道に迷う",
+    "wrong": ["道に逃う", "道に述う", "道に送う"]
+  },
+  {
+    "question": "「おくれる」の正しい漢字はどれですか？",
+    "correct": "遅れる",
+    "wrong": ["犀れる", "運れる", "遣れる"]
+  },
+  {
+    "question": "「つく」の正しい漢字はどれですか？",
+    "correct": "着く",
+    "wrong": ["就く", "突く", "付く"]
+  },
+  {
+    "question": "「だいじょうぶ（な）」の正しい漢字はどれですか？",
+    "correct": "大丈夫",
+    "wrong": ["大丈父", "大文夫", "太丈夫"]
+  },
+  {
+    "question": "「じかん」の正しい漢字はどれですか？",
+    "correct": "時間",
+    "wrong": ["時聞", "特間", "時問"]
+  },
+  {
+    "question": "「まつ」の正しい漢字はどれですか？",
+    "correct": "待つ",
+    "wrong": ["持つ", "侍つ", "特つ"]
+  }
+           ],
+           Irodori_A2_08: [
+  {
+    "question": "「どうぶつえん」の正しい漢字はどれですか？",
+    "correct": "動物園",
+    "wrong": ["働物園", "動物圏", "動物薗"]
+  },
+  {
+    "question": "「おしろ」の正しい漢字はどれですか？",
+    "correct": "お城",
+    "wrong": ["お坂", "お域", "お成"]
+  },
+  {
+    "question": "「はくぶつかん」の正しい漢字はどれですか？",
+    "correct": "博物館",
+    "wrong": ["薄物館", "博物官", "博物間"]
+  },
+  {
+    "question": "「やきゅう」の正しい漢字はどれですか？",
+    "correct": "野球",
+    "wrong": ["野求", "夜球", "野救"]
+  },
+  {
+    "question": "「しみんたいいくかん」の正しい漢字はどれですか？",
+    "correct": "市民体育館",
+    "wrong": ["市民体育官", "市眠体育館", "市民休育館"]
+  },
+  {
+    "question": "「しあい」の正しい漢字はどれですか？",
+    "correct": "試合",
+    "wrong": ["詩合", "試会", "試合い"]
+  },
+  {
+    "question": "「たりない」の正しい漢字はどれですか？",
+    "correct": "足りない",
+    "wrong": ["定りない", "足らない", "促りない"]
+  },
+  {
+    "question": "「むり（な）」の正しい漢字はどれですか？",
+    "correct": "無理",
+    "wrong": ["無利", "武理", "無裏"]
+  },
+  {
+    "question": "「おかね」の正しい漢字はどれですか？",
+    "correct": "お金",
+    "wrong": ["お全", "お金銭", "お余"]
+  },
+  {
+    "question": "「しょくじ」の正しい漢字はどれですか？",
+    "correct": "食事",
+    "wrong": ["食侍", "食持", "食事う"]
+  },
+  {
+    "question": "「やすむ」の正しい漢字はどれですか？",
+    "correct": "休む",
+    "wrong": ["体む", "休すむ", "仮む"]
+  },
+  {
+    "question": "「えいがかん」の正しい漢字はどれですか？",
+    "correct": "映画館",
+    "wrong": ["映両館", "映画官", "栄画館"]
+  },
+  {
+    "question": "「スポーツてん」の正しい漢字はどれですか？",
+    "correct": "スポーツ店",
+    "wrong": ["スポーツ点", "スポーツ庖", "スポーツ広"]
+  },
+  {
+    "question": "「なにか」の正しい漢字はどれですか？",
+    "correct": "何か",
+    "wrong": ["荷か", "河か", "可か"]
+  },
+  {
+    "question": "「そのまえに」の正しい漢字はどれですか？",
+    "correct": "その前に",
+    "wrong": ["その削に", "その煎に", "その剪に"]
+  },
+  {
+    "question": "「むずかしい」の正しい漢字はどれですか？",
+    "correct": "難しい",
+    "wrong": ["雑しい", "離しい", "難かしい"]
+  },
+  {
+    "question": "「かんどうする」の正しい漢字はどれですか？",
+    "correct": "感動する",
+    "wrong": ["感働する", "感導する", "感動する する"]
+  },
+  {
+    "question": "「てんらんかい」の正しい漢字はどれですか？",
+    "correct": "展覧会",
+    "wrong": ["展覧会い", "展観会", "展覧回"]
+  },
+  {
+    "question": "「げんだい」の正しい漢字はどれですか？",
+    "correct": "現代",
+    "wrong": ["見代", "現台", "限代"]
+  },
+  {
+    "question": "「さくひん」の正しい漢字はどれですか？",
+    "correct": "作品",
+    "wrong": ["昨品", "作晶", "作賓"]
+  },
+  {
+    "question": "「ホラーえいが」の正しい漢字はどれですか？",
+    "correct": "ホラー映画",
+    "wrong": ["ホラー栄画", "ホラー映両", "ホラー影画"]
+  },
+  {
+    "question": "「たいくつ（な）」の正しい漢字はどれですか？",
+    "correct": "退屈",
+    "wrong": ["退窟", "対屈", "退掘"]
+  }
+            ],
+            Irodori_A2_11: [
+  {
+    "question": "「にく」の正しい漢字はどれですか？",
+    "correct": "肉",
+    "wrong": ["肌", "冈", "内"]
+  },
+  {
+    "question": "「ぎゅうにく」の正しい漢字はどれですか？",
+    "correct": "牛肉",
+    "wrong": ["午肉", "牛肌", "牛内"]
+  },
+  {
+    "question": "「ぶたにく」の正しい漢字はどれですか？",
+    "correct": "豚肉",
+    "wrong": ["豚肌", "豕肉", "豚内"]
+  },
+  {
+    "question": "「とりにく」の正しい漢字はどれですか？",
+    "correct": "鶏肉",
+    "wrong": ["鳥肉", "鶏肌", "鶏内"]
+  },
+  {
+    "question": "「さかな」の正しい漢字はどれですか？",
+    "correct": "魚",
+    "wrong": ["漁", "鯉", "焦"]
+  },
+  {
+    "question": "「やきそば」の正しい漢字はどれですか？",
+    "correct": "焼きそば",
+    "wrong": ["焙きそば", "燒きそば", "焼そば"]
+  },
+  {
+    "question": "「やきにく」の正しい漢字はどれですか？",
+    "correct": "焼肉",
+    "wrong": ["焙肉", "焼肌", "焼内"]
+  },
+  {
+    "question": "「おかし」の正しい漢字はどれですか？",
+    "correct": "お菓子",
+    "wrong": ["お果子", "お菓了", "お菓孑"]
+  },
+  {
+    "question": "「おちゃ」の正しい漢字はどれですか？",
+    "correct": "お茶",
+    "wrong": ["お荼", "お茉", "お余"]
+  },
+  {
+    "question": "「おさけ」の正しい漢字はどれですか？",
+    "correct": "お酒",
+    "wrong": ["お洒", "お酉", "お酌"]
+  },
+  {
+    "question": "「にほんしゅ」の正しい漢字はどれですか？",
+    "correct": "日本酒",
+    "wrong": ["日本洒", "日本酉", "日木酒"]
+  },
+  {
+    "question": "「しょうちゅう」の正しい漢字はどれですか？",
+    "correct": "焼酎",
+    "wrong": ["焼酌", "焙酎", "焼酋"]
+  },
+  {
+    "question": "「おさら」の正しい漢字はどれですか？",
+    "correct": "お皿",
+    "wrong": ["お血", "お盆", "お盤"]
+  },
+  {
+    "question": "「ごみぶくろ」の正しい漢字はどれですか？",
+    "correct": "ごみ袋",
+    "wrong": ["ごみ帒", "ごみ俗", "ごみ裳"]
+  },
+  {
+    "question": "「じゅんび」の正しい漢字はどれですか？",
+    "correct": "準備",
+    "wrong": ["準俻", "淮備", "準脩"]
+  },
+  {
+    "question": "「もっていく」の正しい漢字はどれですか？",
+    "correct": "持って行く",
+    "wrong": ["待って行く", "侍って行く", "特って行く"]
+  },
+  {
+    "question": "「てつだう」の正しい漢字はどれですか？",
+    "correct": "手伝う",
+    "wrong": ["手仁う", "手伝なう", "手云う"]
+  },
+  {
+    "question": "「のみもの」の正しい漢字はどれですか？",
+    "correct": "飲み物",
+    "wrong": ["飮み物", "飲み者", "飲み物う"]
+  },
+  {
+    "question": "「やく」の正しい漢字はどれですか？",
+    "correct": "焼く",
+    "wrong": ["燃く", "炒く", "焙く"]
+  },
+  {
+    "question": "「やきとり」の正しい漢字はどれですか？",
+    "correct": "焼き鳥",
+    "wrong": ["焼き島", "焼き烏", "焼鳥き"]
+  },
+  {
+    "question": "「しお」の正しい漢字はどれですか？",
+    "correct": "塩",
+    "wrong": ["監", "堪", "温"]
+  },
+  {
+    "question": "「こうちゃ」の正しい漢字はどれですか？",
+    "correct": "紅茶",
+    "wrong": ["江茶", "紅荼", "紅菜"]
+  },
+  {
+    "question": "「うる」の正しい漢字はどれですか？",
+    "correct": "売る",
+    "wrong": ["買る", "壳る", "売う"]
+  },
+  {
+    "question": "「りょうほう」の正しい漢字はどれですか？",
+    "correct": "両方",
+    "wrong": ["両万", "面方", "両放"]
+  },
+  {
+    "question": "「たまご」の正しい漢字はどれですか？",
+    "correct": "卵",
+    "wrong": ["卯", "卵う", "巣"]
+  },
+  {
+    "question": "「らっかせい」の正しい漢字はどれですか？",
+    "correct": "落花生",
+    "wrong": ["洛花生", "落化生", "落花性"]
+  },
+  {
+    "question": "「そばこ」の正しい漢字はどれですか？",
+    "correct": "そば粉",
+    "wrong": ["そば紛", "そば扮", "そば粉う"]
+  },
+  {
+    "question": "「こむぎ」の正しい漢字はどれですか？",
+    "correct": "小麦",
+    "wrong": ["少麦", "小妻", "小麥"]
+  },
+  {
+    "question": "「こむぎこ」の正しい漢字はどれですか？",
+    "correct": "小麦粉",
+    "wrong": ["小麦紛", "少麦粉", "小麦扮"]
+  },
+  {
+    "question": "「にゅうせいひん」の正しい漢字はどれですか？",
+    "correct": "乳製品",
+    "wrong": ["乳制品", "乳製晶", "孚製品"]
+  },
+  {
+    "question": "「ぎゅうにゅう」の正しい漢字はどれですか？",
+    "correct": "牛乳",
+    "wrong": ["午乳", "牛孚", "牛乱"]
+  },
+  {
+    "question": "「ざいりょう」の正しい漢字はどれですか？",
+    "correct": "材料",
+    "wrong": ["材科", "村料", "材了"]
+  },
+  {
+    "question": "「しょうひきげん」の正しい漢字はどれですか？",
+    "correct": "消費期限",
+    "wrong": ["消費期眼", "消費期恨", "消賓期限"]
+  },
+  {
+    "question": "「はいっている」の正しい漢字はどれですか？",
+    "correct": "入っている",
+    "wrong": ["込っている", "人っている", "入って居る"]
+  },
+  {
+    "question": "「きょうじゅうに」の正しい漢字はどれですか？",
+    "correct": "今日中に",
+    "wrong": ["今日仲に", "今曰中に", "令日中に"]
+  },
+  {
+    "question": "「しょうひん」の正しい漢字はどれですか？",
+    "correct": "商品",
+    "wrong": ["商晶", "啇品", "商賓"]
+  },
+  {
+    "question": "「にゅうせいぶん」の正しい漢字はどれですか？",
+    "correct": "乳成分",
+    "wrong": ["孚成分", "乳成介", "乳戚分"]
+  },
+  {
+    "question": "「だいず」の正しい漢字はどれですか？",
+    "correct": "大豆",
+    "wrong": ["太豆", "大荳", "犬豆"]
+  },
+  {
+    "question": "「めいしょう」の正しい漢字はどれですか？",
+    "correct": "名称",
+    "wrong": ["名秤", "各称", "名称う"]
+  },
+  {
+    "question": "「げんざいりょうめい」の正しい漢字はどれですか？",
+    "correct": "原材料名",
+    "wrong": ["原村料名", "原材科名", "原材料各"]
+  },
+  {
+    "question": "「さっきんほうほう」の正しい漢字はどれですか？",
+    "correct": "殺菌方法",
+    "wrong": ["殺菌方注", "殺菌万法", "殺困方法"]
+  },
+  {
+    "question": "「ないようりょう」の正しい漢字はどれですか？",
+    "correct": "内容量",
+    "wrong": ["内容重", "内客量", "内容測"]
+  },
+  {
+    "question": "「しょうみきげん」の正しい漢字はどれですか？",
+    "correct": "賞味期限",
+    "wrong": ["賞味期眼", "賞味期恨", "賞未期限"]
+  },
+  {
+    "question": "「ほぞんほうほう」の正しい漢字はどれですか？",
+    "correct": "保存方法",
+    "wrong": ["保存方注", "保在方法", "保存万法"]
+  },
+  {
+    "question": "「はんばいしゃ」の正しい漢字はどれですか？",
+    "correct": "販売者",
+    "wrong": ["販買者", "販売者う", "阪売者"]
+  },
+  {
+    "question": "「ほんぴん」の正しい漢字はどれですか？",
+    "correct": "本品",
+    "wrong": ["本晶", "本賓", "木品"]
+  },
+  {
+    "question": "「ふくまれる」の正しい漢字はどれですか？",
+    "correct": "含まれる",
+    "wrong": ["合まれる", "今まれる", "含れる"]
+  },
+  {
+    "question": "「アレルギーぶっしつ」の正しい漢字はどれですか？",
+    "correct": "アレルギー物質",
+    "wrong": ["アレルギー物貭", "アレルギー物資", "アレルギー勿質"]
+  },
+  {
+    "question": "「せいぞうしゃ」の正しい漢字はどれですか？",
+    "correct": "製造者",
+    "wrong": ["制造者", "製造者う", "製浩者"]
+  },
+  {
+    "question": "「にじゅうななひんもく」の正しい漢字はどれですか？",
+    "correct": "27品目",
+    "wrong": ["27品且", "27晶目", "27品目う"]
+  }
+            ],
+            Irodori_A2_12: [
+  {
+    "question": "「あじ」の正しい漢字はどれですか？",
+    "correct": "味",
+    "wrong": ["昧", "味う", "沫"]
+  },
+  {
+    "question": "「あまい」の正しい漢字はどれですか？",
+    "correct": "甘い",
+    "wrong": ["甜い", "甘るい", "廿い"]
+  },
+  {
+    "question": "「からい」の正しい漢字はどれですか？",
+    "correct": "辛い",
+    "wrong": ["幸い", "辛るい", "辛らい"]
+  },
+  {
+    "question": "「にがい」の正しい漢字はどれですか？",
+    "correct": "苦い",
+    "wrong": ["若い", "苫い", "苦るい"]
+  },
+  {
+    "question": "「おべんとう」の正しい漢字はどれですか？",
+    "correct": "お弁当",
+    "wrong": ["お弁富", "お辨当", "お升当"]
+  },
+  {
+    "question": "「にわ」の正しい漢字はどれですか？",
+    "correct": "庭",
+    "wrong": ["廷", "延", "庁"]
+  },
+  {
+    "question": "「たまごやき」の正しい漢字はどれですか？",
+    "correct": "卵焼き",
+    "wrong": ["卯焼き", "卵焙き", "卵焼",]
+  },
+  {
+    "question": "「おこのみやき」の正しい漢字はどれですか？",
+    "correct": "お好み焼き",
+    "wrong": ["お好味焼き", "お好み焙き", "お妤み焼き"]
+  },
+  {
+    "question": "「うめぼし」の正しい漢字はどれですか？",
+    "correct": "梅干し",
+    "wrong": ["海干し", "梅千し", "梅干うし"]
+  },
+  {
+    "question": "「すきやき」の正しい漢字はどれですか？",
+    "correct": "すき焼き",
+    "wrong": ["すき焙き", "すき燒き", "すき焼"]
+  },
+  {
+    "question": "「なま」の正しい漢字はどれですか？",
+    "correct": "生",
+    "wrong": ["圭", "牛", "産"]
+  },
+  {
+    "question": "「おなかがいっぱい（な）」の「なか」の正しい漢字はどれですか？",
+    "correct": "お腹",
+    "wrong": ["お復", "お複", "お腸"]
+  },
+  {
+    "question": "「にがて（な）」の正しい漢字はどれですか？",
+    "correct": "苦手",
+    "wrong": ["若手", "苫手", "苦季"]
+  },
+  {
+    "question": "「ちゃわんむし」の正しい漢字はどれですか？",
+    "correct": "茶碗蒸し",
+    "wrong": ["茶椀蒸し", "茶碗蓋し", "茶碗蒸",]
+  },
+  {
+    "question": "「ぎんなん」の正しい漢字はどれですか？",
+    "correct": "銀杏",
+    "wrong": ["銀否", "銀本", "根杏"]
+  },
+  {
+    "question": "「いれる」の正しい漢字はどれですか？",
+    "correct": "入れる",
+    "wrong": ["込れる", "人れる", "入る"]
+  },
+  {
+    "question": "「ちょうりほうほう」の正しい漢字はどれですか？",
+    "correct": "調理方法",
+    "wrong": ["調里方法", "調理万法", "調理方注"]
+  },
+  {
+    "question": "「とりだす」の正しい漢字はどれですか？",
+    "correct": "取り出す",
+    "wrong": ["採り出す", "取り出だす", "取出す"]
+  },
+  {
+    "question": "「ねっとう」の正しい漢字はどれですか？",
+    "correct": "熱湯",
+    "wrong": ["熱陽", "熱温", "熱満"]
+  },
+  {
+    "question": "「そそぐ」の正しい漢字はどれですか？",
+    "correct": "注ぐ",
+    "wrong": ["注そぐ", "注く", "沖ぐ"]
+  },
+  {
+    "question": "「おゆ」の正しい漢字はどれですか？",
+    "correct": "お湯",
+    "wrong": ["お陽", "お温", "お満"]
+  },
+  {
+    "question": "「すてる」の正しい漢字はどれですか？",
+    "correct": "捨てる",
+    "wrong": ["拾てる", "舎てる", "捨る"]
+  },
+  {
+    "question": "「まぜる」の正しい漢字はどれですか？",
+    "correct": "混ぜる",
+    "wrong": ["交ぜる", "混じる", "混る"]
+  },
+  {
+    "question": "「うちがわ」の正しい漢字はどれですか？",
+    "correct": "内側",
+    "wrong": ["内則", "内測", "内偄"]
+  },
+  {
+    "question": "「せん」の正しい漢字はどれですか？",
+    "correct": "線",
+    "wrong": ["綜", "緑", "縁"]
+  },
+  {
+    "question": "「ゆきりぐち」の正しい漢字はどれですか？",
+    "correct": "湯切り口",
+    "wrong": ["湯切口", "陽切り口", "湯切りロ"]
+  }
+        ],
         };
 
         // --- PENGATURAN PASSWORD DECK PRO ---
@@ -3162,15 +2979,25 @@
         const mcQuestionBox = document.getElementById('questionBox');
         const mcOptionsGrid = document.getElementById('optionsGrid');
         const mcPromptText = document.querySelector('.prompt-text');
-        const mcShuffleBtn = document.getElementById('quizShuffleBtn');
         const mcBackBtn = document.getElementById('quizBackBtn');
-        const mcPrevBtn = document.getElementById('quizPrevBtn');
+        const mcProgressFill = document.getElementById('quizProgressFill');
+        const mcScoreCorrectEl = document.getElementById('quizScoreCorrect');
+        const mcScoreWrongEl = document.getElementById('quizScoreWrong');
+
+        const mcOptionLabels = ['A', 'B', 'C', 'D', 'E', 'F'];
         
         let mcCurrentDeck = [];
         let mcCurrentIndex = 0;
+        let mcCurrentQuestion = "";
         let mcCurrentCorrectAnswer = "";
         let mcScoreCorrect = 0;
         let mcScoreWrong = 0;
+        let mcWrongLog = [];
+
+        function mcUpdateScorePill() {
+            mcScoreCorrectEl.innerText = mcScoreCorrect;
+            mcScoreWrongEl.innerText = mcScoreWrong;
+        }
 
         function mcLoadCategory(categoryKey, titleText, subtitleText) {
             const dataSet = mcFlashcardData[categoryKey] || [];
@@ -3184,6 +3011,8 @@
             mcCurrentIndex = 0;
             mcScoreCorrect = 0;
             mcScoreWrong = 0;
+            mcWrongLog = [];
+            mcUpdateScorePill();
 
             mcDeckTitle.innerText = `${titleText} - ${subtitleText}`;
             
@@ -3194,50 +3023,96 @@
             mcRenderQuestion();
         }
 
+        const MC_MAX_SCORE = 250;
+        const MC_PASS_SCORE = 200;
+
+        function mcEscapeHtml(str) {
+            const div = document.createElement('div');
+            div.innerText = str;
+            return div.innerHTML;
+        }
+
         function mcRenderQuestion() {
             if (mcCurrentIndex >= mcCurrentDeck.length) {
                 const total = mcScoreCorrect + mcScoreWrong;
-                const percent = total > 0 ? Math.round((mcScoreCorrect / total) * 100) : 0;
+                const rawScore = total > 0 ? (mcScoreCorrect / total) * MC_MAX_SCORE : 0;
+                const finalScore = Math.round(rawScore);
+                const isPass = finalScore >= MC_PASS_SCORE;
+                const dotPosPct = (finalScore / MC_MAX_SCORE) * 100;
+                const passMarkerPct = (MC_PASS_SCORE / MC_MAX_SCORE) * 100;
 
                 let feedback = 'Gas ulang lagi biar makin nempel! 💪';
-                if (percent === 100) feedback = 'Sempurna banget, gokil! 🔥🔥';
-                else if (percent >= 80) feedback = 'Mantap, dikit lagi sempurna!';
-                else if (percent >= 60) feedback = 'Lumayan nih, terus diulang ya!';
+                let resultTitle = 'Kuis Selesai!';
+                if (finalScore === MC_MAX_SCORE) { feedback = 'Sempurna banget, gokil! 🔥🔥'; resultTitle = 'Perfect Score!'; }
+                else if (isPass) { feedback = 'Mantap, kamu lulus deck ini!'; resultTitle = 'Lulus!'; }
+                else if (finalScore >= MC_PASS_SCORE - 30) { feedback = 'Dikit lagi lulus, ulangi yuk!'; resultTitle = 'Hampir Lulus'; }
+                else feedback = 'Belum lulus, yuk diulang biar makin nempel!';
+
+                let reviewHtml = '';
+                if (mcWrongLog.length > 0) {
+                    const reviewItems = mcWrongLog.map(item => `
+                        <div class="quiz-review-item">
+                            <div class="quiz-review-question">${mcEscapeHtml(item.question)}</div>
+                            <div class="quiz-review-answer wrong"><span>Jawaban kamu</span><span>${mcEscapeHtml(item.selected)}</span></div>
+                            <div class="quiz-review-answer correct"><span>Jawaban benar</span><span>${mcEscapeHtml(item.correct)}</span></div>
+                        </div>
+                    `).join('');
+                    reviewHtml = `
+                        <div class="quiz-review-list">
+                            <div class="quiz-review-title">📋 Evaluasi Jawaban Salah (${mcWrongLog.length})</div>
+                            ${reviewItems}
+                        </div>
+                    `;
+                } else if (total > 0) {
+                    reviewHtml = `<div class="quiz-review-empty">🎉 Semua jawaban kamu benar, mantap!</div>`;
+                }
 
                 mcQuestionBox.innerHTML = `
-                    <div style="font-size:22px">すごい🥳🤩🔥!<br>Kuis Selesai!</div>
-                    <div style="font-size:17px;margin-top:14px;color:#ffd700;">Skor: ${mcScoreCorrect} / ${total} (${percent}%)</div>
-                    <div style="font-size:11px;margin-top:8px;color:#aaa;">${feedback}</div>
+                    <div class="quiz-result-card">
+                        <div class="quiz-score-number">${finalScore}<span class="max"> / ${MC_MAX_SCORE}</span></div>
+                        <div class="quiz-pass-tag ${isPass ? 'pass' : 'fail'}">${isPass ? '✓ Lulus' : '✕ Belum Lulus'}</div>
+                        <div class="quiz-gauge-wrap">
+                            <div class="quiz-gauge-track">
+                                <div class="quiz-gauge-pass-marker" style="left:${passMarkerPct}%;"></div>
+                                <div class="quiz-gauge-dot" style="left:${dotPosPct}%; color:${isPass ? '#2ed573' : '#ff4d5e'};"></div>
+                            </div>
+                            <div class="quiz-gauge-labels">
+                                <span>0</span>
+                                <span>${MC_MAX_SCORE}</span>
+                            </div>
+                        </div>
+                        <div class="quiz-result-title">${resultTitle}</div>
+                        <div class="quiz-result-score">${mcScoreCorrect} benar &nbsp;•&nbsp; ${mcScoreWrong} salah &nbsp;•&nbsp; ${total} soal</div>
+                        <div class="quiz-result-feedback">${feedback}</div>
+                    </div>
+                    ${reviewHtml}
                 `;
                 mcOptionsGrid.innerHTML = "";
                 mcPromptText.style.display = 'none';
                 mcCounterEl.innerText = "Selesai";
-                
-                mcPrevBtn.disabled = false;
+                mcProgressFill.style.width = '100%';
                 return;
-            }
-
-            if (mcCurrentIndex === 0) {
-                mcPrevBtn.disabled = true;
-            } else {
-                mcPrevBtn.disabled = false;
             }
 
             mcPromptText.style.display = 'block';
             const qData = mcCurrentDeck[mcCurrentIndex];
             
             mcQuestionBox.innerText = qData.question;
+            mcCurrentQuestion = qData.question;
             mcCurrentCorrectAnswer = qData.correct;
-            mcCounterEl.innerText = `${mcCurrentIndex + 1} / ${mcCurrentDeck.length}`;
+            mcCounterEl.innerText = `Soal ${mcCurrentIndex + 1} dari ${mcCurrentDeck.length}`;
+            mcProgressFill.style.width = `${(mcCurrentIndex / mcCurrentDeck.length) * 100}%`;
+            mcUpdateScorePill();
 
             let options = [qData.correct, ...qData.wrong];
 
             options = options.sort(() => 0.5 - Math.random());
 
             mcOptionsGrid.innerHTML = '';
-            options.forEach(opt => {
+            options.forEach((opt, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'option-btn';
+                btn.setAttribute('data-option-label', mcOptionLabels[i] || (i + 1));
                 btn.innerText = opt;
                 btn.onclick = () => mcHandleAnswer(btn, opt);
                 mcOptionsGrid.appendChild(btn);
@@ -3247,20 +3122,34 @@
         function mcHandleAnswer(btn, selectedAns) {
             const allBtns = document.querySelectorAll('.option-btn');
             
-            allBtns.forEach(b => b.style.pointerEvents = 'none');
+            allBtns.forEach(b => {
+                b.style.pointerEvents = 'none';
+                b.disabled = true;
+                if (b !== btn) b.classList.add('dimmed');
+            });
 
             if (selectedAns === mcCurrentCorrectAnswer) {
+                btn.classList.remove('dimmed');
                 btn.classList.add('correct');
                 mcScoreCorrect++;
             } else {
+                btn.classList.remove('dimmed');
                 btn.classList.add('wrong');
                 mcScoreWrong++;
+                mcWrongLog.push({
+                    question: mcCurrentQuestion,
+                    selected: selectedAns,
+                    correct: mcCurrentCorrectAnswer
+                });
                 allBtns.forEach(b => {
                     if (b.innerText === mcCurrentCorrectAnswer) {
+                        b.classList.remove('dimmed');
                         b.classList.add('correct');
                     }
                 });
             }
+
+            mcUpdateScorePill();
 
             setTimeout(() => {
                 mcCurrentIndex++;
@@ -3269,30 +3158,11 @@
         }
 
         // --- EVENTS ---
-        mcShuffleBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (mcCurrentDeck.length > 0) {
-                mcCurrentDeck = mcCurrentDeck.sort(() => 0.5 - Math.random());
-                mcCurrentIndex = 0;
-                mcScoreCorrect = 0;
-                mcScoreWrong = 0;
-                mcRenderQuestion();
-            }
-        });
-        
         mcBackBtn.addEventListener('click', (e) => {
             e.preventDefault();
             mcQuizPage.style.display = 'none';
             mcHomePage.style.display = 'flex';
             window.scrollTo(0,0);
-        });
-
-        mcPrevBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (mcCurrentIndex > 0) {
-                mcCurrentIndex--;
-                mcRenderQuestion();
-            }
         });
 
         document.querySelectorAll('#home-page-mc .menu-card').forEach(card => {
