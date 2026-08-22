@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Belajar Bahasa Jepang - Flash Card & Pilihan Ganda</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <style>
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,6 +17,7 @@
             align-items: center; 
             justify-content: flex-start;
             min-height: 100vh; 
+            min-height: 100dvh; 
             overflow-x: hidden;
         }
 
@@ -960,6 +960,7 @@
             align-items: center; 
             justify-content: flex-start;
             min-height: 100vh; 
+            min-height: 100dvh; 
             overflow-x: hidden;
         }
 
@@ -1374,14 +1375,21 @@
             align-items: center;
             justify-content: flex-start;
             width: 100%;
-            min-height: 100vh;
-            height: auto;
+            /* FIX BUG: sebelumnya min-height:100vh + height:auto, jadi box-nya ikut MEMBESAR
+               ngikutin konten & "overflow-y:auto" gak pernah kepakai (scrollHeight = clientHeight
+               terus meski kontennya panjang) -- akibatnya kalau konten kartu + tombol lebih tinggi
+               dari layar, bagian bawah (spt tombol Kembali ke Menu) jadi KE-POTONG & GAK BISA
+               dijangkau scroll sama sekali. Sekarang height DIKUNCI sebesar viewport, biar overflow
+               beneran kedeteksi & seluruh konten (termasuk tombol di bawah) selalu bisa discroll. */
+            height: 100vh;
+            height: 100dvh; /* tinggi viewport yg lebih stabil di HP, gak loncat pas address bar nongol/ilang */
             touch-action: pan-y; 
             position: fixed; 
             top: 0;
             left: 0;
             background: #0a0a0a;
             overflow-y: auto;
+            overscroll-behavior-y: contain; /* biar scroll halaman ini gak "mantul"/nge-chain ke document pas mentok */
             -webkit-overflow-scrolling: touch;
             padding: 30px 0 40px 0;
         }
@@ -1402,26 +1410,48 @@
             width: 85vw; 
             max-width: 500px; 
             height: 60vh; 
+            height: 60dvh; /* tinggi viewport yg lebih stabil di HP */
             max-height: 500px; 
             perspective: 1000px; 
+            /* none: area kartu dikontrol penuh oleh JS (tap buat flip, swipe buat ganti kartu),
+               biar scroll halaman luar gak akan pernah ke-trigger dari sentuhan di area ini */
+            touch-action: none;
         }
 
-        .card { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s; cursor: pointer; visibility: hidden; opacity: 0; }
+        .card { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s; cursor: pointer; visibility: hidden; opacity: 0; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; }
         .card.active { visibility: visible; opacity: 1; z-index: 2; }
         .card.flipped { transform: rotateY(180deg); }
         
         .card-face { 
             position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
-            border-radius: 15px; padding: 20px; text-align: center; 
+            display: flex; flex-direction: column; align-items: center; 
+            border-radius: 15px; padding: 16px 20px; text-align: center; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
             word-wrap: break-word;
             overflow-wrap: break-word;
             word-break: break-word;
+            overflow-y: auto;
+            /* isi kartu yg kepanjangan boleh discroll sendiri (native, mulus), tapi "dikunci"
+               (contain) biar pas mentok di ujung atas/bawah gak nembus/nge-chain ke scroll halaman luar */
+            touch-action: pan-y;
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .card-front { background-color: #1a1a1a; color: #fff; border: 2px solid #444; }
-        .card-back { background-color: #fff; color: #000; transform: rotateY(180deg); border: 2px solid #fff;}
+        .card-back { background-color: #1a1a1a; color: #fff; transform: rotateY(180deg); border: 2px solid #444;}
+
+        /* Zona tengah kartu (kata + arti) tetap ke-center walau ada badge di atas / contoh di bawah */
+        .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 0;
+        }
         
         .text-main { 
             font-size: clamp(24px, 10vw, 48px); 
@@ -1431,7 +1461,86 @@
             line-height: 1.3;
         }
         .text-sub { font-size: 15px; color: #888; }
-        .card-back .text-sub { color: #555; }
+
+        /* --- BADGE LEVEL & JENIS KATA (di atas kartu, depan & belakang) --- */
+        .card-badges {
+            flex: 0 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            line-height: 1.6;
+        }
+
+        .badge-level {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #ddd;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .badge-type { color: #10151a; }
+        .badge-type .pos-kanji { opacity: 0.65; font-weight: 900; }
+
+        .badge-type.type-noun    { background: #4fc3f7; }
+        .badge-type.type-verb    { background: #66bb6a; }
+        .badge-type.type-i-adj   { background: #ffa726; }
+        .badge-type.type-na-adj  { background: #ba68c8; color: #fff; }
+        .badge-type.type-pronoun { background: #90a4ae; }
+
+        /* --- KOTAK CONTOH PENGGUNAAN (cuma tampil di belakang kartu, kalau datanya ada) --- */
+        .example-box {
+            flex: 0 0 auto;
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: left;
+            background: rgba(0, 114, 255, 0.08);
+            border: 1px dashed rgba(255,255,255,0.18);
+        }
+        .example-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .example-jp {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #f0f0f0;
+            overflow-wrap: break-word;
+        }
+        .example-jp ruby { ruby-position: over; }
+        .example-jp rt { font-size: 0.55em; color: #7fe0ff; user-select: none; }
+        .example-id { font-size: 12px; color: #999; font-style: italic; margin-top: 3px; }
+
+        /* Nonjolin kata yang lagi dipelajari di dalam kalimat contoh */
+        .example-jp .example-highlight {
+            color: #7fe0ff;
+            font-weight: 900;
+            background: rgba(127, 224, 255, 0.16);
+            padding: 1px 5px;
+            margin: 0 1px;
+            border-radius: 6px;
+            box-shadow: 0 0 0 1px rgba(127, 224, 255, 0.35) inset;
+        }
 
         /* --- TOGGLE FURIGANA (GLOBAL, MUNCUL DI SEMUA MODE) --- */
         .furigana-toggle-btn {
@@ -1478,7 +1587,7 @@
             white-space: nowrap;
         }
         .card-front .text-main rt { color: #7fe0ff; }
-        .card-back .text-main rt { color: #0072ff; }
+        .card-back .text-main rt { color: #7fe0ff; }
 
         /* Pas furigana lagi aktif & beneran kepasang (ada <ruby>), kasih line-height ekstra.
            Tanpa ini, kalau kata kanjinya panjang & kebungkus ke 2 baris, furigana baris bawah
@@ -3238,6 +3347,7 @@
         let mcScoreCorrect = 0;
         let mcScoreWrong = 0;
         let mcWrongLog = [];
+        let mcAnswerTimeoutId = null; // id timer "lanjut ke soal berikutnya", biar bisa dibatalin kalau user buru-buru ganti halaman/deck
 
         function mcUpdateScorePill() {
             mcScoreCorrectEl.innerText = mcScoreCorrect;
@@ -3252,6 +3362,7 @@
                 return;
             }
 
+            if (mcAnswerTimeoutId) { clearTimeout(mcAnswerTimeoutId); mcAnswerTimeoutId = null; } // batalin timer soal sebelumnya yg mungkin masih ngambang
             mcCurrentDeck = [...dataSet];
             mcCurrentIndex = 0;
             mcScoreCorrect = 0;
@@ -3399,7 +3510,9 @@
 
             mcUpdateScorePill();
 
-            setTimeout(() => {
+            if (mcAnswerTimeoutId) clearTimeout(mcAnswerTimeoutId); // jaga-jaga kalau ada timer lama yg belum sempet kepake
+            mcAnswerTimeoutId = setTimeout(() => {
+                mcAnswerTimeoutId = null;
                 mcCurrentIndex++;
                 mcRenderQuestion();
             }, 1200);
@@ -3408,6 +3521,7 @@
         // --- EVENTS ---
         mcBackBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            if (mcAnswerTimeoutId) { clearTimeout(mcAnswerTimeoutId); mcAnswerTimeoutId = null; } // batalin timer lanjut-soal kalau user keburu pencet kembali
             mcQuizPage.style.display = 'none';
             mcHomePage.style.display = 'flex';
             window.scrollTo(0,0);
@@ -7142,6 +7256,59 @@
             }
         });
 
+        // --- METADATA JENIS KATA: kunci singkat di data -> label Indonesia + tag kanji kamus ---
+        const fcWordTypeMeta = {
+            noun:     { label: 'Kata Benda',    pos: '名',  cls: 'type-noun' },
+            verb:     { label: 'Kata Kerja',     pos: '動',  cls: 'type-verb' },
+            'i-adj':  { label: 'Kata Sifat-i',   pos: '形',  cls: 'type-i-adj' },
+            'na-adj': { label: 'Kata Sifat-na',  pos: '形動', cls: 'type-na-adj' },
+            pronoun:  { label: 'Kata Ganti',     pos: '代',  cls: 'type-pronoun' }
+        };
+
+        // Badge Level & Jenis Kata di atas kartu. Diam-diam gak nampilin apa-apa kalau data.level
+        // dan data.type gak diisi, jadi aman buat kategori/kartu lama yang belum dikasih metadata ini.
+        function fcBuildBadges(data) {
+            if (!data.level && !data.type) return '';
+            let inner = '';
+            if (data.level) inner += `<span class="card-badge badge-level">${data.level}</span>`;
+            if (data.type && fcWordTypeMeta[data.type]) {
+                const meta = fcWordTypeMeta[data.type];
+                inner += `<span class="card-badge badge-type ${meta.cls}"><span class="pos-kanji">${meta.pos}</span>${meta.label}</span>`;
+            }
+            return `<div class="card-badges">${inner}</div>`;
+        }
+
+        // Khusus di kotak "Contoh Penggunaan": kata yang lagi dipelajari (data.front) di-highlight
+        // biar keliatan jelas dia dipake di mana dalam kalimatnya. Furigana tetap dipertahankan.
+        function fcProcessExample(exampleHtml, front) {
+            // Ambil kanji inti dari front (buang okurigana/hiragana di belakangnya, misal "着る" -> "着")
+            const kanjiMatch = front ? front.match(/^[\u4E00-\u9FFF\u3400-\u4DBF々〆〤]+/) : null;
+            const targetWord = kanjiMatch ? kanjiMatch[0] : front;
+            if (!targetWord) return exampleHtml;
+
+            // Cari elemen <ruby>TARGETWORD<rt>...</rt></ruby> yang persis, terus bungkus utuh
+            // (kanji + furigananya) biar bacaannya tetep kebaca pas kata itu di-highlight
+            const escaped = targetWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const rubyRegex = new RegExp(`<ruby>${escaped}<rt>.*?<\\/rt><\\/ruby>`);
+            const match = exampleHtml.match(rubyRegex);
+            if (match) {
+                return exampleHtml.replace(rubyRegex, `<span class="example-highlight">${match[0]}</span>`);
+            }
+            // Fallback kalau kata itu ga ke-ruby-in di kalimat contoh (jarang terjadi)
+            if (exampleHtml.includes(targetWord)) {
+                return exampleHtml.replace(targetWord, `<span class="example-highlight">${targetWord}</span>`);
+            }
+            return exampleHtml;
+        }
+
+        // Kotak "Contoh Penggunaan" di sisi belakang kartu. Cuma render kalau data.example diisi.
+        function fcBuildExampleBox(data) {
+            if (!data.example) return '';
+            const processedExample = fcProcessExample(data.example, data.front);
+            const meaning = data.exampleMeaning ? `<div class="example-id">${data.exampleMeaning}</div>` : '';
+            return `<div class="example-box"><div class="example-label">Contoh Penggunaan</div><div class="example-jp">${processedExample}</div>${meaning}</div>`;
+        }
+
         function fcLoadCategory(categoryKey, titleText, subtitleText) {
             fcContainer.innerHTML = "";
             const dataSet = fcFlashcardData[categoryKey] || [];
@@ -7170,16 +7337,26 @@
                 const frontHasFurigana = displayFrontMain.includes('<ruby');
                 const backHasFurigana = displayBackMain.includes('<ruby');
 
+                const badgesHtml = fcBuildBadges(data);
+                const exampleHtml = fcBuildExampleBox(data);
+
                 const card = document.createElement('div');
                 card.className = 'card';
                 card.innerHTML = `
                     <div class="card-face card-front">
-                        <div class="text-main${frontHasFurigana ? ' has-furigana' : ''}"${frontIsKanjiSide ? ` data-kanji="${data.front}" data-reading="${data.back}"` : ''}>${displayFrontMain}</div>
-                        <div class="text-sub">${displayFrontSub}</div>
+                        ${badgesHtml}
+                        <div class="card-body">
+                            <div class="text-main${frontHasFurigana ? ' has-furigana' : ''}"${frontIsKanjiSide ? ` data-kanji="${data.front}" data-reading="${data.back}"` : ''}>${displayFrontMain}</div>
+                            <div class="text-sub">${displayFrontSub}</div>
+                        </div>
                     </div>
                     <div class="card-face card-back">
-                        <div class="text-main${backHasFurigana ? ' has-furigana' : ''}"${backIsKanjiSide ? ` data-kanji="${data.front}" data-reading="${data.back}"` : ''}>${displayBackMain}</div>
-                        <div class="text-sub">${displayBackSub}</div>
+                        ${badgesHtml}
+                        <div class="card-body">
+                            <div class="text-main${backHasFurigana ? ' has-furigana' : ''}"${backIsKanjiSide ? ` data-kanji="${data.front}" data-reading="${data.back}"` : ''}>${displayBackMain}</div>
+                            <div class="text-sub">${displayBackSub}</div>
+                        </div>
+                        ${exampleHtml}
                     </div>
                 `;
                 
@@ -7201,6 +7378,7 @@
             fcHomePage.style.display = 'none';
             fcFlashcardPage.style.display = 'flex';
             window.scrollTo(0,0);
+            fcFlashcardPage.scrollTop = 0; // reset scroll internal halaman FC (container-nya sendiri, terpisah dari scroll window), biar selalu mulai dari atas tiap buka deck - bukan nyangkut di posisi scroll deck sebelumnya
         }
 
         function fcUpdateDisplay() {
@@ -7269,22 +7447,121 @@
             });
         });
 
-        const fcHammerInst = new Hammer(fcContainer);
-        fcHammerInst.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+        // --- SWIPE KARTU (native touch, TANPA Hammer.js) ---
+        // Sebelumnya pakai Hammer.js buat deteksi swipe, tapi library itu udah lama gak
+        // di-maintain dan banyak dilaporkan gak konsisten/gak jalan di browser HP modern.
+        // Diganti pake touchstart/touchmove/touchend polos biar behaviornya kekontrol penuh
+        // & gak tergantung library luar yang rawan.
+        //
+        // FIX STABILITAS SCROLL: dulu area kartu (.card-container) pakai touch-action:pan-x,
+        // yang di praktiknya masih ngasih celah buat browser "mulai" native-scroll halaman
+        // luar duluan sebelum JS sempet manggil preventDefault() di piksel-piksel pertama
+        // gesture (khususnya di iOS: begitu native-scroll kepilih jalan, preventDefault yg
+        // dipanggil belakangan gak lagi ngefek buat ngebatalinnya) — makanya kerasa "scroll
+        // kartu, eh ikut ke-scroll juga bagian lain". Sekarang .card-container pakai
+        // touch-action:none (lihat CSS), jadi browser gak akan pernah nyoba native-scroll
+        // dari sentuhan di area ini sama sekali; JS di bawah ini yang pegang kendali penuh,
+        // jadi gak ada lagi resiko "bocor" ke scroll halaman luar. Sentuhan DI LUAR
+        // .card-container (judul, counter, tombol, area kosong) tetap gak disentuh listener
+        // ini sama sekali, jadi tetep jalan native-scroll #flashcard-page seperti biasa.
+        //
+        // Sisi kartu yang isinya kepanjangan (.card-face dg overflow) tetap dikasih scroll
+        // sendiri secara native & mulus (lihat touch-action:pan-y di CSS .card-face); JS di
+        // sini "ngalah" & gak ikut campur selama masih ada ruang buat discroll di dalam kartu
+        // itu. Begitu udah mentok di ujungnya (atas/bawah), tarikan lanjutan baru dianggap
+        // swipe ganti kartu seperti biasa.
+        (function fcSetupSwipe() {
+            let startX = 0, startY = 0, startTime = 0;
+            let dragging = false;        // lagi megang jari di area kartu
+            let isVerticalSwipe = false; // udah kedetek geraknya vertikal (bukan sekadar tap)
+            let scrollFace = null;       // .card-face yg isinya kepanjangan (kalau ada) di titik sentuh awal
+            let contentScrolling = false; // true kalau gesture ini lagi scroll konten DI DALAM kartu (bukan ganti kartu)
 
-        fcHammerInst.on('swipeup', () => {
-            if (fcCurrentIndex < fcActiveCards.length - 1) {
-                fcCurrentIndex++;
-                fcUpdateDisplay();
-            }
-        });
+            const SWIPE_MIN_DISTANCE = 40; // px, jarak vertikal minimal biar dianggap swipe
+            const SWIPE_MAX_TIME = 700;    // ms, durasi maksimal gesture
+            const LOCK_THRESHOLD = 8;      // px, ambang buat ngunci arah gesture (vertikal vs horizontal)
 
-        fcHammerInst.on('swipedown', () => {
-            if (fcCurrentIndex > 0) {
-                fcCurrentIndex--;
-                fcUpdateDisplay();
+            fcContainer.addEventListener('touchstart', (e) => {
+                if (e.touches.length !== 1) return;
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startTime = Date.now();
+                dragging = true;
+                isVerticalSwipe = false;
+                contentScrolling = false;
+
+                // Jari mulai nyentuh di sisi kartu yang kontennya beneran kepanjangan
+                // (butuh discroll)? Dicatat biar touchmove tau harus "ngalah" ke native
+                // scroll dulu, bukan langsung dianggap gesture ganti kartu.
+                const face = e.target && e.target.closest ? e.target.closest('.card-face') : null;
+                scrollFace = (face && face.scrollHeight > face.clientHeight + 1) ? face : null;
+            }, { passive: true });
+
+            fcContainer.addEventListener('touchmove', (e) => {
+                if (!dragging || e.touches.length !== 1) return;
+                if (contentScrolling) return; // udah diputusin ini scroll konten, biarin native yg jalan penuh
+
+                const dx = e.touches[0].clientX - startX;
+                const dy = e.touches[0].clientY - startY;
+
+                if (!isVerticalSwipe && Math.abs(dy) > LOCK_THRESHOLD && Math.abs(dy) > Math.abs(dx)) {
+                    isVerticalSwipe = true;
+
+                    if (scrollFace) {
+                        const atTop = scrollFace.scrollTop <= 0;
+                        const atBottom = scrollFace.scrollTop + scrollFace.clientHeight >= scrollFace.scrollHeight - 1;
+                        const pullingDown = dy > 0; // jari turun -> nampilin konten yg lebih ATAS
+                        const pullingUp = dy < 0;   // jari naik -> nampilin konten yg lebih BAWAH
+
+                        if (!((pullingDown && atTop) || (pullingUp && atBottom))) {
+                            // Masih ada ruang buat discroll ke arah itu di dalam kartu ->
+                            // serahin sepenuhnya ke native scroll, JANGAN dianggap swipe ganti kartu.
+                            contentScrolling = true;
+                            return;
+                        }
+                    }
+                }
+
+                if (isVerticalSwipe) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            function fcHandleSwipeEnd(e) {
+                if (!dragging) return;
+                dragging = false;
+                const wasSwipe = isVerticalSwipe && !contentScrolling;
+                isVerticalSwipe = false;
+                contentScrolling = false;
+                scrollFace = null;
+                if (!wasSwipe) return; // cuma tap biasa / lagi scroll konten kartu, biarin event click yg nanganin flip
+
+                const touch = e.changedTouches[0];
+                const dy = touch.clientY - startY;
+                const dt = Date.now() - startTime;
+
+                if (dt > SWIPE_MAX_TIME || Math.abs(dy) < SWIPE_MIN_DISTANCE) return;
+
+                if (dy < 0) {
+                    // swipe ke atas -> kartu berikutnya
+                    if (fcCurrentIndex < fcActiveCards.length - 1) {
+                        fcCurrentIndex++;
+                        fcUpdateDisplay();
+                    }
+                } else {
+                    // swipe ke bawah -> kartu sebelumnya
+                    if (fcCurrentIndex > 0) {
+                        fcCurrentIndex--;
+                        fcUpdateDisplay();
+                    }
+                }
             }
-        });
+
+            fcContainer.addEventListener('touchend', fcHandleSwipeEnd);
+            fcContainer.addEventListener('touchcancel', () => {
+                dragging = false; isVerticalSwipe = false; contentScrolling = false; scrollFace = null;
+            });
+        })();
     </script>
 
     <script>
