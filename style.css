@@ -1,0 +1,1684 @@
+/* ===== style.css — semua tampilan (layout, warna, kartu, tombol, modal) ===== */
+
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: #0a0a0a; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            min-height: 100vh; 
+            min-height: 100dvh; 
+            overflow-x: hidden;
+        }
+
+        /* Animasi Transisi Halus */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* --- STYLE HALAMAN UTAMA (HOME) --- */
+        #home-page-mc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+            padding: 40px 20px;
+        }
+
+        .main-title {
+            font-size: clamp(20px, 3vw, 30px);
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 35px;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        .menu-card {
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 110px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .menu-card:active {
+            background-color: #fff;
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
+        .menu-card span { font-size: 11px; color: #888; }
+        .menu-card:active span { color: #333; }
+
+        /* --- ANIMASI & STYLE BADGE PRO LUXURY --- */
+        @keyframes goldShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
+            background-size: 300% 300%;
+            animation: goldShimmer 4s ease infinite;
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .pro-badge .lock-icon {
+            display: inline-block;
+            animation: lockPulse 2s infinite ease-in-out;
+        }
+
+        /* --- ANIMASI & STYLE BADGE EXCLUSIVE (LEBIH MEWAH DARI PRO) --- */
+        @keyframes purpleShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes exclusiveGlow {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(186, 85, 255, 0.6), 0 0 18px rgba(138, 43, 226, 0.5), 0 2px 5px rgba(0,0,0,0.8);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(224, 170, 255, 1), 0 0 38px rgba(186, 85, 255, 0.8), 0 2px 8px rgba(0,0,0,0.9);
+            }
+        }
+
+        @keyframes gemSpin {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-2px) rotate(6deg); }
+        }
+
+        @keyframes textShimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
+            50% { opacity: 1; transform: scale(1) translateY(-3px); }
+        }
+
+        .exclusive-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            padding: 2px;
+            border-radius: 8px;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .exclusive-badge::after {
+            content: "✨";
+            position: absolute;
+            top: -10px;
+            left: -8px;
+            font-size: 11px;
+            animation: sparkleFloat 1.8s ease-in-out infinite;
+        }
+
+        .exclusive-badge-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, #2d004d, #8a2be2, #c77dff, #e0aaff, #6a00b3, #ba55ff);
+            background-size: 400% 400%;
+            animation: purpleShimmer 3s ease infinite, exclusiveGlow 2.2s ease-in-out infinite;
+            border: 1px solid rgba(230, 190, 255, 0.9);
+        }
+
+        .exclusive-badge .badge-text {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+        }
+
+        .exclusive-badge .crown-icon {
+            display: inline-block;
+            font-size: 10px;
+            animation: crownFloat 1.6s ease-in-out infinite;
+        }
+
+        .exclusive-badge .gem-icon {
+            display: inline-block;
+            animation: gemSpin 3s infinite ease-in-out;
+        }
+
+        .menu-card.is-exclusive {
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#111, #111) padding-box,
+                linear-gradient(135deg, #ffd700, #8a2be2, #6a00b3, #e0aaff) border-box;
+            box-shadow: 0 0 6px rgba(186, 85, 255, 0.5);
+        }
+
+        .menu-card.is-exclusive h3,
+        .menu-card.is-exclusive span {
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        
+        /* ======================================================
+           STYLE HALAMAN KUIS (PILIHAN GANDA) — VERSI PROFESIONAL
+           ====================================================== */
+
+        @keyframes quizFadeIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes shakeWrong {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        @keyframes correctPulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0.5); }
+            70% { box-shadow: 0 0 0 14px rgba(46, 213, 115, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); }
+        }
+
+        @keyframes progressGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.35); }
+        }
+
+        #quiz-page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            min-height: 100vh;
+            padding: 28px 20px 40px;
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.06), transparent 55%),
+                #0a0a0a;
+        }
+
+        #quiz-page .quiz-header {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 18px;
+        }
+
+        #quiz-page .quiz-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .title {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: left;
+            color: #f4d160;
+            text-transform: uppercase;
+            max-width: 70%;
+            line-height: 1.3;
+        }
+
+        .quiz-score-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 5px 11px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #ddd;
+            white-space: nowrap;
+        }
+
+        .quiz-score-pill .dot-correct { color: #2ed573; }
+        .quiz-score-pill .dot-wrong { color: #ff4d5e; }
+
+        #quizCounter {
+            font-size: 10px;
+            color: #888;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .quiz-progress-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .quiz-progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ffd700, #ff9d00);
+            transition: width 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+            animation: progressGlow 2.4s ease-in-out infinite;
+        }
+
+        .question-box {
+            width: 100%;
+            max-width: 320px;
+            min-height: 150px;
+            background: linear-gradient(160deg, #16161a, #0f0f11);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 22px;
+            text-align: center;
+            padding: 24px;
+            box-shadow: 0 14px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+            animation: quizFadeIn 0.35s ease;
+            position: relative;
+        }
+
+        .question-box::before {
+            content: "問題";
+            position: absolute;
+            top: 10px;
+            left: 14px;
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: #666;
+            font-weight: 700;
+        }
+
+        .prompt-text {
+            color: #999;
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 28px;
+        }
+
+        .option-btn {
+            position: relative;
+            background-color: #121214;
+            color: #eee;
+            border: 1.5px solid rgba(255, 255, 255, 0.16);
+            border-radius: 12px;
+            padding: 20px 14px 20px 38px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
+            text-align: left;
+            animation: popIn 0.3s ease backwards;
+        }
+
+        .option-btn:nth-child(1) { animation-delay: 0.03s; }
+        .option-btn:nth-child(2) { animation-delay: 0.08s; }
+        .option-btn:nth-child(3) { animation-delay: 0.13s; }
+        .option-btn:nth-child(4) { animation-delay: 0.18s; }
+
+        .option-btn::before {
+            content: attr(data-option-label);
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 800;
+            color: #aaa;
+            transition: all 0.15s ease;
+        }
+
+        .option-btn:not(:disabled):hover {
+            border-color: rgba(255, 215, 0, 0.5);
+            background-color: #17171a;
+        }
+
+        .option-btn:not(:disabled):active {
+            transform: scale(0.96);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+        }
+
+        .option-btn.correct {
+            border-color: #2ed573;
+            background-color: rgba(46, 213, 115, 0.12);
+            color: #2ed573;
+            animation: correctPulse 0.7s ease;
+        }
+
+        .option-btn.correct::before {
+            content: "✓";
+            background: #2ed573;
+            border-color: #2ed573;
+            color: #04140a;
+        }
+
+        .option-btn.wrong {
+            border-color: #ff4d5e;
+            background-color: rgba(255, 77, 94, 0.12);
+            color: #ff4d5e;
+            animation: shakeWrong 0.4s ease;
+        }
+
+        .option-btn.wrong::before {
+            content: "✕";
+            background: #ff4d5e;
+            border-color: #ff4d5e;
+            color: #1a0405;
+        }
+
+        .option-btn.dimmed {
+            opacity: 0.35;
+        }
+
+        .quiz-result-card {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: quizFadeIn 0.4s ease;
+        }
+
+        .quiz-score-number {
+            font-size: 34px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .quiz-score-number .max {
+            font-size: 18px;
+            color: #777;
+            font-weight: 700;
+        }
+
+        .quiz-pass-tag {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .quiz-pass-tag.pass {
+            background: rgba(46, 213, 115, 0.15);
+            color: #2ed573;
+            border: 1px solid rgba(46, 213, 115, 0.4);
+        }
+
+        .quiz-pass-tag.fail {
+            background: rgba(255, 77, 94, 0.15);
+            color: #ff4d5e;
+            border: 1px solid rgba(255, 77, 94, 0.4);
+        }
+
+        .quiz-gauge-wrap {
+            width: 100%;
+            max-width: 260px;
+            margin-bottom: 4px;
+        }
+
+        .quiz-gauge-track {
+            position: relative;
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #ff4d5e 0%, #ffd700 50%, #2ed573 100%);
+            margin-top: 22px;
+        }
+
+        .quiz-gauge-pass-marker {
+            position: absolute;
+            top: -8px;
+            width: 2px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .quiz-gauge-pass-marker::after {
+            content: "Batas Lulus";
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            white-space: nowrap;
+            color: #aaa;
+            letter-spacing: 0.5px;
+        }
+
+        .quiz-gauge-dot {
+            position: absolute;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #16161a;
+            box-shadow: 0 0 0 2px currentColor, 0 4px 8px rgba(0,0,0,0.5);
+            transform: translate(-50%, -50%);
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .quiz-gauge-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            color: #666;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .quiz-result-title {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 18px;
+            text-align: center;
+        }
+
+        .quiz-result-score {
+            font-size: 13px;
+            color: #ffd700;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .quiz-result-feedback {
+            font-size: 11px;
+            color: #999;
+            margin-top: 6px;
+            text-align: center;
+            max-width: 260px;
+        }
+
+        /* --- EVALUASI PILIHAN YANG SALAH (REVIEW SETELAH KUIS) --- */
+        .quiz-review-list {
+            width: 100%;
+            margin-top: 26px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: quizFadeIn 0.4s ease;
+        }
+
+        .quiz-review-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #f4d160;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+
+        .quiz-review-item {
+            width: 100%;
+            background: linear-gradient(160deg, #16161a, #0f0f11);
+            border: 1px solid rgba(255, 77, 94, 0.25);
+            border-radius: 12px;
+            padding: 12px 14px;
+            text-align: left;
+        }
+
+        .quiz-review-question {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .quiz-review-answer {
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 10px;
+            padding: 3px 0;
+        }
+
+        .quiz-review-answer > span:first-child {
+            color: #888;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .quiz-review-answer > span:last-child {
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .quiz-review-answer.wrong > span:last-child {
+            color: #ff4d5e;
+            font-weight: 700;
+            text-decoration: line-through;
+            text-decoration-color: rgba(255, 77, 94, 0.6);
+        }
+
+        .quiz-review-note {
+            margin-top: 8px;
+            padding: 10px 12px;
+            background: rgba(255, 205, 90, 0.08);
+            border-left: 3px solid #ffcd5a;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #e8e6e0;
+        }
+        .quiz-review-answer.correct > span:last-child {
+            color: #2ed573;
+            font-weight: 700;
+        }
+
+        .quiz-review-empty {
+            width: 100%;
+            font-size: 12px;
+            color: #2ed573;
+            text-align: center;
+            font-weight: 700;
+            margin-top: 22px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.12);
+        }
+
+        #quiz-page .controls {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        #quiz-page .controls-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #quiz-page .controls-row button {
+            flex: 1;
+        }
+
+        #quiz-page button.prev-btn,
+        #quiz-page button.shuffle-btn,
+        #quiz-page button.back-btn {
+            background-color: rgba(255, 255, 255, 0.03);
+            width: 100%;
+            padding: 13px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+
+        #quiz-page button.prev-btn {
+            border: 1.5px solid rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+        }
+
+        #quiz-page button.prev-btn:active {
+            background-color: #ffd700;
+            color: #000;
+        }
+
+        #quiz-page button.prev-btn:disabled {
+            border-color: #3a3a3a;
+            color: #555;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        #quiz-page button.shuffle-btn {
+            border: 1.5px solid rgba(85, 170, 255, 0.5);
+            color: #55aaff;
+        }
+
+        #quiz-page button.shuffle-btn:active {
+            background-color: #55aaff;
+            color: #000;
+        }
+
+        #quiz-page button.back-btn {
+            border: 1.5px solid rgba(255, 85, 85, 0.5);
+            color: #ff5555;
+        }
+
+        #quiz-page button.back-btn:active {
+            background-color: #ff5555;
+            color: #000;
+        }
+
+        /* --- RESPONSIVE: TABLET & LAPTOP/PC --- */
+        @media (min-width: 700px) {
+            #quiz-page .quiz-header, #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+                max-width: 480px;
+            }
+            .question-box {
+                font-size: 27px;
+                min-height: 190px;
+            }
+            .option-btn {
+                font-size: 19px;
+                padding: 26px 14px 26px 42px;
+            }
+        }
+
+        @media (min-width: 1100px) {
+            #quiz-page .quiz-header, #quiz-page .question-box, #quiz-page .options-grid, #quiz-page .controls {
+                max-width: 600px;
+            }
+            .question-box {
+                font-size: 30px;
+                min-height: 220px;
+            }
+        }
+
+    
+        /* --- SEARCH BOX DECK --- */
+        .search-container {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 10px;
+            z-index: 10;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 13px 16px;
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .search-input::placeholder { color: #666; }
+
+        .no-results-msg {
+            display: none;
+            width: 100%;
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            padding: 30px 10px;
+        }
+
+        /* --- MODAL PASSWORD CUSTOM (ganti prompt() bawaan) --- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(3px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 320px;
+            background: #111;
+            border: 2px solid #333;
+            border-radius: 14px;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+
+        .modal-box h3 {
+            font-size: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .modal-box p {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .modal-box input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #0a0a0a;
+            border: 2px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .modal-box input:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .modal-error {
+            min-height: 16px;
+            font-size: 11px;
+            color: #ff5555;
+            margin-bottom: 10px !important;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 10px;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #modalCancelBtn {
+            background: transparent;
+            border: 2px solid #555;
+            color: #aaa;
+        }
+
+        #modalCancelBtn:active { background: #333; }
+
+        #modalSubmitBtn {
+            background: #ffd700;
+            border: 2px solid #ffd700;
+            color: #000;
+        }
+
+        #modalSubmitBtn:active { background: #e0c000; }
+
+        @keyframes shakeInput {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-6px); }
+            75% { transform: translateX(6px); }
+        }
+
+        .modal-box input.shake { animation: shakeInput 0.3s ease; border-color: #ff5555; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            background-color: #0a0a0a; 
+            color: #fff; 
+            font-family: 'Courier New', Courier, monospace; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: flex-start;
+            min-height: 100vh; 
+            min-height: 100dvh; 
+            overflow-x: hidden;
+        }
+
+        /* Animasi Transisi Halus */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        /* --- STYLE HALAMAN UTAMA (HOME) --- */
+        #home-page-fc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 40px 20px;
+            touch-action: pan-y; 
+        }
+
+        .main-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 25px; 
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* STYLE CHECKBOX MODE BALIK */
+        .reverse-toggle-container {
+            margin-bottom: 30px; 
+            background: #222; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            border: 1px solid #444;
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .reverse-toggle-container label {
+            font-size: 14px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            width: 100%;
+            padding-bottom: 40px;
+        }
+
+        .menu-card {
+            background-color: #111;
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 110px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            position: relative; /* Penting untuk posisi badge */
+        }
+
+        .menu-card:active {
+            background-color: #fff;
+            color: #000;
+            transform: scale(0.95);
+        }
+
+        .menu-card h3 { font-size: 14px; margin-bottom: 5px; letter-spacing: 1px; }
+        .menu-card span { font-size: 11px; color: #888; }
+        .menu-card:active span { color: #333; }
+
+        /* --- ANIMASI & STYLE BADGE PRO LUXURY / MEWAH --- */
+        @keyframes goldShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes lockPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+
+        .pro-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            
+            /* Gradasi Warna Emas Mengalir */
+            background: linear-gradient(135deg, #ffd700, #fff8dc, #ffaa00, #ffe600, #b8860b);
+            background-size: 300% 300%;
+            animation: goldShimmer 4s ease infinite;
+            
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+            
+            /* Efek Border Emas Glow Menyala */
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.6), 0 2px 5px rgba(0,0,0,0.8);
+            
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+
+        .pro-badge .lock-icon {
+            display: inline-block;
+            animation: lockPulse 2s infinite ease-in-out;
+        }
+
+        /* --- ANIMASI & STYLE BADGE EXCLUSIVE (LEBIH MEWAH DARI PRO) --- */
+        @keyframes purpleShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes exclusiveGlow {
+            0%, 100% {
+                box-shadow: 0 0 8px rgba(186, 85, 255, 0.6), 0 0 18px rgba(138, 43, 226, 0.5), 0 2px 5px rgba(0,0,0,0.8);
+            }
+            50% {
+                box-shadow: 0 0 18px rgba(224, 170, 255, 1), 0 0 38px rgba(186, 85, 255, 0.8), 0 2px 8px rgba(0,0,0,0.9);
+            }
+        }
+
+        @keyframes gemSpin {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.3) rotate(180deg); }
+            100% { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes crownFloat {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-2px) rotate(6deg); }
+        }
+
+        @keyframes textShimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
+            50% { opacity: 1; transform: scale(1) translateY(-3px); }
+        }
+
+        .exclusive-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            padding: 2px;
+            border-radius: 8px;
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        /* Sparkle kecil yang muncul-hilang di sekitar badge */
+        .exclusive-badge::after {
+            content: "✨";
+            position: absolute;
+            top: -10px;
+            left: -8px;
+            font-size: 11px;
+            animation: sparkleFloat 1.8s ease-in-out infinite;
+        }
+
+        .exclusive-badge-inner {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 9px;
+            border-radius: 7px;
+            background: linear-gradient(135deg, #2d004d, #8a2be2, #c77dff, #e0aaff, #6a00b3, #ba55ff);
+            background-size: 400% 400%;
+            animation: purpleShimmer 3s ease infinite, exclusiveGlow 2.2s ease-in-out infinite;
+            border: 1px solid rgba(230, 190, 255, 0.9);
+        }
+
+        .exclusive-badge .badge-text {
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+            text-shadow: 0 0 8px rgba(255,255,255,0.4);
+        }
+
+        .exclusive-badge .crown-icon {
+            display: inline-block;
+            font-size: 10px;
+            animation: crownFloat 1.6s ease-in-out infinite;
+        }
+
+        .exclusive-badge .gem-icon {
+            display: inline-block;
+            animation: gemSpin 3s infinite ease-in-out;
+        }
+
+        /* Efek kartu ikut "mewah" saat deck-nya exclusive: border ungu-emas + cahaya kecil statis */
+        .menu-card.is-exclusive {
+            border: 2px solid transparent;
+            background:
+                linear-gradient(#111, #111) padding-box,
+                linear-gradient(135deg, #ffd700, #8a2be2, #6a00b3, #e0aaff) border-box;
+            box-shadow: 0 0 6px rgba(186, 85, 255, 0.5);
+        }
+
+        .menu-card.is-exclusive h3,
+        .menu-card.is-exclusive span {
+            background: linear-gradient(90deg, #fff 0%, #ffd700 25%, #fff 50%, #e0aaff 75%, #fff 100%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 2.5s linear infinite;
+        }
+        
+        /* --- ANIMASI & STYLE BADGE ADMIN (TIER TERTINGGI, RIBBON HAZARD + GLITCH + CRT) --- */
+        @keyframes stripeMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 56px 0; }
+        }
+
+        @keyframes alarmPulse {
+            0%, 100% {
+                box-shadow: 0 0 5px rgba(200,0,0,0.4), 0 0 10px rgba(200,0,0,0.25), inset 0 0 8px rgba(200,0,0,0.1);
+                border-color: rgba(200,40,40,0.8);
+            }
+            50% {
+                box-shadow: 0 0 10px rgba(200,20,20,0.55), 0 0 18px rgba(200,0,0,0.35), inset 0 0 14px rgba(200,0,0,0.18);
+                border-color: rgba(220,80,80,0.9);
+            }
+        }
+
+        /* Glitch periodik: seluruh kartu "korslet" sekilas kayak sinyal rusak */
+        @keyframes cardCorrupt {
+            0%, 91%, 100% { transform: translate(0,0) skew(0deg); filter: none; }
+            92% { transform: translate(-3px, 1px) skew(2deg); filter: hue-rotate(25deg) saturate(2); }
+            93.5% { transform: translate(3px, -1px) skew(-2deg); filter: hue-rotate(-25deg) saturate(2); }
+            95% { transform: translate(-2px, 0) skew(1deg); filter: hue-rotate(15deg) saturate(1.5); }
+            96.5% { transform: translate(0,0) skew(0deg); filter: none; }
+        }
+
+        @keyframes scanlineMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 8px; }
+        }
+
+        @keyframes glitchText {
+            0%, 89%, 100% { transform: translate(0,0); text-shadow: 0 0 6px rgba(255,0,0,0.9); opacity: 1; }
+            90% { transform: translate(-2px, 1px); text-shadow: 2px 0 #00eaff, -2px 0 #ff0000; opacity: 0.8; }
+            92% { transform: translate(2px, -1px); text-shadow: -2px 0 #00eaff, 2px 0 #ff0000; opacity: 1; }
+            94% { transform: translate(-1px, 0); text-shadow: 1px 0 #00eaff, -1px 0 #ff0000; opacity: 0.7; }
+            96% { transform: translate(0,0); text-shadow: 0 0 6px rgba(255,0,0,0.9); opacity: 1; }
+        }
+
+        /* Teks badge gonta-ganti sendiri: ADMIN <-> DANGER */
+        @keyframes swapTextA {
+            0%, 45% { opacity: 1; }
+            50%, 95% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes swapTextB {
+            0%, 45% { opacity: 0; }
+            50%, 95% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        @keyframes skullSpin {
+            0%, 70% { transform: rotate(0deg) scale(1); }
+            80% { transform: rotate(-25deg) scale(1.25); }
+            90% { transform: rotate(20deg) scale(1.25); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        @keyframes ribbonDrop {
+            0% { transform: translateY(-40px) rotate(45deg); opacity: 0; }
+            100% { transform: translateY(0) rotate(45deg); opacity: 1; }
+        }
+
+        /* Ribbon miring nyilang di pojok kartu, ujung lancip kayak pita perang beneran */
+        .admin-badge {
+            position: absolute;
+            top: 14px;
+            right: -36px;
+            width: 138px;
+            padding: 4px 0;
+            text-align: center;
+            transform: rotate(45deg);
+            z-index: 6;
+            pointer-events: none;
+
+            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 50%, 100% 100%, 10px 100%, 0 50%);
+
+            background-image: repeating-linear-gradient(
+                45deg,
+                #cc0000 0px, #cc0000 10px,
+                #0a0a0a 10px, #0a0a0a 20px
+            );
+            background-size: 200% 100%;
+            animation: ribbonDrop 0.5s ease forwards, stripeMove 1.2s linear infinite;
+
+            border-top: 1px solid rgba(220,120,120,0.7);
+            border-bottom: 1px solid rgba(220,120,120,0.7);
+            box-shadow: 0 0 6px rgba(200,0,0,0.5), 0 2px 6px rgba(0,0,0,0.9);
+        }
+
+        .admin-badge .badge-text {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fff;
+            animation: glitchText 2.4s infinite;
+        }
+
+        .admin-badge .txt { position: relative; }
+        .admin-badge .txt-a { animation: swapTextA 4s infinite; }
+        .admin-badge .txt-b { position: absolute; left: 0; top: 0; white-space: nowrap; animation: swapTextB 4s infinite; }
+
+        .admin-badge .skull-icon {
+            display: inline-block;
+            font-size: 11px;
+            animation: skullSpin 2.4s infinite;
+        }
+
+        /* Seluruh kartu berdenyut alarm + sesekali glitch kayak sinyal rusak */
+        .menu-card.is-admin {
+            border: 2px solid rgba(255,60,60,0.9);
+            background: #150000;
+            animation: alarmPulse 1.6s ease-in-out infinite, cardCorrupt 6s linear infinite;
+            overflow: hidden;
+        }
+
+        /* Overlay scanline ala layar CRT rusak */
+        .menu-card.is-admin::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: repeating-linear-gradient(
+                to bottom,
+                rgba(255,60,60,0.08) 0px,
+                rgba(255,60,60,0.08) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            animation: scanlineMove 1.5s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .menu-card.is-admin h3,
+        .menu-card.is-admin > span {
+            position: relative;
+            z-index: 2;
+            color: #ff5050;
+            text-shadow: 0 0 6px rgba(255,0,0,0.7);
+        }
+
+        /* --- STYLE HALAMAN FLASHCARD --- */
+        #flashcard-page {
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            /* FIX BUG: sebelumnya min-height:100vh + height:auto, jadi box-nya ikut MEMBESAR
+               ngikutin konten & "overflow-y:auto" gak pernah kepakai (scrollHeight = clientHeight
+               terus meski kontennya panjang) -- akibatnya kalau konten kartu + tombol lebih tinggi
+               dari layar, bagian bawah (spt tombol Kembali ke Menu) jadi KE-POTONG & GAK BISA
+               dijangkau scroll sama sekali. Sekarang height DIKUNCI sebesar viewport, biar overflow
+               beneran kedeteksi & seluruh konten (termasuk tombol di bawah) selalu bisa discroll. */
+            height: 100vh;
+            height: 100dvh; /* tinggi viewport yg lebih stabil di HP, gak loncat pas address bar nongol/ilang */
+            touch-action: pan-y; 
+            position: fixed; 
+            top: 0;
+            left: 0;
+            background: #0a0a0a;
+            overflow-y: auto;
+            overscroll-behavior-y: contain; /* biar scroll halaman ini gak "mantul"/nge-chain ke document pas mentok */
+            -webkit-overflow-scrolling: touch;
+            padding: 30px 0 40px 0;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            text-align: center;
+            color: #ffd700; 
+        }
+
+        #fcCounter { margin-bottom: 25px; font-size: 14px; color: #888; letter-spacing: 2px; font-weight: bold;}
+
+        .card-container { 
+            position: relative; 
+            width: 85vw; 
+            max-width: 500px; 
+            height: 60vh; 
+            height: 60dvh; /* tinggi viewport yg lebih stabil di HP */
+            max-height: 500px; 
+            perspective: 1000px; 
+            /* none: area kartu dikontrol penuh oleh JS (tap buat flip, swipe buat ganti kartu),
+               biar scroll halaman luar gak akan pernah ke-trigger dari sentuhan di area ini */
+            touch-action: none;
+        }
+
+        .card { width: 100%; height: 100%; position: absolute; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s; cursor: pointer; visibility: hidden; opacity: 0; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; user-select: none; }
+        .card.active { visibility: visible; opacity: 1; z-index: 2; }
+        .card.flipped { transform: rotateY(180deg); }
+        
+        .card-face { 
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden; 
+            display: flex; flex-direction: column; align-items: center; 
+            border-radius: 15px; padding: 16px 20px; text-align: center; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            overflow-y: auto;
+            /* isi kartu yg kepanjangan boleh discroll sendiri (native, mulus), tapi "dikunci"
+               (contain) biar pas mentok di ujung atas/bawah gak nembus/nge-chain ke scroll halaman luar */
+            touch-action: pan-y;
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .card-front { background-color: #1a1a1a; color: #fff; border: 2px solid #444; }
+        .card-back { background-color: #1a1a1a; color: #fff; transform: rotateY(180deg); border: 2px solid #444;}
+
+        /* Zona tengah kartu (kata + arti) tetap ke-center walau ada badge di atas / contoh di bawah */
+        .card-body {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 0;
+        }
+        
+        .text-main { 
+            font-size: clamp(24px, 10vw, 48px); 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            width: 100%;
+            line-height: 1.3;
+        }
+        .text-sub { font-size: 15px; color: #888; }
+
+        /* --- BADGE LEVEL & JENIS KATA (di atas kartu, depan & belakang) --- */
+        .card-badges {
+            flex: 0 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding-bottom: 10px;
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            white-space: nowrap;
+            line-height: 1.6;
+        }
+
+        .badge-level {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #ddd;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .badge-type { color: #10151a; }
+        .badge-type .pos-kanji { opacity: 0.65; font-weight: 900; }
+
+        .badge-type.type-noun    { background: #4fc3f7; }
+        .badge-type.type-verb    { background: #66bb6a; }
+        .badge-type.type-i-adj   { background: #ffa726; }
+        .badge-type.type-na-adj  { background: #ba68c8; color: #fff; }
+        .badge-type.type-pronoun { background: #90a4ae; }
+
+        /* --- KOTAK CONTOH PENGGUNAAN (cuma tampil di belakang kartu, kalau datanya ada) --- */
+        .example-box {
+            flex: 0 0 auto;
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: left;
+            background: rgba(0, 114, 255, 0.08);
+            border: 1px dashed rgba(255,255,255,0.18);
+        }
+        .example-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 5px;
+        }
+        .example-jp {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #f0f0f0;
+            overflow-wrap: break-word;
+        }
+        .example-jp ruby { ruby-position: over; }
+        .example-jp rt { font-size: 0.55em; color: #7fe0ff; user-select: none; }
+        .example-id { font-size: 12px; color: #999; font-style: italic; margin-top: 3px; }
+
+        /* Nonjolin kata yang lagi dipelajari di dalam kalimat contoh */
+        .example-jp .example-highlight {
+            color: #7fe0ff;
+            font-weight: 900;
+            background: rgba(127, 224, 255, 0.16);
+            padding: 1px 5px;
+            margin: 0 1px;
+            border-radius: 6px;
+            box-shadow: 0 0 0 1px rgba(127, 224, 255, 0.35) inset;
+        }
+
+        /* --- TOGGLE FURIGANA (GLOBAL, MUNCUL DI SEMUA MODE) --- */
+        .furigana-toggle-btn {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 999;
+            background-color: #111;
+            border: 2px solid #333;
+            color: #aaa;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .furigana-toggle-btn.active {
+            background: linear-gradient(135deg, #00c9ff, #0072ff);
+            border-color: #7fe0ff;
+            color: #fff;
+            box-shadow: 0 0 12px rgba(0, 201, 255, 0.7);
+        }
+
+        .furigana-toggle-btn:active { transform: scale(0.92); }
+
+        /* Styling teks ruby (furigana) di dalam kartu */
+        .text-main ruby { ruby-position: over; ruby-align: center; }
+        .text-main rt {
+            font-size: 0.4em;
+            font-weight: normal;
+            letter-spacing: 0;
+            line-height: 1.4;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .card-front .text-main rt { color: #7fe0ff; }
+        .card-back .text-main rt { color: #7fe0ff; }
+
+        /* Pas furigana lagi aktif & beneran kepasang (ada <ruby>), kasih line-height ekstra.
+           Tanpa ini, kalau kata kanjinya panjang & kebungkus ke 2 baris, furigana baris bawah
+           bisa numpuk/kepotong sama teks baris atasnya karena ruby butuh ruang ekstra di atas huruf. */
+        .text-main.has-furigana { line-height: 2.15; }
+
+        #flashcard-page .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            z-index: 10;
+            max-width: 400px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        #flashcard-page button {
+            background-color: #111;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 14px 15px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            flex: 1 1 40%;
+        }
+
+        #flashcard-page button:active { transform: scale(0.95); }
+
+        #flashcard-page button.done-btn { border-color: #55ff55; color: #55ff55; }
+        #flashcard-page button.done-btn:active { background-color: #55ff55; color: #000; }
+        
+        #flashcard-page button.back-btn { border-color: #ff5555; color: #ff5555; width: 100%; flex: 1 1 100%;}
+        #flashcard-page button.back-btn:active { background-color: #ff5555; color: #000; }
+        
+        .all-done-msg {
+            text-align: center;
+            margin-top: 150px;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1.5;
+            padding: 0 20px;
+        }
+    
+
+        .mode-switch-btn {
+            background: transparent;
+            border: 2px solid #555;
+            color: #aaa;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            align-self: flex-start;
+        }
+        .mode-switch-btn:active { background: #fff; color: #000; }
+
+        #mode-select-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+            padding: 60px 20px;
+            min-height: 100vh;
+            justify-content: center;
+        }
+        .mode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            width: 100%;
+            margin-top: 30px;
+        }
+        .mode-card {
+            background-color: #111;
+            border: 2px solid #444;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .mode-card:active { background-color: #fff; color: #000; transform: scale(0.97); }
+        .mode-card .mode-icon { font-size: 40px; margin-bottom: 12px; display: block; }
+        .mode-card h2 { font-size: 18px; letter-spacing: 1px; margin-bottom: 8px; }
+        .mode-card p { font-size: 12px; color: #888; }
+        .mode-card:active p { color: #333; }
+
