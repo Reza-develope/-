@@ -8142,7 +8142,7 @@
               { front: "どちらにお住まいですか？", frontSub: "ketuk untuk jawaban", back: "どちらにおすまいですか", backSub: "Di manakah Anda tinggal?" },
               { front: "ご利用になりますか？", frontSub: "ketuk untuk jawaban", back: "ごりようになりますか", backSub: "Apakah Anda akan menggunakan ~?" },
             ],
-            Irodori_A3_12: [ 
+            Irodori_A3_12_1: [ 
                                       { front: "電気製品", frontSub: "ketuk untuk jawaban", back: "でんきせいひん", backSub: "alat elektronik; peralatan elektronik" },
               { front: "冷蔵庫", frontSub: "ketuk untuk jawaban", back: "れいぞうこ", backSub: "kulkas; lemari pendingin" },
               { front: "洗濯機", frontSub: "ketuk untuk jawaban", back: "せんたくき", backSub: "mesin cuci" },
@@ -8206,7 +8206,7 @@
               { front: "～込み", frontSub: "ketuk untuk jawaban", back: "こみ", backSub: "termasuk ~ (cth: termasuk ongkos kirim)" },
               { front: "～合", frontSub: "ketuk untuk jawaban", back: "ごう", backSub: "~ go, satuan volume nasi di Jepang, sekitar 180 ml (cth: 5,5 go = 990ml)" },
             ],
-            Irodori_A3_12: [ 
+            Irodori_A3_12_2: [ 
                           { front: "出品する", frontSub: "ketuk untuk jawaban", back: "しゅっぴんする", backSub: "melakukan submit barang untuk dijual" },
               { front: "問題なく", frontSub: "ketuk untuk jawaban", back: "もんだいなく", backSub: "tanpa masalah" },
               { front: "炊ける", frontSub: "ketuk untuk jawaban", back: "たける", backSub: "menanak; memasak (cth: menanak nasi)" },
