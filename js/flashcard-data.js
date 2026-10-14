@@ -8759,6 +8759,7 @@
               { front: "節水する", frontSub: "ketuk untuk jawaban", back: "せっすいする", backSub: "menghemat air" },
               { front: "紙", frontSub: "ketuk untuk jawaban", back: "かみ", backSub: "kertas" },
               { front: "節約する", frontSub: "ketuk untuk jawaban", back: "せつやくする", backSub: "menghemat; melakukan penghematan" },
+              
               { front: "リサイクルする", frontSub: "ketuk untuk jawaban", back: "リサイクルする", backSub: "mendaur ulang" },
               { front: "ごみ", frontSub: "ketuk untuk jawaban", back: "ごみ", backSub: "sampah" },
               { front: "分別する", frontSub: "ketuk untuk jawaban", back: "ぶんべつする", backSub: "memilah" },
@@ -8779,6 +8780,7 @@
               { front: "ペットボトル", frontSub: "ketuk untuk jawaban", back: "ペットボトル", backSub: "botol plastik" },
               { front: "資源", frontSub: "ketuk untuk jawaban", back: "しげん", backSub: "dapat didaur ulang" },
               { front: "分け方", frontSub: "ketuk untuk jawaban", back: "わけかた", backSub: "cara memilah / memisahkan" },
+              
               { front: "出し方", frontSub: "ketuk untuk jawaban", back: "だしかた", backSub: "cara membuang" },
               { front: "集積所", frontSub: "ketuk untuk jawaban", back: "しゅうせきじょ", backSub: "titik pengumpulan" },
               { front: "収集日", frontSub: "ketuk untuk jawaban", back: "しゅうしゅうび", backSub: "hari pengumpulan" },
@@ -8799,6 +8801,7 @@
               { front: "食品トレイ", frontSub: "ketuk untuk jawaban", back: "しょくひんトレイ", backSub: "nampan makanan" },
               { front: "可燃ごみ", frontSub: "ketuk untuk jawaban", back: "かねんごみ", backSub: "sampah yang dapat dibakar" },
               { front: "生ごみ", frontSub: "ketuk untuk jawaban", back: "なまごみ", backSub: "sampah sisa makanan" },
+              
               { front: "水を切る", frontSub: "ketuk untuk jawaban", back: "みずをきる", backSub: "dikeringkan; mengeringkan" },
               { front: "布", frontSub: "ketuk untuk jawaban", back: "ぬの", backSub: "kain" },
               { front: "しみこませる", frontSub: "ketuk untuk jawaban", back: "しみこませる", backSub: "dibiarkan terendam; diserap" },
@@ -8819,7 +8822,119 @@
               { front: "不燃ごみ", frontSub: "ketuk untuk jawaban", back: "ふねんごみ", backSub: "sampah yang tidak dapat dibakar" },
               { front: "割れる", frontSub: "ketuk untuk jawaban", back: "われる", backSub: "pecah" },
               { front: "包む", frontSub: "ketuk untuk jawaban", back: "つつむ", backSub: "membungkus" },
+              
               { front: "危険", frontSub: "ketuk untuk jawaban", back: "きけん", backSub: "berbahaya; bahaya" },
+              { front: "乾電池", frontSub: "ketuk untuk jawaban", back: "かんでんち", backSub: "baterai kering" },
+              { front: "刃物", frontSub: "ketuk untuk jawaban", back: "はもの", backSub: "pisau; benda tajam" },
+              { front: "ガラス", frontSub: "ketuk untuk jawaban", back: "ガラス", backSub: "gelas" },
+              { front: "陶磁器", frontSub: "ketuk untuk jawaban", back: "とうじき", backSub: "porselen; keramik" },
+              { front: "電球", frontSub: "ketuk untuk jawaban", back: "でんきゅう", backSub: "bohlam" },
+              { front: "アルミ製品", frontSub: "ketuk untuk jawaban", back: "アルミせいひん", backSub: "benda berbahan alumunium" },
+              { front: "金属", frontSub: "ketuk untuk jawaban", back: "きんぞく", backSub: "logam" },
+              { front: "家電製品", frontSub: "ketuk untuk jawaban", back: "かでんせいひん", backSub: "peralatan elektronik rumah tangga" },
+              { front: "粗大ごみ", frontSub: "ketuk untuk jawaban", back: "そだいごみ", backSub: "sampah ukuran besar" },
+              { front: "家具", frontSub: "ketuk untuk jawaban", back: "かぐ", backSub: "furnitur; mebel; perabot rumah tangga" },
+              { front: "寝具", frontSub: "ketuk untuk jawaban", back: "しんぐ", backSub: "peralatan untuk tidur" },
+              { front: "牛乳パック", frontSub: "ketuk untuk jawaban", back: "ぎゅうにゅうパック", backSub: "karton kemasan susu" },
+              { front: "使い切る", frontSub: "ketuk untuk jawaban", back: "つかいきる", backSub: "menghabiskan; habis digunakan" },
+              { front: "燃える （燃えるごみ）", frontSub: "ketuk untuk jawaban", back: "もえる （もえるごみ）", backSub: "dapat dibakar (cth : sampah yang dapat dibakar)" },
+              { front: "取る", frontSub: "ketuk untuk jawaban", back: "とる", backSub: "dilepas" },
+              { front: "出す （ごみを出す）", frontSub: "ketuk untuk jawaban", back: "だす （ごみをだす）", backSub: "membuang (cth : membuang sampah)" },
+              { front: "粗大ごみ受付センター", frontSub: "ketuk untuk jawaban", back: "そだいごみうけつけセンター", backSub: "pusat penerimaan sampah ukuran besar" },
+              { front: "大きさ", frontSub: "ketuk untuk jawaban", back: "おおきさ", backSub: "ukuran; besarnya" },
+              { front: "シール", frontSub: "ketuk untuk jawaban", back: "シール", backSub: "stiker" },
+              { front: "貼る", frontSub: "ketuk untuk jawaban", back: "はる", backSub: "menempel" },
+            ],
+            Irodori_A3_15_1: [ 
+                                      { front: "消す （電気を消す）", frontSub: "ketuk untuk jawaban", back: "けす （でんきをけす）", backSub: "mematikan (cth : mematikan lampu)" },
+              { front: "忘れずに", frontSub: "ketuk untuk jawaban", back: "わすれずに", backSub: "Jangan lupa (untuk) ～" },
+              { front: "クールビズ", frontSub: "ketuk untuk jawaban", back: "クールビズ", backSub: "\"Cool Biz\" (gerakan Cool Business di Jepang)" },
+              { front: "実施中", frontSub: "ketuk untuk jawaban", back: "じっしちゅう", backSub: "sedang berlangsung" },
+              { front: "軽装", frontSub: "ketuk untuk jawaban", back: "けいそう", backSub: "pakaian ringan dan tipis" },
+              { front: "ノー ～ （ノーネクタイ）", frontSub: "ketuk untuk jawaban", back: "ノー ～ （ノーネクタイ）", backSub: "tanpa ～ (cth : tanpa dasi)" },
+              { front: "設定", frontSub: "ketuk untuk jawaban", back: "せってい", backSub: "pengaturan; setelan" },
+              { front: "ご理解とご協力のほど、よろしくお願いします", frontSub: "ketuk untuk jawaban", back: "ごりかいとごきょうりょくのほど、よろしくおねがいします", backSub: "Kami mohon pengertian dan kerja sama Anda sekalian. (ungkapan bentuk sopan)" },
+              { front: "節電", frontSub: "ketuk untuk jawaban", back: "せつでん", backSub: "penghematan listrik" },
+              { front: "両面印刷", frontSub: "ketuk untuk jawaban", back: "りょうめんいんさつ", backSub: "pencetakan dua sisi" },
+              { front: "マイバッグ", frontSub: "ketuk untuk jawaban", back: "マイバッグ", backSub: "my bag (tas belanja ramah lingkungan)" },
+              { front: "レジ袋", frontSub: "ketuk untuk jawaban", back: "レジぶくろ", backSub: "tas belanja plastik sekali pakai" },
+              { front: "有料化", frontSub: "ketuk untuk jawaban", back: "ゆうりょうか", backSub: "dikenakan biaya; berbayar" },
+              { front: "持参", frontSub: "ketuk untuk jawaban", back: "じさん", backSub: "membawa" },
+              { front: "環境", frontSub: "ketuk untuk jawaban", back: "かんきょう", backSub: "lingkungan" },
+              { front: "エコ", frontSub: "ketuk untuk jawaban", back: "エコ", backSub: "ramah lingkungan" },
+              { front: "節電する", frontSub: "ketuk untuk jawaban", back: "せつでんする", backSub: "menghemat listrik" },
+              { front: "節水する", frontSub: "ketuk untuk jawaban", back: "せっすいする", backSub: "menghemat air" },
+              { front: "紙", frontSub: "ketuk untuk jawaban", back: "かみ", backSub: "kertas" },
+              { front: "節約する", frontSub: "ketuk untuk jawaban", back: "せつやくする", backSub: "menghemat; melakukan penghematan" },
+            ],
+            Irodori_A3_15_2: [ 
+                          { front: "リサイクルする", frontSub: "ketuk untuk jawaban", back: "リサイクルする", backSub: "mendaur ulang" },
+              { front: "ごみ", frontSub: "ketuk untuk jawaban", back: "ごみ", backSub: "sampah" },
+              { front: "分別する", frontSub: "ketuk untuk jawaban", back: "ぶんべつする", backSub: "memilah" },
+              { front: "減らす", frontSub: "ketuk untuk jawaban", back: "へらす", backSub: "mengurangi" },
+              { front: "設定温度", frontSub: "ketuk untuk jawaban", back: "せっていおんど", backSub: "pengaturan / setelan temperatur" },
+              { front: "下げる", frontSub: "ketuk untuk jawaban", back: "さげる", backSub: "menurunkan" },
+              { front: "もったいない", frontSub: "ketuk untuk jawaban", back: "もったいない", backSub: "mubazir" },
+              { front: "缶", frontSub: "ketuk untuk jawaban", back: "かん", backSub: "kaleng" },
+              { front: "まとめる", frontSub: "ketuk untuk jawaban", back: "まとめる", backSub: "dikumpulkan; mengumpulkan" },
+              { front: "出す （水を出す）", frontSub: "ketuk untuk jawaban", back: "だす （みずをだす）", backSub: "mengalirkan (air); membuka (keran)" },
+              { front: "洗剤", frontSub: "ketuk untuk jawaban", back: "せんざい", backSub: "detergen; sabun pembersih" },
+              { front: "止める （水を止める）", frontSub: "ketuk untuk jawaban", back: "とめる （みずをとめる）", backSub: "mematikan (air); menutup (keran)" },
+              { front: "すすぐ", frontSub: "ketuk untuk jawaban", back: "すすぐ", backSub: "membilas" },
+              { front: "ストロー", frontSub: "ketuk untuk jawaban", back: "ストロー", backSub: "sedotan" },
+              { front: "マイ～ （マイストロー）", frontSub: "ketuk untuk jawaban", back: "マイ～ （マイストロー）", backSub: "my ～; ～ pribadi (cth : sedotan pribadi)" },
+              { front: "持ち歩く", frontSub: "ketuk untuk jawaban", back: "もちあるく", backSub: "membawa" },
+              { front: "マイボトル", frontSub: "ketuk untuk jawaban", back: "マイボトル", backSub: "botol pribadi" },
+              { front: "ペットボトル", frontSub: "ketuk untuk jawaban", back: "ペットボトル", backSub: "botol plastik" },
+              { front: "資源", frontSub: "ketuk untuk jawaban", back: "しげん", backSub: "dapat didaur ulang" },
+              { front: "分け方", frontSub: "ketuk untuk jawaban", back: "わけかた", backSub: "cara memilah / memisahkan" },
+            ],
+            Irodori_A3_15_3: [ 
+                          { front: "出し方", frontSub: "ketuk untuk jawaban", back: "だしかた", backSub: "cara membuang" },
+              { front: "集積所", frontSub: "ketuk untuk jawaban", back: "しゅうせきじょ", backSub: "titik pengumpulan" },
+              { front: "収集日", frontSub: "ketuk untuk jawaban", back: "しゅうしゅうび", backSub: "hari pengumpulan" },
+              { front: "資源ごみ", frontSub: "ketuk untuk jawaban", back: "しげんごみ", backSub: "sampah yang dapat didaur ulang" },
+              { front: "～種類 （4種類）", frontSub: "ketuk untuk jawaban", back: "～しゅるい （よんしゅるい）", backSub: "～ jenis (cth : 4 jenis)" },
+              { front: "分ける", frontSub: "ketuk untuk jawaban", back: "わける", backSub: "memilah; membagi" },
+              { front: "ひも", frontSub: "ketuk untuk jawaban", back: "ひも", backSub: "tali" },
+              { front: "しばる", frontSub: "ketuk untuk jawaban", back: "しばる", backSub: "mengikat" },
+              { front: "新聞", frontSub: "ketuk untuk jawaban", back: "しんぶん", backSub: "koran" },
+              { front: "雑誌", frontSub: "ketuk untuk jawaban", back: "ざっし", backSub: "majalah" },
+              { front: "中身", frontSub: "ketuk untuk jawaban", back: "なかみ", backSub: "isi" },
+              { front: "びん", frontSub: "ketuk untuk jawaban", back: "びん", backSub: "botol kaca" },
+              { front: "キャップ", frontSub: "ketuk untuk jawaban", back: "キャップ", backSub: "tutup botol plastik" },
+              { front: "ラベル", frontSub: "ketuk untuk jawaban", back: "ラベル", backSub: "label" },
+              { front: "つぶす", frontSub: "ketuk untuk jawaban", back: "つぶす", backSub: "menghancurkan" },
+              { front: "紙パック", frontSub: "ketuk untuk jawaban", back: "かみパック", backSub: "kemasan minuman karton" },
+              { front: "切り開く", frontSub: "ketuk untuk jawaban", back: "きりひらく", backSub: "memotong terbuka" },
+              { front: "食品トレイ", frontSub: "ketuk untuk jawaban", back: "しょくひんトレイ", backSub: "nampan makanan" },
+              { front: "可燃ごみ", frontSub: "ketuk untuk jawaban", back: "かねんごみ", backSub: "sampah yang dapat dibakar" },
+              { front: "生ごみ", frontSub: "ketuk untuk jawaban", back: "なまごみ", backSub: "sampah sisa makanan" },
+            ],
+            Irodori_A3_15_4: [ 
+                          { front: "水を切る", frontSub: "ketuk untuk jawaban", back: "みずをきる", backSub: "dikeringkan; mengeringkan" },
+              { front: "布", frontSub: "ketuk untuk jawaban", back: "ぬの", backSub: "kain" },
+              { front: "しみこませる", frontSub: "ketuk untuk jawaban", back: "しみこませる", backSub: "dibiarkan terendam; diserap" },
+              { front: "固める", frontSub: "ketuk untuk jawaban", back: "かためる", backSub: "dipadatkan" },
+              { front: "プラスチック", frontSub: "ketuk untuk jawaban", back: "プラスチック", backSub: "plastik" },
+              { front: "再生（する）", frontSub: "ketuk untuk jawaban", back: "さいせい（する）", backSub: "mendaur ulang" },
+              { front: "少量", frontSub: "ketuk untuk jawaban", back: "しょうりょう", backSub: "jumlah kecil" },
+              { front: "植木", frontSub: "ketuk untuk jawaban", back: "うえき", backSub: "tanaman" },
+              { front: "枝", frontSub: "ketuk untuk jawaban", back: "えだ", backSub: "cabang" },
+              { front: "葉", frontSub: "ketuk untuk jawaban", back: "は", backSub: "daun" },
+              { front: "使い古し", frontSub: "ketuk untuk jawaban", back: "つかいふるし", backSub: "bekas" },
+              { front: "凝固剤", frontSub: "ketuk untuk jawaban", back: "ぎょうこざい", backSub: "zat pemadat (sering digunakan untuk memadatkan minyak goreng bekas sebelum dibuang)" },
+              { front: "ビニール", frontSub: "ketuk untuk jawaban", back: "ビニール", backSub: "vinil" },
+              { front: "～類 （ビニール類）", frontSub: "ketuk untuk jawaban", back: "～るい （ビニールるい）", backSub: "berjenis ～ (cth : berjenis vinil)" },
+              { front: "ラップ", frontSub: "ketuk untuk jawaban", back: "ラップ", backSub: "plastik pembungkus" },
+              { front: "容器", frontSub: "ketuk untuk jawaban", back: "ようき", backSub: "wadah" },
+              { front: "発泡スチロール", frontSub: "ketuk untuk jawaban", back: "はっぽうスチロール", backSub: "styrofoam / gabus sintetis" },
+              { front: "不燃ごみ", frontSub: "ketuk untuk jawaban", back: "ふねんごみ", backSub: "sampah yang tidak dapat dibakar" },
+              { front: "割れる", frontSub: "ketuk untuk jawaban", back: "われる", backSub: "pecah" },
+              { front: "包む", frontSub: "ketuk untuk jawaban", back: "つつむ", backSub: "membungkus" },
+            ],
+            Irodori_A3_15_5: [ 
+                          { front: "危険", frontSub: "ketuk untuk jawaban", back: "きけん", backSub: "berbahaya; bahaya" },
               { front: "乾電池", frontSub: "ketuk untuk jawaban", back: "かんでんち", backSub: "baterai kering" },
               { front: "刃物", frontSub: "ketuk untuk jawaban", back: "はもの", backSub: "pisau; benda tajam" },
               { front: "ガラス", frontSub: "ketuk untuk jawaban", back: "ガラス", backSub: "gelas" },
@@ -9464,107 +9579,6 @@
             kenjougo: [],
             sonkeigo: [],
             8880: [
-                          { front: "水道", frontSub: "ketuk untuk jawaban", back: "すいどう", backSub: "saluran air; air ledeng" }, // 1 [BARU]
-              { front: "来年", frontSub: "ketuk untuk jawaban", back: "らいねん", backSub: "tahun depan" }, // 2
-              { front: "申し込む", frontSub: "ketuk untuk jawaban", back: "もうしこむ", backSub: "mendaftarkan diri" }, // 3
-              { front: "祭り", frontSub: "ketuk untuk jawaban", back: "まつり", backSub: "festival" }, // 4
-              { front: "毎年", frontSub: "ketuk untuk jawaban", back: "まいとし", backSub: "setiap tahun" }, // 5
-              { front: "文化", frontSub: "ketuk untuk jawaban", back: "ぶんか", backSub: "kebudayaan" }, // 6
-              { front: "普通", frontSub: "ketuk untuk jawaban", back: "ふつう", backSub: "biasa" }, // 7
-              { front: "袋", frontSub: "ketuk untuk jawaban", back: "ふくろ", backSub: "pembungkus; bungkusan" }, // 8
-              { front: "服", frontSub: "ketuk untuk jawaban", back: "ふく", backSub: "pakaian" }, // 9
-              { front: "広場", frontSub: "ketuk untuk jawaban", back: "ひろば", backSub: "lapangan" }, // 10
-              { front: "開く", frontSub: "ketuk untuk jawaban", back: "ひらく", backSub: "mengadakan" }, // 11
-              { front: "始まる", frontSub: "ketuk untuk jawaban", back: "はじまる", backSub: "mulai" }, // 12
-              { front: "場合", frontSub: "ketuk untuk jawaban", back: "ばあい", backSub: "apabila" }, // 13
-              { front: "値段", frontSub: "ketuk untuk jawaban", back: "ねだん", backSub: "harga" }, // 14
-              { front: "入院する", frontSub: "ketuk untuk jawaban", back: "にゅういんする", backSub: "dirawat di rumah sakit; opname" }, // 15
-              { front: "特別（な）", frontSub: "ketuk untuk jawaban", back: "とくべつ", backSub: "spesial; khusus" }, // 16
-              { front: "店長", frontSub: "ketuk untuk jawaban", back: "てんちょう", backSub: "manajer toko" }, // 17
-              { front: "店員", frontSub: "ketuk untuk jawaban", back: "てんいん", backSub: "staf toko" }, // 18
-              { front: "中止", frontSub: "ketuk untuk jawaban", back: "ちゅうし", backSub: "batal" }, // 19
-              { front: "男性", frontSub: "ketuk untuk jawaban", back: "だんせい", backSub: "pria" }, // 20
-              { front: "体験する", frontSub: "ketuk untuk jawaban", back: "たいけんする", backSub: "mencoba; merasakan (pengalaman baru)" }, // 21 [di foto: 体験]
-              { front: "全員", frontSub: "ketuk untuk jawaban", back: "ぜんいん", backSub: "semuanya" }, // 22
-              { front: "世界", frontSub: "ketuk untuk jawaban", back: "せかい", backSub: "dunia" }, // 23
-              { front: "税別", frontSub: "ketuk untuk jawaban", back: "ぜいべつ", backSub: "harga belum termasuk pajak" }, // 24
-              { front: "生産する", frontSub: "ketuk untuk jawaban", back: "せいさんする", backSub: "memproduksi" }, // 25
-              { front: "水道", frontSub: "ketuk untuk jawaban", back: "すいどう", backSub: "saluran air; air ledeng" }, // 26 [BARU] (dobel dengan no. 1, sama persis di foto)
-              { front: "親切（な）", frontSub: "ketuk untuk jawaban", back: "しんせつ（な）", backSub: "ramah; baik hati" }, // 27
-              { front: "白", frontSub: "ketuk untuk jawaban", back: "しろ", backSub: "putih" }, // 28
-              { front: "女性", frontSub: "ketuk untuk jawaban", back: "じょせい", backSub: "wanita" }, // 29
-              { front: "商品", frontSub: "ketuk untuk jawaban", back: "しょうひん", backSub: "produk" }, // 30
-              { front: "消費税", frontSub: "ketuk untuk jawaban", back: "しょうひぜい", backSub: "pajak konsumen; pajak konsumsi" }, // 31
-              { front: "条件", frontSub: "ketuk untuk jawaban", back: "じょうけん", backSub: "kondisi; syarat" }, // 32
-              { front: "正月／お正月", frontSub: "ketuk untuk jawaban", back: "しょうがつ／おしょうがつ", backSub: "Hari Tahun Baru" }, // 33 [di foto: 正月]
-              { front: "習慣", frontSub: "ketuk untuk jawaban", back: "しゅうかん", backSub: "kebiasaan" }, // 34
-              { front: "自分", frontSub: "ketuk untuk jawaban", back: "じぶん", backSub: "diri sendiri" }, // 35
-              { front: "昨年", frontSub: "ketuk untuk jawaban", back: "さくねん", backSub: "tahun lalu" }, // 36
-              { front: "今月", frontSub: "ketuk untuk jawaban", back: "こんげつ", backSub: "bulan ini" }, // 37
-              { front: "米／お米", frontSub: "ketuk untuk jawaban", back: "こめ／おこめ", backSub: "beras" }, // 38 [di foto: 米]
-              { front: "今年", frontSub: "ketuk untuk jawaban", back: "ことし", backSub: "tahun ini" }, // 39
-              { front: "国際交流", frontSub: "ketuk untuk jawaban", back: "こくさいこうりゅう", backSub: "pertukaran budaya internasional" }, // 40
-              { front: "工事", frontSub: "ketuk untuk jawaban", back: "こうじ", backSub: "pekerjaan konstruksi; perbaikan" }, // 41 [BARU]
-              { front: "黒", frontSub: "ketuk untuk jawaban", back: "くろ", backSub: "hitam" }, // 42
-              { front: "暗い", frontSub: "ketuk untuk jawaban", back: "くらい", backSub: "gelap" }, // 43
-              { front: "禁止", frontSub: "ketuk untuk jawaban", back: "きんし", backSub: "dilarang" }, // 44
-              { front: "急に", frontSub: "ketuk untuk jawaban", back: "きゅうに", backSub: "tiba-tiba" }, // 45
-              { front: "紙", frontSub: "ketuk untuk jawaban", back: "かみ", backSub: "kertas" }, // 46
-              { front: "価格", frontSub: "ketuk untuk jawaban", back: "かかく", backSub: "harga" }, // 47
-              { front: "会場", frontSub: "ketuk untuk jawaban", back: "かいじょう", backSub: "tempat acara" }, // 48
-              { front: "重い", frontSub: "ketuk untuk jawaban", back: "おもい", backSub: "berat" }, // 49
-              { front: "大人", frontSub: "ketuk untuk jawaban", back: "おとな", backSub: "orang dewasa" }, // 50
-              // ----- Kolom kanan (51-100) -----
-              { front: "お知らせ", frontSub: "ketuk untuk jawaban", back: "おしらせ", backSub: "pengumuman" }, // 51
-              { front: "怒る", frontSub: "ketuk untuk jawaban", back: "おこる", backSub: "marah" }, // 52
-              { front: "営業する", frontSub: "ketuk untuk jawaban", back: "えいぎょうする", backSub: "membuka; beroperasi" }, // 53
-              { front: "色", frontSub: "ketuk untuk jawaban", back: "いろ", backSub: "warna" }, // 54
-              { front: "案内する", frontSub: "ketuk untuk jawaban", back: "あんないする", backSub: "memandu" }, // 55
-              { front: "赤", frontSub: "ketuk untuk jawaban", back: "あか", backSub: "merah" }, // 56
-              { front: "青", frontSub: "ketuk untuk jawaban", back: "あお", backSub: "biru" }, // 57
-              { front: "式", frontSub: "ketuk untuk jawaban", back: "しき", backSub: "upacara" }, // 58 [di foto: ～式]
-              { front: "～以上（38度5分以上）", frontSub: "ketuk untuk jawaban", back: "～いじょう（さんじゅうはちどごぶいじょう）", backSub: "～ atau lebih (38,5 derajat atau lebih)" }, // 59 [di foto: ～以上]
-              { front: "軽い", frontSub: "ketuk untuk jawaban", back: "かるい", backSub: "ringan" }, // 60
-              { front: "変わる", frontSub: "ketuk untuk jawaban", back: "かわる", backSub: "berubah" }, // 61
-              { front: "～方", frontSub: "ketuk untuk jawaban", back: "～かた", backSub: "cara ～" }, // 62
-              { front: "～様", frontSub: "ketuk untuk jawaban", back: "～さま", backSub: "Bapak～/Ibu～" }, // 63
-              { front: "～屋 (定食屋)", frontSub: "ketuk untuk jawaban", back: "～や (ていしょくや)", backSub: "～toko/restoran" }, // 64 [di foto: ～屋]
-              { front: "明るい", frontSub: "ketuk untuk jawaban", back: "あかるい", backSub: "terang" }, // 65
-              { front: "遊ぶ", frontSub: "ketuk untuk jawaban", back: "あそぶ", backSub: "bermain;bersenang-senang" }, // 66
-              { front: "油", frontSub: "ketuk untuk jawaban", back: "あぶら", backSub: "minyak" }, // 67
-              { front: "意味", frontSub: "ketuk untuk jawaban", back: "いみ", backSub: "arti; makna" }, // 68
-              { front: "入れる", frontSub: "ketuk untuk jawaban", back: "いれる", backSub: "memasukkan;menambahkan" }, // 69
-              { front: "歌", frontSub: "ketuk untuk jawaban", back: "うた", backSub: "menyanyi" }, // 70
-              { front: "海", frontSub: "ketuk untuk jawaban", back: "うみ", backSub: "laut" }, // 71
-              { front: "運転", frontSub: "ketuk untuk jawaban", back: "うんてん", backSub: "pengoperasian (kereta)" }, // 72
-              { front: "絵", frontSub: "ketuk untuk jawaban", back: "え", backSub: "gambar" }, // 73
-              { front: "泳ぐ", frontSub: "ketuk untuk jawaban", back: "およぐ", backSub: "berenang" }, // 74
-              { front: "会計/お会計", frontSub: "ketuk untuk jawaban", back: "かいけい/おかいけい", backSub: "kasir;pembayaran" }, // 75 [di foto: 会計]
-              { front: "歌手", frontSub: "ketuk untuk jawaban", back: "かしゅ", backSub: "penyanyi" }, // 76
-              { front: "川", frontSub: "ketuk untuk jawaban", back: "かわ", backSub: "sungai" }, // 77
-              { front: "観光地", frontSub: "ketuk untuk jawaban", back: "かんこうち", backSub: "destinasi wisata;tempat wisata" }, // 78
-              { front: "客", frontSub: "ketuk untuk jawaban", back: "きゃく", backSub: "tamu; pelanggan" }, // 79 [BARU]
-              { front: "牛乳", frontSub: "ketuk untuk jawaban", back: "ぎゅうにゅう", backSub: "susu" }, // 80
-              { front: "切る", frontSub: "ketuk untuk jawaban", back: "きる", backSub: "memotong" }, // 81
-              { front: "禁煙", frontSub: "ketuk untuk jawaban", back: "きんえん", backSub: "larangan merokok" }, // 82
-              { front: "計画", frontSub: "ketuk untuk jawaban", back: "けいかく", backSub: "rencana" }, // 83
-              { front: "経験", frontSub: "ketuk untuk jawaban", back: "けいけん", backSub: "pengalaman" }, // 84
-              { front: "交通", frontSub: "ketuk untuk jawaban", back: "こうつう", backSub: "lalu lintas; transportasi" }, // 85 [BARU]
-              { front: "故障", frontSub: "ketuk untuk jawaban", back: "こしょう", backSub: "kerusakan; rusak" }, // 86 [BARU]
-              { front: "ご飯", frontSub: "ketuk untuk jawaban", back: "ごはん", backSub: "makanan" }, // 87
-              { front: "塩", frontSub: "ketuk untuk jawaban", back: "しお", backSub: "garam" }, // 88
-              { front: "事故", frontSub: "ketuk untuk jawaban", back: "じこ", backSub: "kecelakaan" }, // 89
-              { front: "自然", frontSub: "ketuk untuk jawaban", back: "しぜん", backSub: "alam" }, // 90
-              { front: "指定席", frontSub: "ketuk untuk jawaban", back: "していせき", backSub: "tempat duduk sesuai pesanan" }, // 91
-              { front: "自転車", frontSub: "ketuk untuk jawaban", back: "じてんしゃ", backSub: "sepeda" }, // 92
-              { front: "島", frontSub: "ketuk untuk jawaban", back: "しま", backSub: "pulau" }, // 93
-              { front: "写真", frontSub: "ketuk untuk jawaban", back: "しゃしん", backSub: "foto" }, // 94
-              { front: "自由", frontSub: "ketuk untuk jawaban", back: "じゆう", backSub: "bebas; kebebasan" }, // 95 [BARU]
-              { front: "週末", frontSub: "ketuk untuk jawaban", back: "しゅうまつ", backSub: "akhir pekan" }, // 96
-              { front: "出発する", frontSub: "ketuk untuk jawaban", back: "しゅっぱつする", backSub: "berangkat" }, // 97
-              { front: "上手（な）", frontSub: "ketuk untuk jawaban", back: "じょうず（な）", backSub: "pandai; terampil" }, // 98
-              { front: "調べる", frontSub: "ketuk untuk jawaban", back: "しらべる", backSub: "mengecek;mencari tahu" }, // 99
-              { front: "到着する", frontSub: "ketuk untuk jawaban", back: "とうちゃくする", backSub: "tiba" }, // 100
             ],
             Sh218: [
             ],
