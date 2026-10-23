@@ -992,6 +992,46 @@
   { question: "スーパーへ牛乳＿＿＿買いに行きます。", correct: "を", wrong: ["に", "で", "が"], explanation: "「を」nandain objek dari 買う di dalam pola “V-masu + に行く” (pergi buat beli susu)." },
   { question: "あには東京＿＿＿すんでいます。", correct: "に", wrong: ["で", "を", "へ"], explanation: "「に」nandain tempat tinggal/keberadaan (tinggal di Tokyo), dipake bareng すむ." },
         ],
+        shiken_bunpou_a3_bab18: [
+        // ----- ❶ V-(よ)うと思います／思っています (10 soal) -----
+  { question: "将来、日本で＿＿＿と思います。", correct: "働こう", wrong: ["働くう", "働よう", "働ろう"], explanation: "「働く」itu grup 1. Akhiran -u diganti -o + う: hatarak + o + う = 働こう. Bukan 「よう」, itu buat grup 2." },
+  { question: "来年、日本へ＿＿＿と思っています。", correct: "行こう", wrong: ["行よう", "行きよう", "行くおう"], explanation: "「行く」grup 1: ik + u → ik + o + う = 行こう. Grup 1 nggak pernah pake 「よう」." },
+  { question: "毎日、野菜を＿＿＿と思います。", correct: "食べよう", wrong: ["食べろう", "食べおう", "食べるよう"], explanation: "「食べる」grup 2: buang 「る」, tambah 「よう」 = 食べよう. Jangan nyisain 「る」 (食べるよう salah)." },
+  { question: "また、この店に＿＿＿と思います。", correct: "こよう", wrong: ["きよう", "くよう", "こおう"], explanation: "「来る」grup 3 (tidak beraturan), bentuk volisionalnya 来よう dibaca 「こよう」. Hati-hati, bacaannya bukan 「き」/「く」." },
+  { question: "週末、部屋を掃除＿＿＿と思います。", correct: "しよう", wrong: ["するよう", "しろう", "すよう"], explanation: "「する」grup 3 (tidak beraturan): する → しよう. Kata kerja 「～する」 juga ikut pola ini: 掃除する → 掃除しよう." },
+  { question: "新しいかばんを＿＿＿と思っています。", correct: "買おう", wrong: ["買こう", "買よう", "買るう"], explanation: "「買う」grup 1: ka + u → ka + o + う = 買おう. Ingat, -u diganti -o lalu ditambah う (dibaca panjang ‘oo’)." },
+  { question: "子どものときから、ずっと医者になろうと＿＿＿。", correct: "思っています", wrong: ["思います", "思いません", "思いましょう"], explanation: "「思っています」dipake kalau udah mikir gitu terus sejak dulu (ada 「ずっと」). 「思います」itu buat niat yang baru kepikiran sekarang." },
+  { question: "今の学校を卒業したら、日本で＿＿＿つもりです。", correct: "働く", wrong: ["働こう", "働いて", "働き"], explanation: "「つもりだ」nyambung ke bentuk kamus (辞書形) / bentuk ない, bukan bentuk volisional. 働くつもりです = rencana bakal kerja (lebih konkret & realistis dari ～(よ)うと思う)." },
+  { question: "しばらくは国に帰ら＿＿＿つもりです。", correct: "ない", wrong: ["ません", "なく", "ず"], explanation: "Negatif 「つもり」pake bentuk ない: 帰らないつもりです = nggak ada rencana pulang. Bentuk 「ません」nggak bisa langsung nyambung ke つもり." },
+  { question: "もっとお金を＿＿＿たいと思っています。", correct: "稼ぎ", wrong: ["稼ぐ", "稼ごう", "稼いで"], explanation: "「～たい」nyambung ke bentuk ます tanpa ます: 稼ぎ + たい. ～たい(と思っている) dipake buat nyatain keinginan, terlepas bisa terwujud atau nggak." },
+
+// ----- ❷ V-るために、～ (3 soal) -----
+  { question: "将来、自分の店を＿＿＿ために、貯金しています。", correct: "持つ", wrong: ["持って", "持ち", "持とう"], explanation: "「～ために」nyambung ke bentuk kamus (辞書形): 持つために. Bukan te-form, bentuk ます, atau bentuk volisional." },
+  { question: "日本料理の料理人に＿＿＿ために、勉強しています。", correct: "なる", wrong: ["なって", "なり", "なろう"], explanation: "「V-るために」= buat tujuan. Kata kerja sebelum ために harus bentuk kamus: 料理人になるために." },
+  { question: "友だち＿＿＿ために、日本料理を作ってあげます。", correct: "の", wrong: ["が", "を", "に"], explanation: "Kalau pake kata benda, polanya 「N + のために」(demi N): 友だちのために = demi teman." },
+
+// ----- ❸ ～ために vs ～ように (4 soal) -----
+  { question: "仕事に遅れない＿＿＿、少し早めに家を出ます。", correct: "ように", wrong: ["ために", "ことに", "ところに"], explanation: "「～ように」dipake buat nyatain keadaan yang diharapkan/dihindari. Setelah bentuk ない (遅れない) harus pake 「ように」, bukan 「ために」." },
+  { question: "日本語が話せる＿＿＿、毎日練習しています。", correct: "ように", wrong: ["ために", "ことを", "ことが"], explanation: "「話せる」itu bentuk potensial (bisa). Bentuk potensial, わかる, dan できる nyambungnya ke 「ように」, bukan 「ために」." },
+  { question: "将来、自分の会社を作る＿＿＿、貯金しています。", correct: "ために", wrong: ["ように", "ことに", "ところに"], explanation: "「作る」itu kata kerja yang bisa dikontrol kemauan sendiri (意志動詞), jadi pake 「ために」. 「ように」buat kata kerja non-kehendak / potensial / ない." },
+  { question: "先生の話が＿＿＿ように、いちばん前の席にすわります。", correct: "わかる", wrong: ["わかり", "わかろう", "わかって"], explanation: "「わかる」bukan 意志動詞, jadi dipake dengan 「ように」dalam bentuk kamus: わかるように = supaya bisa ngerti." },
+
+// ----- ❹ V-てあげます (4 soal) -----
+  { question: "両親に、家を建てて＿＿＿つもりです。", correct: "あげる", wrong: ["くれる", "もらう", "いただく"], explanation: "Kita ngelakuin sesuatu buat orang lain (orang tua), jadi pake 「V-てあげる」. 「くれる」itu orang lain ngelakuin buat kita, 「もらう」nerima tindakan." },
+  { question: "友だちのために、日本料理を作って＿＿＿。", correct: "あげます", wrong: ["くれます", "もらいます", "いただきます"], explanation: "Aku masak buat teman, dan aku mikir itu bermanfaat buat dia → V-てあげます." },
+  { question: "後輩に、この町のいろいろな店を案内して＿＿＿。", correct: "あげました", wrong: ["もらいました", "いただきました", "くれました"], explanation: "Subjeknya yang ngasih bantuan ke 後輩 (junior), jadi 「V-てあげました」. Catatan: ke atasan/guru sebaiknya jangan pake あげる, kesannya maksa & nggak sopan." },
+  { question: "友だちの引っ越しのとき、荷物を＿＿＿あげました。", correct: "運んで", wrong: ["運びて", "運ぶて", "運んだ"], explanation: "「あげる」nyambung ke te-form. 運ぶ (grup 1, akhiran -bu) berubah jadi 「運んで」." },
+
+// ----- ❺ V-てもらいます (3 soal) -----
+  { question: "旅行のとき、友だち＿＿＿写真を撮ってもらいました。", correct: "に", wrong: ["が", "を", "で"], explanation: "Di V-てもらう, orang yang ngelakuin tindakan ditandai 「に」: 友だちに = dari/oleh teman. Subjek (aku) biasanya dilesapin." },
+  { question: "旅行のとき、友だちに写真を＿＿＿もらいました。", correct: "撮って", wrong: ["撮り", "撮る", "撮った"], explanation: "「もらう」nyambung ke te-form: 撮る → 撮って. Jadi 撮ってもらいました = aku difotoin teman." },
+  { question: "先生に、日本語の作文を直して＿＿＿。", correct: "いただきました", wrong: ["もらいました", "あげました", "くれました"], explanation: "Yang ngelakuin tindakan itu orang yang dihormati (先生), jadi 「もらう」dinaikin jadi 「V-ていただく」: 直していただきました. 「あげました」arahnya malah kebalik." },
+
+// ----- ❻ V-てくれます (3 soal) -----
+  { question: "山内さんは、私にたくさん、日本語を教えて＿＿＿。", correct: "くれました", wrong: ["あげました", "もらいました", "いただきました"], explanation: "Orang lain (山内さん, jadi subjek) ngelakuin sesuatu buat aku (pembicara) → V-てくれます. Ini dipake kalau pembicara ngerasa tindakannya bermanfaat." },
+  { question: "だれかが、私の財布を拾って交番に届けて＿＿＿。", correct: "くれました", wrong: ["もらいました", "あげました", "いただきました"], explanation: "Subjeknya 「だれかが」(orang yang ngelakuin), dan penerimanya aku (dompet milikku) → V-てくれました. Kalau 「もらう」, subjeknya harus orang yang nerima." },
+  { question: "友だちが、私の引っ越しを手伝って＿＿＿。", correct: "くれました", wrong: ["もらいました", "あげました", "いただきました"], explanation: "Teman (subjek, pake 「が」) ngebantu aku → 手伝ってくれました. Kata 「私に」biasanya dilesapin karena penerimanya pasti pembicara." },
+        ],
         shiken_bunpou_A2: [
           { question: "Dua teman akrab lagi ngobrol santai (bentuk futsuutai). Lengkapi balasannya: 久しぶり。＿＿＿？", correct: "元気？", wrong: ["元気です", "元気ですか"], explanation: "Ini obrolan santai (futsuutai) antar temen akrab, jadi cukup naikin nada tanya di akhir kata tanpa embel-embel ですか kayak basa formal. 元気ですか sama 元気です kedengeran kaku banget buat ngobrol sama temen deket." },
   { question: "Artinya: \"Sudah setahun sejak saya datang ke Jepang.\" Lengkapi: 日本に来て、＿＿＿になります。", correct: "1年", wrong: ["1年に", "1年の"], explanation: "Pola '~になります' buat nunjukin udah jadi sekian lama sejak suatu kejadian, langsung tempel angka+satuan waktu tanpa partikel tambahan (1年になります = 'udah jadi setahun'). Nambahin に atau の di sini malah bikin gramatikalnya salah." },
