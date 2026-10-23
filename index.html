@@ -76,14 +76,23 @@
             <em>(Usahakan menebak dulu!)</em>
         </div>
         
-                <!-- TAMBAHAN: Checkbox Mode Balik -->
-        <div class="reverse-toggle-container">
-            <label>
-                <input type="checkbox" id="reverse-mode" style="width: 18px; height: 18px; cursor: pointer;">
-                🔄 Mode Balik (Indo -> Jepang)
-            </label>
+                <!-- TOGGLE ARAH BELAJAR (geser / ketuk): kiri = Jepang -> Indo, kanan = Indo -> Jepang -->
+        <div class="dir-switch-wrap">
+            <div class="dir-switch-caption">ARAH BELAJAR</div>
+            <div class="dir-switch" id="dirSwitch" role="switch" aria-checked="false" tabindex="0" aria-label="Arah belajar: geser untuk ganti Jepang ke Indo atau Indo ke Jepang">
+                <div class="dir-switch-thumb" id="dirSwitchThumb"></div>
+                <div class="dir-switch-opt dir-opt-left" data-side="left">
+                    <span class="dir-main">日本語</span><span class="dir-arrow">→</span><span class="dir-main">ID</span>
+                </div>
+                <div class="dir-switch-opt dir-opt-right" data-side="right">
+                    <span class="dir-main">ID</span><span class="dir-arrow">→</span><span class="dir-main">日本語</span>
+                </div>
+            </div>
+            <div class="dir-switch-hint" id="dirSwitchHint">Soal Jepang, jawab artinya (Indo)</div>
+            <!-- checkbox asli disimpan tersembunyi biar flashcard.js tetap jalan -->
+            <input type="checkbox" id="reverse-mode" style="display:none;">
         </div>
-        
+
         <div class="search-container">
             <input type="text" id="fcSearchInput" class="search-input" placeholder="🔍 Cari deck... (misal: kanji, kata kerja, bab 5)">
         </div>
@@ -525,6 +534,12 @@
                 </div>
             <div class="menu-card" data-category="Irodori_A3_18">
                 <h3>Irodori A2.2</h3><span>Bab 18</span>
+                </div>
+            <div class="menu-card" data-category="Irodori_A3_18_1">
+                <h3>Irodori A2.2</h3><span>Bab 18 part 1</span>
+                </div>
+            <div class="menu-card" data-category="Irodori_A3_18_2">
+                <h3>Irodori A2.2</h3><span>Bab 18 part 2</span>
               </div>
             <div class="menu-card" data-category="kanji_idri_12">
                 <h3>Kanji A2</h3><span>bab 12</span>
@@ -676,6 +691,9 @@
             </div>
                 <div class="menu-card" data-category="partikel_penempatan_1">
                 <h3>Latihan Partikel</h3><span>Penempatan は・が・を・に dll + kombo</span>
+                </div>
+                <div class="menu-card" data-category="shiken_bunpou_a3_bab18">
+                <h3>shiken bunpou</h3><span>A2.2 第18課</span>
               </div>
                 <div class="menu-card" data-category="shiken_bunpou_A2">
                 <h3>Shiken</h3><span>A2</span>
