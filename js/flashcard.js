@@ -444,3 +444,79 @@
             });
         })();
 
+
+
+/* ============ TOGGLE ARAH BELAJAR (geser / ketuk) ============ */
+(function () {
+    const sw = document.getElementById('dirSwitch');
+    const thumb = document.getElementById('dirSwitchThumb');
+    const hint = document.getElementById('dirSwitchHint');
+    const cb = document.getElementById('reverse-mode');
+    if (!sw || !thumb || !cb) return;
+
+    const HINTS = {
+        false: 'Soal Jepang, jawab artinya (Indo)',
+        true: 'Soal Indo, jawab versi Jepang'
+    };
+
+    function render(on) {
+        sw.classList.toggle('on', on);
+        sw.setAttribute('aria-checked', String(on));
+        hint.textContent = HINTS[on];
+    }
+    function setValue(on, silent) {
+        cb.checked = on;
+        render(on);
+        try { localStorage.setItem('fc_reverse_mode', on ? '1' : '0'); } catch (e) {}
+        if (!silent && navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
+    }
+
+    // pulihkan pilihan terakhir
+    let saved = false;
+    try { saved = localStorage.getItem('fc_reverse_mode') === '1'; } catch (e) {}
+    setValue(saved, true);
+
+    // geser (drag) + ketuk
+    let startX = 0, startOn = false, dragging = false, moved = false, maxTravel = 0;
+    sw.addEventListener('pointerdown', function (e) {
+        dragging = true; moved = false;
+        startX = e.clientX; startOn = cb.checked;
+        maxTravel = sw.clientWidth / 2;
+        sw.setPointerCapture(e.pointerId);
+    });
+    sw.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        const dx = e.clientX - startX;
+        if (Math.abs(dx) > 4) { moved = true; sw.classList.add('dragging'); }
+        if (!moved) return;
+        let pos = (startOn ? maxTravel : 0) + dx;
+        pos = Math.max(0, Math.min(maxTravel, pos));
+        thumb.style.transform = 'translateX(' + pos + 'px)';
+    });
+    function endDrag(e) {
+        if (!dragging) return;
+        dragging = false;
+        sw.classList.remove('dragging');
+        if (moved) {
+            const dx = e.clientX - startX;
+            const pos = (startOn ? maxTravel : 0) + dx;
+            thumb.style.transform = '';
+            setValue(pos > maxTravel / 2);
+        } else {
+            thumb.style.transform = '';
+            const rect = sw.getBoundingClientRect();
+            setValue((e.clientX - rect.left) > rect.width / 2);
+        }
+    }
+    sw.addEventListener('pointerup', endDrag);
+    sw.addEventListener('pointercancel', function () {
+        dragging = false; sw.classList.remove('dragging'); thumb.style.transform = '';
+    });
+
+    // keyboard
+    sw.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); setValue(false); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); setValue(true); }
+        else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setValue(!cb.checked); }
+    });
+})();
