@@ -1125,5 +1125,470 @@
   { question: "Artinya: \"Ana pernah mengatakan bahwa dia sangat suka yakitori.\" (ngutip perkataan orang) Lengkapi: アナさんは前に、焼き鳥が大好きだ＿＿＿言っていました。", correct: "と", wrong: ["が", "の"], explanation: "Partikel と dipake buat nandain isi kutipan/perkataan sebelum kata kerja 言う (bilang) — pola '〜と言っていました' artinya 'pernah bilang bahwa...'." },
   { question: "Artinya: \"Saya rasa lebih baik memberi sesuatu yang berkesan.\" (nyatain pendapat) Lengkapi: もっと、思い出に残るものがいい＿＿＿思います。", correct: "と", wrong: ["が", "を"], explanation: "Partikel と dipake buat nandain isi pikiran/pendapat sebelum kata kerja 思う (berpikir) — pola '〜と思います' artinya 'saya rasa...'." },
         ],
+        shiken_bunpou_A3_1318: [
+          // ➊ V-(ら)れます ＜受身④＞
+  {
+    question: "この建物は、2年前に＿＿＿。",
+    correct: "建てられました",
+    wrong: ["建てれました", "建てさせました", "建たれました"],
+    explanation: "Subjeknya benda (建物) dan pelakunya nggak penting, jadi pakai pasif: 'dibangun'. 建てる itu Grup II, tinggal ganti る → られる = 建てられる. 建てれました itu bentuk potensial ala ら抜き ('bisa membangun'), 建てさせました itu kausatif ('menyuruh membangun'), dan 建たれました bentuknya nggak pas."
+  },
+  {
+    question: "「使う」の受身形はどれですか。",
+    correct: "使われる",
+    wrong: ["使える", "使わせる", "使あれる"],
+    explanation: "Verba Grup I yang berakhiran う: う → わ + れる, jadi 使う → 使われる (bukan あれる ya!). 使える = potensial ('bisa pakai'), 使わせる = kausatif ('menyuruh pakai'). Contoh di bab ini: 市の行事に使われています."
+  },
+  {
+    question: "「この大会は、毎年、市の体育館で行われます」の意味はどれですか。",
+    correct: "Kompetisi ini diadakan tiap tahun di gimnasium kota.",
+    wrong: ["Kompetisi ini bisa diadakan tiap tahun di gimnasium kota.", "Kompetisi ini menyuruh orang mengadakan acara tiap tahun di gimnasium kota.", "Kompetisi ini nggak pernah diadakan di gimnasium kota."],
+    explanation: "行われます = pasif dari 行う ('diadakan/dilaksanakan'), dipakai buat acara yang pelakunya nggak disebut. 行えます itu potensial ('bisa melakukan'), 行わせます kausatif ('menyuruh melakukan')."
+  },
+  {
+    question: "この図書館は、市民の皆さんに広く＿＿＿います。",
+    correct: "利用されて",
+    wrong: ["利用して", "利用できて", "利用しられて"],
+    explanation: "Pelakunya (市民の皆さん) ditandai に dan subjeknya perpustakaan, jadi pakai pasif: 'dimanfaatkan oleh warga'. する → される (Grup III), jadi 利用する → 利用される. 利用しられて itu salah bentuk, yang bener される (bukan しられる)."
+  },
+
+  // ➋ V-てあります
+  {
+    question: "壁に、ポスターが＿＿＿。（Seseorang sudah menempelkannya di sana）",
+    correct: "貼ってあります",
+    wrong: ["貼っています", "貼りました", "貼れます"],
+    explanation: "N が V-てあります = keadaan yang ada karena seseorang sengaja melakukannya (di sini: sengaja nempel poster). Pakai verba transitif seperti 貼る. 貼っています nggak cocok dengan が, sedangkan 貼りました / 貼れます artinya beda ('menempel (lampau)' / 'bisa menempel')."
+  },
+  {
+    question: "この博物館には、昔の道具がたくさん＿＿＿あります。",
+    correct: "展示して",
+    wrong: ["展示され", "展示する", "展示した"],
+    explanation: "てあります = V-て + あります, jadi verbanya harus bentuk て: 展示して + あります (sengaja dipamerkan). 展示され / 展示する / 展示した nggak bisa langsung nyambung ke あります."
+  },
+  {
+    question: "「机の上に、資料が置いてあります」の意味はどれですか。",
+    correct: "Di atas meja ada dokumen yang sengaja ditaruh seseorang (sebelumnya).",
+    wrong: ["Seseorang sedang menaruh dokumen di atas meja sekarang.", "Dokumen di atas meja akan ditaruh nanti.", "Dokumen di atas meja terjatuh sendiri."],
+    explanation: "V-てあります nunjukin hasil dari tindakan yang disengaja (biasanya buat persiapan), jadi artinya 'dokumennya udah ditaruh (seseorang) di atas meja'. Kalau lagi menaruh sekarang itu 置いています, dan kalau jatuh sendiri pakai verba intransitif (落ちています)."
+  },
+  {
+    question: "つぎのうち、まちがっている文はどれですか。（Pilih kalimat yang SALAH）",
+    correct: "ドアが閉まってあります。",
+    wrong: ["冷蔵庫に、ジュースが入れてあります。", "窓に、カーテンがかけてあります。", "テーブルに、料理が並べてあります。"],
+    explanation: "てあります cuma bisa dipakai dengan verba transitif (ada yang sengaja melakukannya). 閉まる itu intransitif ('tertutup sendiri'), jadi yang bener 閉まっています (keadaan tertutup) atau 閉めてあります (sengaja ditutup). 入れる, かける, 並べる semuanya transitif, jadi aman."
+  },
+
+  // ➌ N1 だけじゃなくて、N2 も～
+  {
+    question: "この図書館では、本＿＿＿、CDやDVDも借りられます。",
+    correct: "だけじゃなくて",
+    wrong: ["だけで", "しか", "なら"],
+    explanation: "N1 だけじゃなくて、N2 も～ = 'bukan cuma N1, N2 juga'. Di sini: bukan cuma buku, CD dan DVD juga bisa dipinjam. だけで / しか / なら nggak bikin kalimat nyambung ke 'N2 も'."
+  },
+  {
+    question: "「この体育館は、スポーツだけじゃなくて、コンサートにも使われます」の意味はどれですか。",
+    correct: "Gimnasium ini dipakai buat olahraga, dan juga buat konser.",
+    wrong: ["Gimnasium ini cuma dipakai buat olahraga.", "Gimnasium ini cuma dipakai buat konser.", "Gimnasium ini nggak dipakai buat olahraga maupun konser."],
+    explanation: "だけじゃなくて = 'bukan cuma', jadi olahraga DAN konser dua-duanya. Pilihan 'cuma olahraga' atau 'cuma konser' salah karena kalimatnya justru bilang nggak cuma satu. 使われます = pasif ('dipakai')."
+  },
+  {
+    question: "A：この図書館では、本だけ借りられるんですか。 B：いいえ、＿＿＿。",
+    correct: "本だけじゃなくて、CDやDVDも借りられます",
+    wrong: ["本だけ借りられます", "CDやDVDだけ借りられます", "本もCDもDVDも借りられません"],
+    explanation: "A nanya 'cuma buku yang bisa dipinjam?', B jawab いいえ ('bukan'), jadi lanjutannya harus nambah barang lain: 'bukan cuma buku, CD dan DVD juga bisa'. Pilihan lain bertentangan dengan いいえ."
+  },
+
+  // ➍ N なら、～
+  {
+    question: "この施設は、小学生以下＿＿＿、無料で入れます。",
+    correct: "なら",
+    wrong: ["ので", "のに", "ても"],
+    explanation: "N なら、～ = 'kalau (untuk) N, ...' buat nentuin syarat atau batasan. Jadi: kalau anak SD ke bawah, bisa masuk gratis. ので / のに / ても nggak bisa nyambung langsung ke kata benda 小学生以下."
+  },
+  {
+    question: "「会員なら、本を10冊まで借りられます」の意味はどれですか。",
+    correct: "Kalau anggota, bisa meminjam buku sampai 10 buah.",
+    wrong: ["Karena anggota, harus meminjam 10 buku.", "Meski anggota, nggak bisa meminjam buku.", "Setelah jadi anggota, baru beli 10 buku."],
+    explanation: "N なら = 'kalau (kamu) N', jadi ini syarat yang berlaku buat anggota. 借りられます itu potensial, artinya 'bisa pinjam'. Pilihan lain salah di arti ('harus', 'meski', 'beli')."
+  },
+  {
+    question: "駅前の図書館＿＿＿、日曜日も開いていますよ。",
+    correct: "なら",
+    wrong: ["のに", "ても", "ながら"],
+    explanation: "'Kalau perpustakaan depan stasiun, hari Minggu juga buka lho.' N なら dipakai buat ngebahas hal yang lagi jadi topik, lalu ngasih info yang relevan. のに / ても / ながら nggak bisa nyambung langsung ke kata benda."
+  },
+
+  // ➎ 【疑問詞】V-ても、～
+  {
+    question: "この施設は、＿＿＿利用しても、無料です。",
+    correct: "だれが",
+    wrong: ["だれの", "だれも", "だれに"],
+    explanation: "【疑問詞】V-ても、～ = 'siapa/kapan/di mana pun ..., tetap/boleh ...'. だれが利用しても = 'siapa pun yang memakai, tetap gratis'. だれの / だれも / だれに nggak bisa dipakai di pola ini."
+  },
+  {
+    question: "「何を食べてもいいです」の意味はどれですか。",
+    correct: "Boleh makan apa saja.",
+    wrong: ["Nggak boleh makan apa pun.", "Harus makan sesuatu.", "Aku nggak tahu mau makan apa."],
+    explanation: "【疑問詞】+ V-ても + いいです = 'mau ... apa/siapa/kapan pun, boleh'. 何を食べてもいい = 'makan apa saja boleh'. Bukan larangan dan bukan kewajiban."
+  },
+  {
+    question: "この図書館は、＿＿＿行っても、開いています。",
+    correct: "いつ",
+    wrong: ["いつか", "いつも", "いつから"],
+    explanation: "いつ行っても = 'kapan pun pergi, (selalu) buka'. Pola 【疑問詞】V-ても artinya 'nggak peduli kapan/siapa/di mana'. いつか = 'suatu saat', いつも = 'selalu', いつから = 'sejak kapan' — nggak cocok sama ても di sini."
+  },
+
+  // ################ 第14課 前髪は、もう少し短く切ってもらえますか？ ################
+
+  // ➊ ナA-に／イA-く V
+  {
+    question: "前髪は、もう少し＿＿＿切ってください。",
+    correct: "短く",
+    wrong: ["短い", "短くて", "短に"],
+    explanation: "Kata sifat-い diubah jadi く kalau mau nerangin verba: 短い → 短く + 切ってください = 'tolong potong lebih pendek'. 短い nggak bisa langsung nyambung ke verba, 短くて dipakai buat nyambung kalimat, dan 短に salah karena に itu buat kata sifat-な."
+  },
+  {
+    question: "部屋を＿＿＿してください。",
+    correct: "きれいに",
+    wrong: ["きれいで", "きれいな", "きれいく"],
+    explanation: "きれい itu kata sifat-な, jadi pakai に buat nerangin verba: きれいに + してください = 'tolong bikin jadi bersih'. きれいで dipakai buat nyambung kalimat, きれいな buat nerangin kata benda, dan きれいく salah (く cuma buat kata sifat-い)."
+  },
+  {
+    question: "A：髪の色は、どうしますか。 B：もう少し＿＿＿してください。",
+    correct: "明るく",
+    wrong: ["明るい", "明るに", "明るさ"],
+    explanation: "明るい itu kata sifat-い, jadi 明るく + してください = 'tolong bikin lebih terang'. Pola ナA-に／イA-く + V dipakai buat minta hasil atau kondisi tertentu."
+  },
+  {
+    question: "前髪は、もう少し短く＿＿＿もらえますか。",
+    correct: "切って",
+    wrong: ["切る", "切り", "切った"],
+    explanation: "V-てもらえますか = 'bisa tolong ...?' (minta tolong dengan sopan). Verbanya wajib bentuk て: 切って + もらえますか. Bentuk kamus, ます-stem, atau lampau nggak bisa langsung nyambung ke もらえますか."
+  },
+
+  // ➋ N のために、～
+  {
+    question: "このカードは、外国の方＿＿＿、作られました。",
+    correct: "のために",
+    wrong: ["のあとで", "のまえに", "のあいだ"],
+    explanation: "N のために、～ = 'demi/untuk N' (penerima manfaat atau tujuan). Jadi kartu ini dibuat untuk orang asing. のあとで ('setelah'), のまえに ('sebelum'), のあいだ ('selama') artinya beda."
+  },
+  {
+    question: "家族＿＿＿、毎日がんばって働いています。（Demi keluarga, aku kerja keras tiap hari）",
+    correct: "のために",
+    wrong: ["のそばに", "のあとで", "のまえに"],
+    explanation: "'Demi keluarga' = 家族のために. N のために nunjukin orang/hal yang jadi tujuan atau penerima manfaat dari usaha kita. のそばに ('di samping'), のあとで ('setelah'), のまえに ('sebelum') salah arti."
+  },
+  {
+    question: "「お年寄りのために、席をゆずりました」の意味はどれですか。",
+    correct: "Aku memberikan tempat dudukku demi/untuk orang tua.",
+    wrong: ["Aku memberikan tempat dudukku sebelum orang tua datang.", "Aku memberikan tempat dudukku karena aku capek.", "Aku nggak mau memberikan tempat dudukku ke orang tua."],
+    explanation: "N のために = 'untuk/demi N'. お年寄りのために = 'demi orang yang lebih tua'. 席をゆずる = 'memberikan tempat duduk'."
+  },
+
+  // ################ 第15課 会議室の電気がついたままでした ################
+
+  // ➊ V-たままです
+  {
+    question: "会議室の電気が＿＿＿ままでした。",
+    correct: "ついた",
+    wrong: ["ついて", "つく", "つけた"],
+    explanation: "V-たまま = keadaan tetap begitu (nggak diubah), biasanya yang nggak seharusnya. 電気が + ついた (intransitif, 'menyala') + まま = 'lampunya masih nyala'. Kalau pakai verba transitif harus を: 電気をつけたまま."
+  },
+  {
+    question: "エアコンを＿＿＿まま、寝てしまいました。",
+    correct: "つけた",
+    wrong: ["ついた", "つけて", "つける"],
+    explanation: "Karena objeknya ditandai を, pakai verba transitif: エアコンを + つけた + まま = 'tidur dengan AC dibiarkan nyala'. ついた itu intransitif (cocoknya sama が), sedangkan つけて / つける nggak bisa nyambung ke まま."
+  },
+  {
+    question: "水を＿＿＿まま、歯をみがかないでください。",
+    correct: "出した",
+    wrong: ["出た", "出して", "出す"],
+    explanation: "V-たまま harus pakai bentuk た (lampau). 水を + 出した + まま = 'dengan air dibiarkan mengalir'. 出た itu intransitif (cocoknya 水が出た), 出して / 出す nggak bisa nyambung ke まま."
+  },
+  {
+    question: "「靴をはいたまま部屋に入らないでください」の意味はどれですか。",
+    correct: "Tolong jangan masuk ruangan dengan sepatu yang masih dipakai.",
+    wrong: ["Tolong jangan masuk ruangan setelah melepas sepatu.", "Tolong jangan membeli sepatu di dalam ruangan.", "Tolong lepas sepatu sambil berjalan masuk ruangan."],
+    explanation: "V-たまま = 'dalam keadaan tetap (V)'. 靴をはいたまま = 'dengan sepatu dibiarkan terpakai'. 入らないでください = 'tolong jangan masuk'."
+  },
+
+  // ➋ V-るのにいいです
+  {
+    question: "このマイバッグは、ごみを＿＿＿のにいいですよ。",
+    correct: "減らす",
+    wrong: ["減らした", "減らして", "減らさない"],
+    explanation: "V-るのにいいです = 'bagus buat (melakukan) V'. Verbanya harus bentuk kamus: 減らす + のに + いいです = 'bagus buat ngurangin sampah'. Bentuk lampau, て, atau negatif nggak dipakai di pola ini."
+  },
+  {
+    question: "この辞書は、日本語を勉強する＿＿＿いいですよ。",
+    correct: "のに",
+    wrong: ["ので", "のを", "のと"],
+    explanation: "Pola V-るのにいいです = 'bagus buat V'. Jadi 勉強するのにいい = 'bagus buat belajar'. ので ('karena'), のを, dan のと nggak bisa dipakai di sini."
+  },
+  {
+    question: "「このアプリは、ごみの出し方を調べるのにいいです」の意味はどれですか。",
+    correct: "Aplikasi ini bagus buat cari tahu cara buang sampah.",
+    wrong: ["Aplikasi ini harus dipakai tiap kali buang sampah.", "Aplikasi ini nggak bisa dipakai buat cari tahu cara buang sampah.", "Aplikasi ini lebih bagus dari aplikasi lain buat buang sampah."],
+    explanation: "V-るのにいいです = 'bagus/cocok buat V'. 調べる = 'mencari tahu'. Jadi aplikasi ini cocok dipakai buat cek cara buang sampah. Nggak ada makna 'harus' atau perbandingan di pola ini."
+  },
+
+  // ################ 第16課 地震が来ても、あわてて動かないでください ################
+
+  // ➊ V（命令形）／V-るな（禁止の命令形）
+  {
+    question: "「逃げる」の命令形はどれですか。",
+    correct: "逃げろ",
+    wrong: ["逃げれ", "逃げて", "逃げるな"],
+    explanation: "Bentuk perintah (命令形) Grup II: る diganti ろ, jadi 逃げる → 逃げろ ('Kabur!'). 逃げれ itu salah (bentuk ら抜き nggak dipakai buat perintah), 逃げて cuma te-form/permintaan halus, dan 逃げるな artinya 'jangan kabur' (larangan)."
+  },
+  {
+    question: "「集まる」の命令形はどれですか。",
+    correct: "集まれ",
+    wrong: ["集まろ", "集まるな", "集まって"],
+    explanation: "Grup I: huruf terakhir kolom う diganti kolom え, jadi 集まる → 集まれ ('Kumpul!'). 集まろ salah (ろ cuma buat Grup II), 集まるな = 'jangan kumpul', 集まって = te-form."
+  },
+  {
+    question: "危ない！ここに＿＿＿！",
+    correct: "入るな",
+    wrong: ["入れ", "入ろう", "入った"],
+    explanation: "V-るな = larangan tegas ('jangan ...!') yang dipakai di situasi bahaya atau darurat. 入るな = 'jangan masuk!'. 入れ itu perintah 'masuk!', 入ろう = 'ayo masuk', 入った = lampau — nggak ada yang cocok sama 危ない."
+  },
+  {
+    question: "駅の注意書き：「ホームを走るな」の意味はどれですか。",
+    correct: "Jangan lari di peron.",
+    wrong: ["Larilah di peron.", "Boleh lari di peron.", "Aku bisa lari di peron."],
+    explanation: "V-るな (bentuk kamus + な) = 'jangan V!' — larangan tegas yang sering muncul di papan peringatan dan pengumuman darurat. Beda dari V-ないでください yang lebih sopan."
+  },
+
+  // ➋ V-ないようにしてください
+  {
+    question: "火事のときは、できるだけ煙を＿＿＿ようにしてください。",
+    correct: "吸わない",
+    wrong: ["吸わなくて", "吸わず", "吸わなかった"],
+    explanation: "V-ないようにしてください = 'usahakan jangan V' (lebih halus dari V-ないでください). Pakai bentuk negatif biasa + ように: 吸わない + ように + してください. 'できるだけ' (sebisa mungkin) cocok banget sama pola ini."
+  },
+  {
+    question: "地震のときは、エレベーターを＿＿＿ようにしてください。",
+    correct: "使わない",
+    wrong: ["使わなくて", "使わなかった", "使って"],
+    explanation: "Bentuk negatif (ない) + ようにしてください. 使う → 使わない (う → わ). Jadi 使わないようにしてください = 'usahakan jangan pakai lift'."
+  },
+  {
+    question: "「ここに荷物を置かないようにしてください」の意味はどれですか。",
+    correct: "Tolong usahakan jangan menaruh barang di sini.",
+    wrong: ["Tolong taruh barang di sini.", "Tolong bawa barang ke sini.", "Silakan taruh barang kalau mau."],
+    explanation: "V-ないようにしてください = 'tolong usahakan jangan V'. 置かない = 'nggak menaruh'. Jadi intinya larangan halus buat naruh barang di tempat itu."
+  },
+
+  // ➌ V-（られ）なくなります
+  {
+    question: "ドアが開かなくなると、外に＿＿＿なります。",
+    correct: "逃げられなく",
+    wrong: ["逃げられなくて", "逃げられない", "逃げられず"],
+    explanation: "V-（られ）なくなります = 'jadi nggak bisa V (lagi)'. 逃げる → 逃げられる (potensial) → 逃げられなく + なります. Karena diikuti なります, bagian depannya harus berbentuk なく (bukan ない / なくて / ず)."
+  },
+  {
+    question: "地震で電車が止まって、家に＿＿＿なりました。（jadi nggak bisa pulang）",
+    correct: "帰れなく",
+    wrong: ["帰れない", "帰らなく", "帰れなくて"],
+    explanation: "'Jadi nggak bisa pulang' = potensial negatif + なる: 帰れる → 帰れなく + なりました. 帰らなく + なりました artinya 'jadi nggak pulang (lagi)', maknanya beda. 帰れない / 帰れなくて nggak bisa nyambung ke なりました."
+  },
+  {
+    question: "「パスワードを忘れると、ログインできなくなります」の意味はどれですか。",
+    correct: "Kalau lupa password, jadi nggak bisa login.",
+    wrong: ["Kalau lupa password, jadi bisa login.", "Kalau lupa password, harus login.", "Kalau bisa login, jadi lupa password."],
+    explanation: "できなくなります = できる ('bisa') + なくなります → 'jadi nggak bisa'. ～と、～ = 'kalau ..., (maka) ...'. Jadi hasil dari lupa password adalah nggak bisa login."
+  },
+
+  // ➍ S ても、～
+  {
+    question: "大きな地震が＿＿＿、あわてて動かないでください。",
+    correct: "来ても",
+    wrong: ["来て", "来る", "来た"],
+    explanation: "S ても、～ = 'meskipun/walaupun S, ...'. 来る → 来ても = 'meskipun datang'. Jadi 'meskipun gempa besar datang, jangan panik dan bergerak'. 来て / 来る / 来た nggak bisa nyambung ke bagian belakang kalimat ini."
+  },
+  {
+    question: "安く＿＿＿、すぐこわれる物は買いたくないです。",
+    correct: "ても",
+    wrong: ["ので", "たら", "ながら"],
+    explanation: "Kata sifat-い: い → くても. 安い → 安くても = 'walaupun murah'. ので / たら / ながら nggak bisa nempel langsung ke 安く."
+  },
+  {
+    question: "「雨が降っても、避難訓練は行います」の意味はどれですか。",
+    correct: "Meskipun hujan, latihan evakuasi tetap dilaksanakan.",
+    wrong: ["Kalau hujan, latihan evakuasi dibatalkan.", "Karena hujan, latihan evakuasi dilaksanakan.", "Setelah hujan, latihan evakuasi baru dimulai."],
+    explanation: "S ても = 'meskipun'. Hasilnya nggak terpengaruh kondisi di depan, jadi latihan tetap jalan walau hujan. Kalau mau bilang 'kalau hujan, dibatalkan' bentuknya 雨が降ったら、中止します."
+  },
+
+  // ➎ V（普通形）かどうか、～
+  {
+    question: "この道が通れる＿＿＿、まだわかりません。",
+    correct: "かどうか",
+    wrong: ["とか", "かも", "ので"],
+    explanation: "（普通形）かどうか、～ = 'apakah ... atau nggak, ...'. 通れるかどうか、わかりません = 'nggak tahu bisa dilewati atau nggak'. Verbanya pakai bentuk biasa, lalu tambahin かどうか."
+  },
+  {
+    question: "あの店が安い＿＿＿、調べてから行きます。",
+    correct: "かどうか",
+    wrong: ["かもしれません", "ように", "ばかり"],
+    explanation: "Kata sifat-い bentuk biasa + かどうか: 安いかどうか = 'murah atau nggak'. Jadi 'aku cek dulu murah atau nggak, baru pergi'. かもしれません = 'mungkin', nggak cocok di sini."
+  },
+  {
+    question: "「明日、雨が降るかどうか、わかりません」の意味はどれですか。",
+    correct: "Aku nggak tahu apakah besok hujan atau nggak.",
+    wrong: ["Aku tahu besok pasti hujan.", "Aku tahu besok nggak hujan.", "Besok hujan, tapi aku nggak tahu kenapa."],
+    explanation: "かどうか = 'apakah ... atau nggak'. わかりません = 'nggak tahu'. Jadi artinya nggak tahu besok hujan atau nggak."
+  },
+
+  // ################ 第17課 日本語が前より話せるようになりました ################
+
+  // ➊ V-（られ）るようになりました
+  {
+    question: "日本に来てから、日本語が＿＿＿ようになりました。",
+    correct: "話せる",
+    wrong: ["話す", "話した", "話せた"],
+    explanation: "V-（られ）るようになりました = 'jadi bisa V (setelah sebelumnya nggak bisa)'. Karena objeknya ditandai が, verbanya harus bentuk potensial: 話す → 話せる + ようになりました. 話すようになりました ('jadi (sering) bicara') butuh を, bukan が."
+  },
+  {
+    question: "半年前は自転車に乗れませんでしたが、今は＿＿＿。",
+    correct: "乗れるようになりました",
+    wrong: ["乗れるになりました", "乗れるようにしました", "乗るようでした"],
+    explanation: "Perubahan dari nggak bisa → bisa: 乗れる (potensial) + ようになりました. 乗れるになりました salah (kurang よう), 乗れるようにしました artinya 'aku mengusahakan supaya bisa', dan 乗るようでした juga beda arti."
+  },
+  {
+    question: "最近、納豆が＿＿＿ようになりました。",
+    correct: "食べられる",
+    wrong: ["食べる", "食べさせる", "食べられた"],
+    explanation: "食べる itu Grup II, potensialnya る → られる = 食べられる (kalau ngobrol sering jadi 食べれる, bentuk ら抜き). 食べられるようになりました = 'sekarang jadi bisa makan natto'. 食べさせる itu kausatif, 食べられた bentuk lampau jadi nggak bisa nyambung."
+  },
+  {
+    question: "「前は食べられませんでしたが、今は食べられます」と同じ意味の文はどれですか。",
+    correct: "今は食べられるようになりました。",
+    wrong: ["今は食べられなくなりました。", "今は食べるようにしました。", "今は食べたばかりです。"],
+    explanation: "Dulu nggak bisa, sekarang bisa = V-（られ）るようになりました. 食べられなくなりました artinya kebalikannya ('jadi nggak bisa makan'), 食べるようにしました = 'berusaha makan', 食べたばかりです = 'baru saja makan'."
+  },
+  {
+    question: "「前より日本語が話せるようになりました」の意味はどれですか。",
+    correct: "Aku sekarang jadi bisa bicara bahasa Jepang lebih baik daripada sebelumnya.",
+    wrong: ["Aku jadi nggak bisa lagi bicara bahasa Jepang seperti dulu.", "Aku akan berusaha bisa bicara bahasa Jepang.", "Aku baru saja bicara bahasa Jepang."],
+    explanation: "前より = 'dibanding sebelumnya', 話せるようになりました = 'jadi bisa bicara'. Jadi ada peningkatan kemampuan. Kebalikannya 話せなくなりました, 'berusaha' = 話せるようにします, 'baru saja' = 話したばかりです."
+  },
+
+  // ################ 第18課 将来、自分の会社を作ろうと思います ################
+
+  // ➊ V-（よ）うと思います／思っています
+  {
+    question: "「作る」の意向形（～う／～よう）はどれですか。",
+    correct: "作ろう",
+    wrong: ["作よう", "作りよう", "作らよう"],
+    explanation: "Bentuk意向形 (volitional) Grup I: huruf terakhir kolom う diganti kolom お + う, jadi 作る → 作ろう. Grup II: る → よう (食べる → 食べよう). 作よう / 作りよう / 作らよう semuanya salah bentuk."
+  },
+  {
+    question: "将来、日本で＿＿＿と思います。",
+    correct: "働こう",
+    wrong: ["働こ", "働きよう", "働いよう"],
+    explanation: "V-（よ）うと思います = 'aku berencana/berniat V'. 働く itu Grup I → 働こう. 働こ (kurang う), 働きよう, dan 働いよう semuanya bentuk yang salah."
+  },
+  {
+    question: "来年の春、新しい仕事を＿＿＿と思っています。",
+    correct: "始めよう",
+    wrong: ["始めろう", "始まろう", "始めるよう"],
+    explanation: "始める itu Grup II: る → よう, jadi 始めよう. 始めろう campuran yang salah (ろ itu buat perintah). 始まろう dari 始まる (intransitif) nggak cocok dengan を. 始めるよう juga salah. ～と思っています = niat yang udah lama dipikirin."
+  },
+  {
+    question: "来年、日本の大学に＿＿＿と思っています。",
+    correct: "留学しよう",
+    wrong: ["留学ろう", "留学するよう", "留学しろう"],
+    explanation: "Grup III: する → しよう, jadi 留学する → 留学しよう (来る → 来よう/こよう). 留学ろう, 留学するよう, dan 留学しろう (しろ = perintah) semuanya salah."
+  },
+  {
+    question: "「将来、国へ帰って、先生になろうと思っています」の意味はどれですか。",
+    correct: "Aku berniat pulang ke negaraku dan jadi guru di masa depan.",
+    wrong: ["Aku dulu pulang ke negaraku lalu jadi guru.", "Aku kira orang lain akan pulang dan jadi guru.", "Aku nggak mau pulang dan jadi guru."],
+    explanation: "V-（よ）うと思っています = 'aku (sedang) berniat/berencana V'. なろう = 意向形 dari なる. Jadi ini niat di masa depan, bukan cerita masa lalu atau perkiraan tentang orang lain."
+  },
+
+  // ➋ V-るために、～
+  {
+    question: "日本で働く＿＿＿、日本語を勉強しています。（Tujuan: supaya bisa bekerja di Jepang）",
+    correct: "ために",
+    wrong: ["ので", "まえに", "ながら"],
+    explanation: "V-るために、～ = 'supaya/untuk V' (tujuan). Verbanya bentuk kamus + ために: 働くために = 'supaya bisa kerja'. ので ('karena'), まえに ('sebelum'), ながら ('sambil') artinya beda."
+  },
+  {
+    question: "日本語＿＿＿、日本に来ました。",
+    correct: "を勉強するために",
+    wrong: ["を勉強するのために", "の勉強するために", "が勉強するために"],
+    explanation: "Kata kerja langsung + ために (tanpa の): 日本語を勉強するために. Kalau pakai kata benda barulah の: 日本語の勉強のために. 'V-るのために' itu salah kaprah."
+  },
+  {
+    question: "「日本に住むために、もっと日本語をがんばろうと思います」の意味はどれですか。",
+    correct: "Supaya bisa tinggal di Jepang, aku berniat belajar bahasa Jepang lebih giat.",
+    wrong: ["Karena sudah tinggal di Jepang, aku berniat belajar bahasa Jepang lebih giat.", "Setelah tinggal di Jepang, aku berniat belajar bahasa Jepang.", "Aku kira orang Jepang akan belajar bahasa Jepang lebih giat."],
+    explanation: "V-るために = tujuan ('supaya V'), 住む = 'tinggal'. がんばろう = 意向形 dari がんばる. Jadi tujuannya: bisa hidup di Jepang; niatnya: lebih giat belajar bahasa Jepang."
+  },
+
+  // ➌ V-てあげます
+  {
+    question: "来月、母の誕生日なので、母に料理を＿＿＿つもりです。",
+    correct: "作ってあげる",
+    wrong: ["作ってくれる", "作ってもらう", "作ってくださる"],
+    explanation: "V-てあげます = aku melakukan sesuatu buat orang lain. Karena ulang tahun ibu, aku yang masakin buat ibu → 作ってあげる. 作ってくれる / 作ってくださる = orang lain melakukan buat aku, 作ってもらう = aku menerima (minta dibuatin)."
+  },
+  {
+    question: "友だちが日本語の手紙を読めなくて困っていたので、読んで＿＿＿。",
+    correct: "あげました",
+    wrong: ["くれました", "もらいました", "いただきました"],
+    explanation: "Aku yang bantu temanku → V-てあげました ('(aku) membacakan buat temanku'). くれました (orang lain ke aku), もらいました (aku menerima), dan いただきました (sopan, aku menerima) arah bantuannya terbalik."
+  },
+  {
+    question: "「両親に、家を建ててあげるつもりです」の意味はどれですか。",
+    correct: "Aku berencana membangunkan rumah untuk orang tuaku.",
+    wrong: ["Aku berencana dibangunkan rumah oleh orang tuaku.", "Orang tuaku berencana membangunkan rumah untukku.", "Aku berencana membangun rumah bersama orang tuaku."],
+    explanation: "V-てあげます = 'aku ngelakuin sesuatu buat orang lain'. 両親に + 建ててあげる = 'membangunkan (rumah) untuk orang tua'. Kalau orang tua yang bangunin buat aku, bentuknya 建ててくれる / 建ててもらう."
+  },
+
+  // ➍ V-てもらいます
+  {
+    question: "日本語の先生＿＿＿、日本語を教えてもらいました。",
+    correct: "に",
+    wrong: ["が", "を", "と"],
+    explanation: "V-てもらいます = menerima kebaikan (dibantu) dari seseorang. Orang yang melakukannya ditandai に (atau から): 先生に教えてもらいました = 'diajari oleh guru'. が / を / と nggak cocok buat nandain pemberi bantuan di pola ini."
+  },
+  {
+    question: "友だちに引っ越しを＿＿＿。（Temanku membantuku pindahan）",
+    correct: "手伝ってもらいました",
+    wrong: ["手伝ってあげました", "手伝ってくれました", "手伝いました"],
+    explanation: "Aku yang dibantu teman → pakai V-てもらいました, dan teman ditandai に. 手伝ってあげました (aku bantu teman), 手伝ってくれました (pemberinya ditandai が, bukan に), 手伝いました (cuma 'membantu') nggak cocok."
+  },
+  {
+    question: "「JF工業のみなさんには、とても親切にしてもらいました」の意味はどれですか。",
+    correct: "Aku diperlakukan dengan sangat baik oleh semua orang di JF Kogyo.",
+    wrong: ["Aku memperlakukan semua orang di JF Kogyo dengan sangat baik.", "Semua orang di JF Kogyo ingin aku bersikap baik.", "Aku nggak diperlakukan baik oleh semua orang di JF Kogyo."],
+    explanation: "V-てもらいます = 'aku menerima (kebaikan) dari ...'. 親切にしてもらいました = 'diperlakukan dengan baik'. には menandai pihak yang berbuat baik ke aku. Kalau aku yang berbuat baik, bentuknya 親切にしてあげました."
+  },
+
+  // ➎ V-てくれます
+  {
+    question: "山内さんは、私にたくさん日本語を＿＿＿。",
+    correct: "教えてくれました",
+    wrong: ["教えてあげました", "教えてもらいました", "教えさせました"],
+    explanation: "V-てくれます = orang lain melakukan sesuatu buat aku (atau keluargaku). Subjeknya yang melakukan (山内さんは), penerimanya aku (私に). 教えてあげました (aku yang ngajarin), 教えてもらいました (aku yang menerima), 教えさせました (kausatif) arahnya beda."
+  },
+  {
+    question: "駅で道に迷っていたとき、知らない人が地図を＿＿＿。",
+    correct: "見せてくれました",
+    wrong: ["見せてあげました", "見せてもらいました", "見せていただきました"],
+    explanation: "Orang asing yang berbuat baik ke aku → V-てくれました (pelakunya ditandai が). 見せてあげました arahnya dari aku ke orang lain, sedangkan 見せてもらいました / 見せていただきました dipakai kalau aku subjeknya dan pelaku ditandai に."
+  },
+  {
+    question: "つぎのうち、まちがっている文はどれですか。（Pilih kalimat yang SALAH）",
+    correct: "私が友だちに日本語を教えてくれました。",
+    wrong: ["先生が私に漢字を教えてくれました。", "友だちが弟に日本語を教えてくれました。", "母が私にお弁当を作ってくれました。"],
+    explanation: "V-てくれます dipakai kalau orang lain melakukan sesuatu buat aku atau keluargaku. Kalau aku yang ngelakuin buat orang lain, harus V-てあげます: 私が友だちに日本語を教えてあげました. Kalimat lain bener: guru → aku, teman → adikku (keluargaku), ibu → aku."
+  }
+        ],
         };
 
