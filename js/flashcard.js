@@ -2,14 +2,15 @@
 
         // --- PENGATURAN PASSWORD DECK PRO ---
         const fcDeckPasswords = {
-            
+            pribadi_jimmy: "5",
+          pribadi_PADIR: "1" 
          
         };
 
         // --- PENGATURAN PASSWORD DECK EXCLUSIVE (tier di atas Pro) ---
         // Cara pakai: tambahin data-category deck ke sini, contoh:
         const fcExclusivePasswords = {
-          pribadi_jimmy: "5"  // <-- CONTOH DEMO, ganti/hapus sesuai kebutuhan
+           // <-- CONTOH DEMO, ganti/hapus sesuai kebutuhan
         };
 
         // --- PENGATURAN PASSWORD DECK ADMIN (tier tertinggi, di atas Exclusive) ---
@@ -320,7 +321,7 @@
                     const ok = await askDeckPassword(title, 'Deck ini EXCLUSIVE 💎, minta password ke admin', fcExclusivePasswords[category]);
                     if (ok) fcLoadCategory(category, title, subtitle);
                 } else if (fcDeckPasswords[category]) {
-                    const ok = await askDeckPassword(title, 'Deck ini digembok buat sauqi ajah😝, minta password ke: fadir, Razan, arival', fcDeckPasswords[category]);
+                    const ok = await askDeckPassword(title, 'minta ke atmin atau ke yang punya deck', fcDeckPasswords[category]);
                     if (ok) fcLoadCategory(category, title, subtitle);
                 } else {
                     fcLoadCategory(category, title, subtitle);
