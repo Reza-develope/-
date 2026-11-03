@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<script>/* sinkron tema dengan aplikasi induk: ?theme=dark|light atau pesan {type:'fc-theme'} */(function(){try{var m=/[?&]theme=(dark|light)/.exec(location.search);var r=document.documentElement;if(m)r.setAttribute('data-theme',m[1]);addEventListener('message',function(e){var d=e.data;if(d&&d.type==='fc-theme'&&(d.theme==='dark'||d.theme==='light'))r.setAttribute('data-theme',d.theme);});}catch(e){}})();</script>
 <title>Latihan Bunpou A1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,8 +13,11 @@
 :root{--bg:#EEF1F6;--card:#fff;--ink:#16213B;--mute:#5C6882;--line:#D8DEEA;--soft:#E7ECF4;--brand:#243F7A;--onbrand:#fff;
 --ok:#17714F;--okbg:#E2F2EA;--ng:#B1451B;--ngbg:#FBEAE0;--warn:#7D5B00;--warnbg:#FAEFC8;--seal:#B3202A;
 --font:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic UI","Meiryo","Noto Sans JP",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-@media (prefers-color-scheme:dark){:root{--bg:#0E1424;--card:#161E33;--ink:#E8EDF8;--mute:#9AA6C0;--line:#2B3656;--soft:#202A47;--brand:#86A6F2;--onbrand:#0E1424;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0E1424;--card:#161E33;--ink:#E8EDF8;--mute:#9AA6C0;--line:#2B3656;--soft:#202A47;--brand:#86A6F2;--onbrand:#0E1424;
 --ok:#5ED3A2;--okbg:#12332A;--ng:#FF9C70;--ngbg:#3A2218;--warn:#F0CA5C;--warnbg:#39300F;--seal:#E8545A}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0E1424;--card:#161E33;--ink:#E8EDF8;--mute:#9AA6C0;--line:#2B3656;--soft:#202A47;--brand:#86A6F2;--onbrand:#0E1424;
+--ok:#5ED3A2;--okbg:#12332A;--ng:#FF9C70;--ngbg:#3A2218;--warn:#F0CA5C;--warnbg:#39300F;--seal:#E8545A}
+:root[data-theme="light"]{color-scheme:light}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.7 var(--font)}
