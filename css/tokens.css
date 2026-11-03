@@ -1,0 +1,113 @@
+/* =====================================================================
+   css/tokens.css — IDENTITAS VISUAL (palet, huruf, jarak). Semua warna & ukuran lain mengacu ke sini.
+
+   Arah desain — "buku tulis kanji di bawah bulan merah":
+   • Kertas bergaris biru-keabuan (siang) / langit nila (malam), tinta nila, dan satu warna cap (hanko) merah shu.
+     Nila & merah sama dengan halaman bunpou, jadi seluruh aplikasi terasa satu keluarga.
+   • Satu hal yang diingat: BULAN MERAH (赤月) di Beranda — makin banyak kartu hari ini selesai, makin penuh bulannya.
+     Sisanya sengaja tenang: daftar seperti daftar isi buku (bukan tumpukan kartu seragam), garis tipis, sedikit bayangan.
+   • Huruf: Klee One (gaya tulisan tangan buku pelajaran sekolah Jepang) untuk teks Jepang di kartu;
+     Zen Kaku Gothic New untuk semua teks antarmuka. Hanya dua keluarga.
+   • Warna status mengikuti kebiasaan Anki supaya cepat dikenali: baru = biru, belajar = merah, review = hijau.
+   ===================================================================== */
+:root {
+  color-scheme: light;
+  /* kertas & tinta */
+  --paper: #f5f6fa;
+  --surface: #ffffff;
+  --surface-2: #eef0f6;
+  --ink: #151b2e;
+  --ink-2: #474f66;
+  --ink-3: #646c83;
+  --line: #dfe3ec;
+  --line-2: #cdd3e0;
+  /* merek */
+  --indigo: #243f7a;
+  --indigo-soft: #e4eaf6;
+  --seal: #b3202a;
+  --seal-ink: #ffffff;
+  --seal-soft: #f8e5e7;
+  --moon-track: #e7d3d6; --moon-body: #f0e5e8;
+  /* status & nilai */
+  --c-new: #2b5ba8;      --c-new-soft: #e3ecf9;
+  --c-learn: #b3202a;    --c-learn-soft: #f8e5e7;
+  --c-review: #2a7a56;   --c-review-soft: #e0f1e9;
+  --g-again: #b3202a;    --g-again-soft: #f8e5e7;
+  --g-hard: #9a5f0c;     --g-hard-soft: #f9ecd3;
+  --g-good: #2a7a56;     --g-good-soft: #e0f1e9;
+  --g-easy: #2b5ba8;     --g-easy-soft: #e3ecf9;
+  --gold: #8a6411;       --gold-soft: #f6ecd0;
+  /* pengaman */
+  --focus: #243f7a;
+  --overlay: rgba(14, 20, 38, 0.5);
+  --shadow-float: 0 10px 34px rgba(14, 20, 38, 0.18), 0 2px 8px rgba(14, 20, 38, 0.08);
+
+  /* huruf */
+  --f-ui: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', 'Yu Gothic', Meiryo, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-jp: 'Klee One', 'Hiragino Maru Gothic ProN', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif;
+  --t-caption: 0.78rem;
+  --t-small: 0.875rem;
+  --t-body: 1rem;
+  --t-lead: 1.125rem;
+  --t-h2: 1.25rem;
+  --t-h1: 1.75rem;
+
+  /* bentuk & jarak (radius sengaja bertingkat sesuai peran) */
+  --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 26px; --r-pill: 999px;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px;
+  --gutter: 16px;
+  --tabbar-h: 64px;
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* malam: langit nila, bulan merah menyala */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --paper: #0d1322;
+  --surface: #141b30;
+  --surface-2: #1a2340;
+  --ink: #e8ebf4;
+  --ink-2: #aab3ca;
+  --ink-3: #8c96b0;
+  --line: #252f4d;
+  --line-2: #33406a;
+  --indigo: #9db2e6;
+  --indigo-soft: #1c2748;
+  --seal: #e0434b;
+  --seal-ink: #1a0709;
+  --seal-soft: #3a1820;
+  --moon-track: #2d2a41; --moon-body: #1a1d36;
+  --c-new: #86a9ee;      --c-new-soft: #1b2849;
+  --c-learn: #ff8089;    --c-learn-soft: #3a1820;
+  --c-review: #63c89e;   --c-review-soft: #12352a;
+  --g-again: #ff8089;    --g-again-soft: #3a1820;
+  --g-hard: #e6ad52;     --g-hard-soft: #3b2c10;
+  --g-good: #63c89e;     --g-good-soft: #12352a;
+  --g-easy: #86a9ee;     --g-easy-soft: #1b2849;
+  --gold: #e6c05a;       --gold-soft: #3a3014;
+  --focus: #9db2e6;
+  --overlay: rgba(4, 7, 16, 0.66);
+  --shadow-float: 0 12px 38px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --paper: #0d1322; --surface: #141b30; --surface-2: #1a2340;
+    --ink: #e8ebf4; --ink-2: #aab3ca; --ink-3: #8c96b0;
+    --line: #252f4d; --line-2: #33406a;
+    --indigo: #9db2e6; --indigo-soft: #1c2748;
+    --seal: #e0434b; --seal-ink: #1a0709; --seal-soft: #3a1820; --moon-track: #2d2a41; --moon-body: #1a1d36;
+    --c-new: #86a9ee; --c-new-soft: #1b2849; --c-learn: #ff8089; --c-learn-soft: #3a1820; --c-review: #63c89e; --c-review-soft: #12352a;
+    --g-again: #ff8089; --g-again-soft: #3a1820; --g-hard: #e6ad52; --g-hard-soft: #3b2c10;
+    --g-good: #63c89e; --g-good-soft: #12352a; --g-easy: #86a9ee; --g-easy-soft: #1b2849;
+    --gold: #e6c05a; --gold-soft: #3a3014; --focus: #9db2e6;
+    --overlay: rgba(4, 7, 16, 0.66);
+    --shadow-float: 0 12px 38px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@media (min-width: 900px) {
+  :root { --gutter: 24px; }
+}
