@@ -1,0 +1,46 @@
+/* Irodori A2 · Bab 4 — 39 kartu */
+FC.defineShard("Irodori_A2_4", {
+  "Irodori_A2_4_1": [
+    { front: "天気", back: "てんき", backSub: "cuaca" },
+    { front: "晴れ", back: "はれ", backSub: "cerah; baik (cuaca)" },
+    { front: "晴れる", back: "はれる", backSub: "cerah; menjadi cerah" },
+    { front: "いい天気", back: "いいてんき", backSub: "cuacanya cerah; cuacanya baik" },
+    { front: "くもり", back: "くもり", backSub: "berawan" },
+    { front: "くもる", back: "くもる", backSub: "berawan; mendung" },
+    { front: "雨", back: "あめ", backSub: "hujan" },
+    { front: "降る", back: "ふる", backSub: "turun (hujan; salju; dll.)" },
+    { front: "風", back: "かぜ", backSub: "angin" },
+    { front: "吹く", back: "ふく", backSub: "(angin) bertiup; meniup" },
+    { front: "雷", back: "かみなり", backSub: "guntur" },
+    { front: "鳴る", back: "なる", backSub: "(guntur) bergemuruh" },
+    { front: "今", back: "いま", backSub: "sekarang" },
+    { front: "昨日", back: "きのう", backSub: "kemarin" },
+    { front: "だいぶ", back: "だいぶ", backSub: "banyak; cukup" },
+    { front: "嫌になる", back: "いやになる", backSub: "mengganggu; mengesalkan" },
+    { front: "ゆうべ", back: "ゆうべ", backSub: "tadi malam" },
+    { front: "すごい", back: "すごい", backSub: "deras (hujan); hebat" },
+    { front: "本当ですね", back: "ほんとうですね", backSub: "benar sekali" },
+    { front: "夜中", back: "よなか", backSub: "tengah malam" }
+  ],
+  "Irodori_A2_4_2": [
+    { front: "明日", back: "あした", backSub: "besok" },
+    { front: "1日", back: "いちにち", backSub: "sepanjang hari" },
+    { front: "やむ", back: "やむ", backSub: "berhenti" },
+    { front: "ただ", back: "ただ", backSub: "tapi" },
+    { front: "強い", back: "つよい", backSub: "kuat" },
+    { front: "服装", back: "ふくそう", backSub: "pakaian" },
+    { front: "お出かけください", back: "おでかけください", backSub: "silakan bepergian" },
+    { front: "台風", back: "たいふう", backSub: "topan" },
+    { front: "外", back: "そと", backSub: "di luar" },
+    { front: "死ぬ", back: "しぬ", backSub: "mati" },
+    { front: "気温", back: "きおん", backSub: "suhu udara" },
+    { front: "アイス", back: "アイス", backSub: "es krim" },
+    { front: "町", back: "まち", backSub: "kota" },
+    { front: "触る", back: "さわる", backSub: "menyentuh" },
+    { front: "冷たい", back: "つめたい", backSub: "dingin" },
+    { front: "まっしろ（な）", back: "まっしろ（な）", backSub: "putih bersih" },
+    { front: "とっても", back: "とっても", backSub: "sangat; banget" },
+    { front: "まだ", back: "まだ", backSub: "belum" },
+    { front: "遅れる", back: "おくれる", backSub: "terlambat" }
+  ]
+});
