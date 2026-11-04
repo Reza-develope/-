@@ -6,8 +6,8 @@
      Nila & merah sama dengan halaman bunpou, jadi seluruh aplikasi terasa satu keluarga.
    • Satu hal yang diingat: BULAN MERAH (赤月) di Beranda — makin banyak kartu hari ini selesai, makin penuh bulannya.
      Sisanya sengaja tenang: daftar seperti daftar isi buku (bukan tumpukan kartu seragam), garis tipis, sedikit bayangan.
-   • Huruf: Klee One (gaya tulisan tangan buku pelajaran sekolah Jepang) untuk teks Jepang di kartu;
-     Zen Kaku Gothic New untuk semua teks antarmuka. Hanya dua keluarga.
+   • Huruf: Noto Sans JP — huruf gotik polos (gaya tulisan komputer biasa), jelas dan tidak tajam — untuk SEMUA teks,
+     termasuk kanji di kartu. Satu keluarga saja.
    • Warna status mengikuti kebiasaan Anki supaya cepat dikenali: baru = biru, belajar = merah, review = hijau.
    ===================================================================== */
 :root {
@@ -43,8 +43,8 @@
   --shadow-float: 0 10px 34px rgba(14, 20, 38, 0.18), 0 2px 8px rgba(14, 20, 38, 0.08);
 
   /* huruf */
-  --f-ui: 'Zen Kaku Gothic New', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', 'Yu Gothic', Meiryo, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --f-jp: 'Klee One', 'Hiragino Maru Gothic ProN', 'Zen Kaku Gothic New', 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic', Meiryo, sans-serif;
+  --f-ui: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', Meiryo, 'Noto Sans CJK JP', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --f-jp: var(--f-ui);   /* teks Jepang (kanji/kana) memakai huruf polos yang sama dengan antarmuka */
   --t-caption: 0.78rem;
   --t-small: 0.875rem;
   --t-body: 1rem;
