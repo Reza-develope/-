@@ -72,27 +72,30 @@
       var obj; try { obj = JSON.parse(f.text); } catch (e) { UI.alert('Berkas tidak valid', 'Berkas ini bukan JSON yang bisa dibaca.'); return; }
       var modern = obj && obj.format === 'akatsuki-fc-backup', legacy = obj && obj.decks && obj.log;
       if (!modern && !legacy) { UI.alert('Format tidak dikenali', 'Pilih berkas cadangan yang diunduh dari aplikasi ini.'); return; }
-      var info = modern ? U.fmtNum((obj.cards || []).length) + ' catatan kartu, ' + U.fmtNum((obj.log || []).length) + ' riwayat jawaban, ' + (obj.marks || []).length + ' kartu bintang.'
+      var nMine = modern ? Object.keys(obj.kv || {}).filter(function (k) { return k.indexOf(FC.userDecks.KEY) === 0; }).length : 0;
+      var info = modern ? U.fmtNum((obj.cards || []).length) + ' catatan kartu, ' + U.fmtNum((obj.log || []).length) + ' riwayat jawaban, ' + (obj.marks || []).length + ' kartu bintang' + (nMine ? ', ' + nMine + ' deck buatan sendiri.' : '.')
         : 'Cadangan versi lama. Riwayat harinya akan dihitung di Statistik; jadwal kartu dimulai dari awal dengan FSRS.';
-      UI.dialog({ title: 'Pulihkan cadangan', text: info + (modern ? ' "Gabung" menambahkan ke data sekarang (yang lebih baru menang). "Ganti" menghapus data sekarang lebih dulu.' : ''), cancelValue: false, actions: modern ? [
+      UI.dialog({ title: 'Pulihkan cadangan', text: info + (modern ? ' "Gabung" menambahkan ke data sekarang (yang lebih baru menang). "Ganti" menghapus progres sekarang lebih dulu; deck buatan sendiri yang hanya ada di perangkat ini tetap dipertahankan.' : ''), cancelValue: false, actions: modern ? [
         { label: 'Batal', value: false }, { label: 'Ganti', value: 'replace', danger: true }, { label: 'Gabung', value: 'merge', primary: true }
       ] : [{ label: 'Batal', value: false }, { label: 'Impor', value: 'merge', primary: true }] }).then(function (mode) {
         if (!mode) return;
         S.importJSON(obj, mode).then(function (rep) {
-          UI.toast(modern ? 'Dipulihkan: ' + rep.cards + ' kartu, ' + rep.log + ' riwayat.' : 'Cadangan lama dibaca.', { ms: 4200 });
-          if (mode === 'replace') setTimeout(function () { location.reload(); }, 900); else { FC.bus.emit('progress'); FC.bus.emit('stars'); FC.app.refresh(); }
+          UI.toast(modern ? 'Dipulihkan: ' + rep.cards + ' kartu, ' + rep.log + ' riwayat' + (rep.decks ? ', ' + rep.decks + ' deck' : '') + '.' : 'Cadangan lama dibaca.', { ms: 4200 });
+          if (mode === 'replace') setTimeout(function () { location.reload(); }, 900);
+          else { try { FC.userDecks.load(); } catch (e) { console.error(e); } FC.bus.emit('progress'); FC.bus.emit('stars'); FC.app.refresh(); }
         }).catch(function (e) { UI.alert('Pemulihan gagal', (e && e.message) || 'Berkas tidak bisa dipakai.'); });
       });
     });
   }
   function exportCsv() { S.exportCSV().then(function (csv) { UI.download('riwayat-review-' + stamp() + '.csv', '﻿' + csv, 'text/csv;charset=utf-8'); }); }
   function wipe() {
-    UI.confirm({ title: 'Hapus semua progres?', text: 'Jadwal semua kartu, riwayat review, kartu bintang, skor kuis, dan progres bunpou dihapus dari perangkat ini. Pengaturan kembali ke bawaan. Tidak bisa dibatalkan.', ok: 'Lanjut', danger: true }).then(function (ok) {
+    var mineN = FC.userDecks.totals().decks;
+    UI.confirm({ title: 'Hapus semua progres?', text: 'Jadwal semua kartu, riwayat review, kartu bintang, skor kuis, dan progres bunpou dihapus dari perangkat ini. Pengaturan kembali ke bawaan. Tidak bisa dibatalkan.' + (mineN ? ' Deck buatanmu (' + mineN + ' deck) tetap ada, hanya jadwal belajarnya yang dihapus.' : ''), ok: 'Lanjut', danger: true }).then(function (ok) {
       if (!ok) return;
       UI.confirm({ title: 'Yakin hapus semuanya?', text: 'Unduh cadangan dulu bila kamu mungkin butuh data ini lagi.', ok: 'Hapus semua', cancel: 'Batal', danger: true }).then(function (ok2) {
         if (!ok2) return;
         try { Object.keys(localStorage).filter(function (k) { return k.indexOf('bunpou:') === 0; }).forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
-        S.reset(false).then(function () { UI.toast('Semua progres dihapus.'); setTimeout(function () { location.reload(); }, 700); });
+        S.reset(false, FC.userDecks.KEY).then(function () { UI.toast('Semua progres dihapus.'); setTimeout(function () { location.reload(); }, 700); });
       });
     });
   }
@@ -144,6 +147,7 @@
       row('Penyimpanan', null, status, true),
       row('Unduh cadangan', S.getKv('lastBackup') ? 'Terakhir: ' + U.fmtAgo(S.getKv('lastBackup')) + '.' : 'Belum pernah. Disarankan sebelum ganti HP atau menghapus data browser.', h('button.btn.btn-sm', { type: 'button', onclick: exportBackup }, UI.iconEl('download', 'sm'), 'Unduh')),
       row('Pulihkan cadangan', 'Dari berkas .json hasil unduhan.', h('button.btn.btn-sm', { type: 'button', onclick: importBackup }, UI.iconEl('upload', 'sm'), 'Pilih berkas')),
+      FC.userDecks.totals().decks ? row('Deck buatanmu', U.fmtNum(FC.userDecks.totals().decks) + ' deck, ' + U.fmtNum(FC.userDecks.totals().cards) + ' kartu. Ikut tersimpan di cadangan.', h('button.btn.btn-sm', { type: 'button', onclick: function () { FC.app.go('decks'); } }, 'Buka')) : null,
       row('Ekspor riwayat review', 'Berkas CSV untuk dibuka di spreadsheet.', h('button.btn.btn-sm', { type: 'button', onclick: exportCsv }, UI.iconEl('download', 'sm'), 'CSV'))
     ];
     var offBtn = h('button.btn.btn-sm', { type: 'button' }, 'Unduh semua deck');
@@ -154,12 +158,12 @@
     });
     if (D.allLoaded()) { offBtn.textContent = 'Sudah diunduh'; offBtn.disabled = true; }
     dataRows.push(row('Pakai tanpa internet', 'Isi deck diunduh saat dibuka. Unduh semuanya sekarang agar bisa dipakai offline.', offBtn));
-    el.appendChild(group('Data dan cadangan', 'Progres belajar disimpan di browser ini. Unduh cadangan secara berkala.', dataRows));
+    el.appendChild(group('Data dan cadangan', 'Progres belajar dan deck buatanmu disimpan di browser ini. Unduh cadangan secara berkala.', dataRows));
     refreshStatus(status);
 
-    el.appendChild(group('Zona bahaya', null, [row('Hapus semua progres', 'Mengembalikan aplikasi ke kondisi awal di perangkat ini.', h('button.btn.btn-sm.btn-danger', { type: 'button', onclick: wipe }, UI.iconEl('trash', 'sm'), 'Hapus'))]));
+    el.appendChild(group('Zona bahaya', null, [row('Hapus semua progres', 'Menghapus jadwal belajar, riwayat, dan bintang di perangkat ini. Deck buatanmu tetap ada.', h('button.btn.btn-sm.btn-danger', { type: 'button', onclick: wipe }, UI.iconEl('trash', 'sm'), 'Hapus'))]));
 
-    var nDecks = D.decks.filter(function (d) { return d.shard; }).length;
+    var nDecks = D.decks.filter(function (d) { return d.shard && !d.user; }).length;
     el.appendChild(h('section.set-group.about', h('h2.section-title', 'Tentang'),
       h('details.fsrs-note', h('summary', 'Cara kerja jadwal belajar'),
         h('p', 'Setiap kartu punya tiga angka yang diperbarui tiap kali dijawab: stabilitas (berapa lama ingatan bertahan), kesulitan, dan peluang ingat saat ini. FSRS-7 memakai dua jejak ingatan, cepat dan lambat, sehingga jeda antar pengulangan lebih akurat dibanding aturan tetap.'),
