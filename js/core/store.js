@@ -1,7 +1,7 @@
 /* =====================================================================
    js/core/store.js — PENYIMPANAN & PENCATATAN.
    • IndexedDB (database "akatsuki-fc"): cards (status SRS per kartu+arah), log (riwayat review,
-     hanya ditambah), marks (⭐), kv (hitungan harian, dll). Semua dibaca ke memori saat mulai,
+     hanya ditambah), marks (⭐), kv (hitungan harian, deck buatan pengguna `ud:*`, dll). Semua dibaca ke memori saat mulai,
      jadi UI tidak pernah menunggu disk; tulis ke disk dilakukan per jawaban dalam satu transaksi.
    • localStorage hanya untuk pengaturan kecil (butuh sinkron saat halaman dimuat: tema, dst).
    • Cadangan JSON (gabung/ganti), ekspor CSV riwayat, migrasi dari versi lama, minta penyimpanan permanen.
@@ -14,6 +14,7 @@
   var U = FC.util;
 
   var DB_NAME = 'akatsuki-fc', DB_VER = 1, SET_KEY = 'fc.settings.v2', MIG_KEY = 'fc.migrated.v2';
+  var UD_PREFIX = 'ud:';    // kunci kv deck buatan pengguna (satu kunci per deck) — ikut cadangan karena kv diekspor utuh
 
   var DEFAULTS = {
     theme: 'auto',            // auto | light | dark
@@ -182,6 +183,14 @@
     var tx = S._db.transaction('kv', 'readwrite'); tx.objectStore('kv').put({ key: key, val: val });
     return track(txDone(tx));
   };
+  S.delKv = function (key) {
+    delete S._kv[key];
+    if (!S._db) return Promise.resolve();
+    var tx = S._db.transaction('kv', 'readwrite'); tx.objectStore('kv').delete(key);
+    return track(txDone(tx));
+  };
+  /** semua kunci kv berawalan tertentu (dipakai deck buatan pengguna: "ud:<id>") */
+  S.kvKeys = function (prefix) { return Object.keys(S._kv).filter(function (k) { return k.indexOf(prefix) === 0; }); };
 
   /* ---------- riwayat ---------- */
   S.allLog = function () {
@@ -243,13 +252,13 @@
   /** Impor cadangan (format v2 atau cadangan SRS lama). mode: 'merge' | 'replace'. */
   S.importJSON = function (obj, mode) {
     if (!obj || typeof obj !== 'object') return Promise.reject(new Error('Berkas bukan cadangan yang valid'));
-    var rep = { cards: 0, log: 0, marks: 0, legacy: false };
+    var rep = { cards: 0, log: 0, marks: 0, decks: 0, legacy: false };
     if (obj.format !== 'akatsuki-fc-backup') {
       if (obj.decks && obj.log) { S.setKv('legacySrs', obj); rep.legacy = true; mergeLegacyDays(obj); return Promise.resolve(rep); }
       return Promise.reject(new Error('Format cadangan tidak dikenali'));
     }
     var replace = mode === 'replace';
-    var work = replace ? S.reset(true) : Promise.resolve();
+    var work = replace ? S.reset(true, UD_PREFIX) : Promise.resolve();      // deck buatan pengguna bukan progres: tidak ikut terhapus
     return work.then(function () { return S.allLog(); }).then(function (curLog) {
       var seen = new Set(curLog.map(function (l) { return l.id; }));
       var cards = [], log = [], marks = [];
@@ -265,6 +274,15 @@
       var kv = obj.kv || {};
       if (replace || !S._kv.daily) { if (kv.daily) S._kv.daily = kv.daily; }
       ['legacyDays', 'legacySrs'].forEach(function (k) { if (kv[k] && (replace || !S._kv[k])) S._kv[k] = kv[k]; });
+      // deck buatan pengguna ("ud:<id>"): gabung → yang `updated`-nya lebih baru menang; ganti → deck di cadangan menggantikan deck
+      // yang sama di perangkat ini, sedangkan deck yang HANYA ada di perangkat tetap dipertahankan (cadangan lama tidak boleh menghapus deck baru).
+      // Isinya tidak dipercaya begitu saja: userdecks.js membersihkannya lagi saat deck dimuat (FC.userDecks.load).
+      Object.keys(kv).forEach(function (k) {
+        var v = kv[k];
+        if (k.indexOf(UD_PREFIX) !== 0 || !v || typeof v !== 'object' || !Array.isArray(v.cards)) return;
+        var cur = S._kv[k];
+        if (replace || !cur || (+v.updated || 0) > (+cur.updated || 0)) { S._kv[k] = v; rep.decks++; }
+      });
       if (replace && obj.settings) { S.settings = Object.assign({}, DEFAULTS, obj.settings); saveSettings(); }
       if (obj.bunpou) Object.keys(obj.bunpou).forEach(function (k) { try { if (replace || localStorage.getItem(k) == null) localStorage.setItem(k, obj.bunpou[k]); } catch (e) {} });
       rep.cards = cards.length; rep.log = log.length; rep.marks = marks.length;
@@ -278,13 +296,17 @@
     });
   };
 
-  /** Hapus semua progres. keepSettings=true untuk dipakai internal saat "ganti" cadangan. */
-  S.reset = function (internal) {
-    S._cards = new Map(); S._marks = new Map(); S._kv = {}; S._logCache = []; S._lastLogId = 0; S._memLog = [];
+  /** Hapus semua progres. internal=true dipakai saat "ganti" cadangan (pengaturan tidak direset).
+      keepPrefix: kunci kv berawalan ini dipertahankan (deck buatan pengguna bukan progres, jadi tidak ikut terhapus). */
+  S.reset = function (internal, keepPrefix) {
+    var keep = {};
+    if (keepPrefix) Object.keys(S._kv).forEach(function (k) { if (k.indexOf(keepPrefix) === 0) keep[k] = S._kv[k]; });
+    S._cards = new Map(); S._marks = new Map(); S._kv = Object.assign({}, keep); S._logCache = []; S._lastLogId = 0; S._memLog = [];
     if (!internal) { S.settings = Object.assign({}, DEFAULTS); saveSettings(); try { localStorage.setItem(MIG_KEY, '1'); } catch (e) {} }
     if (!S._db) return Promise.resolve();
     var tx = S._db.transaction(['cards', 'log', 'marks', 'kv'], 'readwrite');
     ['cards', 'log', 'marks', 'kv'].forEach(function (n) { tx.objectStore(n).clear(); });
+    Object.keys(keep).forEach(function (k) { tx.objectStore('kv').put({ key: k, val: keep[k] }); });
     return txDone(tx);
   };
 
