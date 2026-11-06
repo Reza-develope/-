@@ -75,6 +75,8 @@
   function boot() {
     try { FC.data.init(); } catch (e) { return fatal('Data deck gagal dimuat', e); }
     FC.store.ready.then(function () { return FC.store.migrateLegacy(); }).then(function (rep) {
+      var ud = { decks: 0, skipped: 0 };
+      try { ud = FC.userDecks.load(); } catch (e) { console.error(e); }          // deck buatan pengguna ("Deck Saya") hidup di penyimpanan, bukan di berkas data
       applyTheme(); buildChrome(); syncFuri();
       FC.store.onChange(function (keys) {
         if (keys.indexOf('theme') >= 0) applyTheme();
@@ -85,6 +87,7 @@
       root.addEventListener('hashchange', route);
       route();
       if (rep && rep.stars) UI.toast(rep.stars + ' kartu bintang dari versi lama dipindahkan.', { ms: 5000 });
+      if (ud.skipped) UI.toast(ud.skipped + ' deck buatan sendiri rusak dan dilewati. Bila punya cadangan, pulihkan dari Pengaturan.', { ms: 8000 });
       registerSW();
       FC.ready = true; FC.bus.emit('ready');
     }).catch(function (e) { fatal('Aplikasi gagal dimulai', e); });

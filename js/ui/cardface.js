@@ -34,9 +34,14 @@
     if (html.indexOf(target) >= 0) return html.replace(target, '<mark class="hl">' + target + '</mark>');
     return html;
   };
+  // Contoh kalimat boleh memuat penanda furigana (<ruby>…<rt>…</rt></ruby>) dan hanya itu. Tag lain dilucuti, supaya teks buatan
+  // pengguna (atau cadangan/impor yang tidak tepercaya) tidak bisa menyuntikkan HTML. Isi deck bawaan tidak berubah.
+  F.safeExample = function (s) {
+    return String(s).split(/(<\/?(?:ruby|rt)>)/i).map(function (part, i) { return i % 2 ? part.toLowerCase() : esc(part); }).join('');
+  };
   F.exampleBox = function (c) {
     if (!c.example || !FC.store.get('showExample')) return '';
-    return '<div class="example"><div class="example-label">Contoh penggunaan</div><div class="example-jp jp">' + F.processExample(c.example, c.front) +
+    return '<div class="example"><div class="example-label">Contoh penggunaan</div><div class="example-jp jp">' + F.processExample(F.safeExample(c.example), c.front) +
       '</div>' + (c.exampleMeaning ? '<div class="example-id">' + esc(c.exampleMeaning) + '</div>' : '') + '</div>';
   };
 

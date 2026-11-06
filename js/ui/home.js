@@ -52,7 +52,9 @@
             FC.store.set('active', cur); UI.toast(d.title + ' masuk ke sesi harian'); FC.bus.emit('progress');
           } }, 'Tambah')));
       })),
-      h('div.sheet-actions', h('button.btn.btn-block', { type: 'button', onclick: function () { FC.app.go('decks'); } }, 'Lihat semua deck')));
+      h('div.sheet-actions',
+        h('button.btn.btn-block', { type: 'button', onclick: function () { FC.app.go('decks'); } }, 'Lihat semua deck'),
+        FC.myDecks ? h('button.btn.btn-quiet.btn-block', { type: 'button', onclick: function () { FC.myDecks.create(); } }, 'Atau buat deck sendiri') : null));
     el.appendChild(box);
   }
 

@@ -197,8 +197,13 @@
     // tombol ⋯ di bilah atas: info, tunda, bintang, akhiri
     V.bar.querySelector('.fullbar-actions').appendChild(h('button.btn.btn-icon', { type: 'button', 'aria-label': 'Menu sesi', onclick: function () {
       if (!sess) return;
+      var mineDeck = item && FC.myDecks && D.originOf(item.card), mine = !!mineDeck && D.isUserDeck(mineDeck);      // kartu dari "Deck Saya" boleh diperbaiki langsung dari sini
       var sh = UI.sheet({ title: 'Sesi belajar', sub: scopeTitle(scope), body: h('div.rows',
         h('button.row', { type: 'button', onclick: function () { sh.close(); if (item) STUDY.cardInfo(item.card); } }, h('div.row-main', h('div.row-title', 'Info kartu'), h('div.row-sub', 'Status FSRS dan riwayat jawaban')), h('div.row-end', UI.iconEl('chev', 'sm'))),
+        mine ? h('button.row', { type: 'button', onclick: function () {
+          sh.close(); var cur = item; if (!cur) return;
+          FC.myDecks.editCard(mineDeck, D.cid(cur.card), { allowDelete: false, onSaved: function () { if (item === cur && !V.dead) present(cur, revealed, true); } });      // hapus kartu sengaja tidak ditawarkan di tengah sesi
+        } }, h('div.row-main', h('div.row-title', 'Ubah kartu'), h('div.row-sub', 'Perbaiki tulisan, cara baca, atau arti')), h('div.row-end', UI.iconEl('chev', 'sm'))) : null,
         h('button.row', { type: 'button', onclick: function () { sh.close(); bury(); } }, h('div.row-main', h('div.row-title', 'Tunda kartu ini'), h('div.row-sub', 'Muncul lagi besok')), h('div.row-end', UI.iconEl('chev', 'sm'))),
         h('button.row', { type: 'button', onclick: function () { sh.close(); V.layer.close(); } }, h('div.row-main', h('div.row-title', 'Akhiri sesi'), h('div.row-sub', 'Jawaban sebelumnya sudah tersimpan')), h('div.row-end', UI.iconEl('chev', 'sm')))), focus: false });
     } }, UI.iconEl('more')));

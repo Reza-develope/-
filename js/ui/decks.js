@@ -60,6 +60,7 @@
     return h('button.row.deck-row', { type: 'button', onclick: function () { DU.openDeck(d.id); } }, main, end);
   };
   DU.starRow = starRow;
+  DU.switchRow = switchRow;       // dipakai juga oleh editor deck buatan sendiri (mydecks.js)
   function starRow() {
     var n = FC.store.starCount();
     return h('button.row.deck-row.star-row', { type: 'button', onclick: function () { DU.openStar(); } },
@@ -111,7 +112,10 @@
       return;
     }
     if (FC.store.starCount() && (state.group === 'all')) list.appendChild(h('div.rows.star-rows', starRow()));
-    D.groups.forEach(function (g) { if (state.group === 'all' || state.group === g.id) list.appendChild(groupSection(g, LS)); });
+    D.groups.forEach(function (g) {
+      if (state.group !== 'all' && state.group !== g.id) return;
+      list.appendChild(g.user && FC.myDecks ? FC.myDecks.section(LS) : groupSection(g, LS));      // "Deck Saya": deck buatan pengguna (mydecks.js)
+    });
   }
 
   FC.app.register('decks', {
@@ -159,15 +163,18 @@
   function fill(L, body, id, cards) {
     var S = FC.store, d = D.deck(id), n = numbers(cards), lim = FC.session.limits(Date.now());
     U.clear(body);
+    var go = function (fn) { return function () { var below = UI.layers(); fn(); below.forEach(function (x) { x.close(); }); }; };   // buka layar belajar dulu, baru tutup SEMUA lembar di bawahnya (satu entri riwayat saja)
+    var mine = !!d.user && !!FC.myDecks;
+    if (mine && !cards.length) { body.appendChild(FC.myDecks.emptyState(id, go)); body.appendChild(FC.myDecks.footer(id, L)); return; }      // deck buatan sendiri yang masih kosong
     var todayNew = Math.min(n.fresh, lim.newLeft);
     body.appendChild(h('div.deck-stats', statBox(n.fresh, 'Baru', 'new'), statBox(n.due, 'Jatuh tempo', 'due'), statBox(n.mature, 'Dikuasai', 'mature'), statBox(n.total, 'Total')));
     body.appendChild(stackBar(n)); body.appendChild(legend());
-    var go = function (fn) { return function () { var below = UI.layers(); fn(); below.forEach(function (x) { x.close(); }); }; };   // buka layar belajar dulu, baru tutup SEMUA lembar di bawahnya (satu entri riwayat saja)
     body.appendChild(h('div.sheet-actions',
       h('button.btn.btn-primary.btn-block', { type: 'button', onclick: go(function () { FC.study.start({ type: 'deck', id: id }); }) }, 'Belajar'),
       h('p.hint.center', n.due + ' review dan ' + todayNew + ' kartu baru untuk hari ini'),
       h('button.btn.btn-block', { type: 'button', onclick: go(function () { FC.study.cram({ type: 'deck', id: id }); }) }, 'Latihan bebas'),
       h('p.hint.center', 'Membalik semua kartu tanpa mengubah jadwal')));
+    if (mine) body.appendChild(FC.myDecks.editRow(id, go));
     var active = (S.get('active') || []).indexOf(id) >= 0, locked = !!D.lockOf(id) || (d.parent && !!D.lockOf(d.parent));
     body.appendChild(switchRow('Ikut sesi harian', locked ? 'Deck terkunci baru ikut sesi harian setelah kuncinya dibuka di halaman ini.' : 'Kartu baru dan review deck ini muncul di Beranda.', active, function (on) {
       var cur = (S.get('active') || []).filter(function (x) { return x !== id; });
@@ -191,6 +198,7 @@
         });
       } }, 'Atur ulang progres deck'));
     }
+    if (mine) body.appendChild(FC.myDecks.footer(id, L));
   }
 
   /* ---------- ⭐ Kartu Susah ---------- */
