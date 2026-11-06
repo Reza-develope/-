@@ -379,3 +379,85 @@ kbd { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 500; line-height
 .hb-v em { font-style: normal; color: var(--ink-3); margin-left: 4px; }
 .vsec { margin-top: var(--s7); }
 .vsec .section-title { margin-bottom: var(--s2); }
+
+/* =====================================================================
+   DECK SAYA — deck buatan pengguna: bagian di tab Deck, editor, tempel banyak, bagikan
+   (js/ui/mydecks.js). Warna & jarak tetap dari tokens.css; bagian ini memakai cap merah (--seal) sebagai penanda "milikmu".
+   ===================================================================== */
+.group-head.has-actions { align-items: center; }
+.group-head.has-actions .group-sub { margin-left: 0; }
+.group-actions { margin-left: auto; display: flex; gap: var(--s2); flex: none; }
+.group-mine .group-head { border-bottom-color: var(--seal); }
+.mine-empty { margin-top: var(--s3); padding: var(--s5) var(--s4); text-align: center; background: var(--surface); border: 1.5px dashed var(--line-2); border-radius: var(--r-lg); }
+.mine-empty h3 { font-size: var(--t-lead); line-height: 1.3; margin-bottom: var(--s2); }
+.mine-empty p { color: var(--ink-2); font-size: var(--t-small); max-width: 46ch; margin: 0 auto var(--s4); }
+.mine-btns { display: flex; flex-wrap: wrap; gap: var(--s2); justify-content: center; }
+.mine-tail { padding-top: var(--s2); }
+.my-empty { text-align: center; padding: var(--s3) 0 var(--s1); }
+.my-empty h3 { font-size: var(--t-lead); line-height: 1.3; margin-bottom: var(--s2); }
+.my-empty p { color: var(--ink-2); font-size: var(--t-small); max-width: 40ch; margin: 0 auto var(--s2); }
+.my-foot-actions { display: grid; gap: var(--s1); margin-top: var(--s3); }
+.my-foot-actions .btn { margin-top: 0; }
+
+/* editor */
+.my-inner .banner { margin: 0 0 var(--s3); }
+.my-h { font-size: var(--t-lead); font-weight: 700; line-height: 1.3; margin-bottom: var(--s3); }
+.my-add { padding: var(--s4); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); }
+.my-form { display: grid; gap: var(--s3); }
+.my-form > .sheet-actions { margin-top: var(--s1); }
+.my-more { border-top: 1px solid var(--line); }
+.my-more > summary { cursor: pointer; padding: var(--s3) 0 var(--s2); color: var(--indigo); font-size: var(--t-small); font-weight: 700; }
+.my-more[open] { display: grid; gap: var(--s3); padding-bottom: var(--s1); }
+.my-more[open] > summary { padding-bottom: 0; }
+.field-err { color: var(--seal); font-size: var(--t-caption); font-weight: 500; line-height: 1.4; }
+.field-err:empty { display: none; }
+.input[aria-invalid='true'] { border-color: var(--seal); }
+.select.full { width: 100%; }
+.my-status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s2); margin-top: var(--s3); font-size: var(--t-small); }
+.my-status:empty { display: none; }
+.my-status .ico { color: var(--c-review); }
+.my-status-text { flex: 1; min-width: 0; }
+.my-autosave { margin-top: var(--s3); }
+.my-tools { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); margin: var(--s4) 0 var(--s2); }
+.my-tools .btn { min-width: 0; padding: 0 var(--s3); font-size: var(--t-small); }
+.my-inner > .setting-row { border-top: 1px solid var(--line); }
+.my-search { margin: var(--s4) 0 var(--s1); }
+.citem-no { flex: none; min-width: 26px; padding-top: 0.6rem; text-align: right; color: var(--ink-3); font-size: var(--t-caption); }
+.my-row .citem-end { align-self: center; color: var(--ink-3); }
+.my-row:focus-visible { outline-offset: -2px; }
+.my-editor .fullbar-title .s, .my-bulk .fullbar-title .s { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }      /* judul deck panjang tidak membuat bilah atas membengkak */
+@media (max-width: 359px) { .my-tools .btn .ico { display: none; } }
+
+/* tempel banyak */
+.my-bulk .full-inner { display: grid; gap: var(--s3); align-content: start; }
+.my-namebox { display: grid; gap: var(--s3); padding-bottom: var(--s3); border-bottom: 1px solid var(--line); }
+.my-lead { color: var(--ink-2); font-size: var(--t-small); line-height: 1.6; }
+.my-sample { padding: 0 var(--s3); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); }
+.my-sample > summary { padding: var(--s3) 0; }
+.my-sample[open] { padding-bottom: var(--s3); }
+.my-pre { margin: 0; padding: var(--s3); background: var(--surface-2); border-radius: var(--r-sm); font-size: var(--t-small); line-height: 1.7; white-space: pre; overflow-x: auto; }
+.my-notes { margin: 0; padding-left: var(--s4); list-style: disc; color: var(--ink-2); font-size: var(--t-small); }
+.my-notes li { margin-bottom: 4px; }
+.textarea { display: block; width: 100%; min-height: 168px; padding: var(--s3) var(--s4); border-radius: var(--r-sm); border: 1.5px solid var(--line-2); background: var(--surface); color: var(--ink); line-height: 1.7; resize: vertical; }
+.textarea::placeholder { color: var(--ink-3); }
+.textarea:focus-visible { outline: none; border-color: var(--focus); box-shadow: 0 0 0 3px var(--indigo-soft); }
+.my-bulk-tools { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.my-pv { display: grid; gap: var(--s2); }
+.pv-head b { font-size: 1.5rem; color: var(--c-review); }
+.pv-note { color: var(--ink-2); font-size: var(--t-small); }
+.pv-table { border-top: 1px solid var(--line); }
+.pv-row { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--s2); padding: 7px 0; border-bottom: 1px solid var(--line); font-size: var(--t-small); }
+.pv-row > span:first-child { font-weight: 700; }
+.pv-more { color: var(--ink-3); font-size: var(--t-caption); }
+.pv-skip { padding: var(--s3); border-radius: var(--r-md); background: var(--g-hard-soft); font-size: var(--t-small); }
+.pv-skip-title { font-weight: 700; margin-bottom: 4px; }
+.pv-skip-row { padding: 5px 0; border-top: 1px solid color-mix(in srgb, var(--g-hard) 28%, transparent); }
+.pv-skip-raw, .pv-skip-more { color: var(--ink-2); font-size: var(--t-caption); }
+.pv-skip-more { padding-top: 5px; }
+.my-foot { flex: none; padding: var(--s3) var(--gutter) calc(var(--s3) + var(--safe-b)); background: var(--paper); border-top: 1px solid var(--line); }
+.my-foot-inner { max-width: 640px; margin: 0 auto; }
+
+/* bagikan */
+.my-share { display: grid; gap: var(--s3); }
+.my-share .sheet-actions { margin-top: var(--s1); }
+.my-share .textarea { min-height: 150px; }
