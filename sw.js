@@ -6,15 +6,15 @@
    Saat data/kode berubah, naikkan BUILD di sini DAN di index.html (jalankan: node tools/bump-build.js).
    ===================================================================== */
 'use strict';
-const BUILD = '2026.11.04';
+const BUILD = '2026.11.06';
 const SHELL = 'fc-shell-' + BUILD, DATA = 'fc-data-' + BUILD, FONTS = 'fc-fonts-v1';
 const SHELL_FILES = [
   './', 'index.html', 'manifest.webmanifest', 'assets/icon.svg', 'assets/icons/icon-192.png',
   'css/tokens.css', 'css/base.css', 'css/screens.css',
   'data/manifest.js', 'data/locks.js',
-  'js/core/util.js', 'js/core/fsrs.js', 'js/core/scheduler.js', 'js/core/store.js', 'js/core/data.js', 'js/core/session.js',
+  'js/core/util.js', 'js/core/fsrs.js', 'js/core/scheduler.js', 'js/core/store.js', 'js/core/data.js', 'js/core/session.js', 'js/core/userdecks.js',
   'js/core/furigana-data.js', 'js/core/furigana.js', 'js/core/tts.js',
-  'js/ui/kit.js', 'js/ui/cardface.js', 'js/ui/app.js', 'js/ui/home.js', 'js/ui/decks.js', 'js/ui/study.js', 'js/ui/practice.js', 'js/ui/stats.js', 'js/ui/settings.js'
+  'js/ui/kit.js', 'js/ui/cardface.js', 'js/ui/app.js', 'js/ui/home.js', 'js/ui/decks.js', 'js/ui/mydecks.js', 'js/ui/study.js', 'js/ui/practice.js', 'js/ui/stats.js', 'js/ui/settings.js'
 ];
 
 self.addEventListener('install', (e) => {

@@ -14,7 +14,7 @@
   <script>
     (function () {
       window.FC = window.FC || {};
-      FC.BUILD = '2026.11.04';   // naikkan angka ini saat data/kode berubah (sw.js memakai versi yang sama)
+      FC.BUILD = '2026.11.06';   // naikkan angka ini saat data/kode berubah (sw.js memakai versi yang sama)
       try {
         var s = JSON.parse(localStorage.getItem('fc.settings.v2') || '{}');
         if (s.theme === 'dark' || s.theme === 'light') document.documentElement.setAttribute('data-theme', s.theme);
@@ -52,6 +52,7 @@
   <script src="js/core/store.js"></script>
   <script src="js/core/data.js"></script>
   <script src="js/core/session.js"></script>
+  <script src="js/core/userdecks.js"></script>   <!-- "Deck Saya": deck buatan pengguna (disimpan di browser, ikut cadangan) -->
   <script src="js/core/furigana-data.js"></script>
   <script src="js/core/furigana.js"></script>
   <script src="js/core/tts.js"></script>
@@ -61,6 +62,7 @@
   <script src="js/ui/app.js"></script>   <!-- kerangka + rute; layar di bawah mendaftar ke FC.app -->
   <script src="js/ui/home.js"></script>
   <script src="js/ui/decks.js"></script>
+  <script src="js/ui/mydecks.js"></script>   <!-- editor "Deck Saya": bikin deck, tambah/ubah kartu, tempel banyak, bagikan -->
   <script src="js/ui/study.js"></script>
   <script src="js/ui/practice.js"></script>
   <script src="js/ui/stats.js"></script>

@@ -15,6 +15,9 @@ dan dipasang di layar utama HP sebagai aplikasi (PWA, bisa offline).
 - **Latihan bebas (cram).** Mengulang deck tanpa mengubah jadwal.
 - **Deck dimuat per bagian.** Isi kartu dipecah jadi 62 berkas kecil yang baru diunduh saat dibutuhkan,
   bukan satu berkas 1,4 MB yang dimuat di awal.
+- **Deck Saya: bikin deck sendiri tanpa coding.** Siswa bisa membuat, mengubah, menghapus, dan membagikan deck langsung dari web
+  (satu per satu, tempel dari Excel/WhatsApp, atau impor `.txt`/`.csv`). Deck buatan sendiri memakai mesin yang sama dengan deck
+  bawaan: jadwal FSRS-7, sesi harian, bintang, statistik, offline, dan cadangan. Lihat [Deck Saya](#deck-saya-siswa-bikin-deck-sendiri).
 - **Pilihan ganda & Bunpou.** Kuis pilihan ganda dengan skor terbaik tersimpan, plus latihan tata bahasa A1/A2/A2.2.
 - **Statistik.** Heatmap 20 minggu, perkiraan ulasan ke depan, sebaran status kartu, retensi 30 hari vs target, sebaran jawaban.
   Setiap grafik punya versi tabel.
@@ -68,8 +71,8 @@ data/
   locks.js              gembok deck dan kuis
   decks/*.js            isi kartu, satu berkas per deck (dimuat saat dibutuhkan)
   quiz/*.js             isi soal pilihan ganda, satu berkas per kuis
-js/core/                mesin: util, fsrs, scheduler, store (IndexedDB), data, session, furigana, tts
-js/ui/                  tampilan: app (rute, tema), kit (komponen), home, decks, study, practice, stats, settings
+js/core/                mesin: util, fsrs, scheduler, store (IndexedDB), data, session, furigana, tts, userdecks (deck buatan pengguna)
+js/ui/                  tampilan: app (rute, tema), kit (komponen), home, decks, mydecks (editor Deck Saya), study, practice, stats, settings
 tools/                  skrip pembangun dan tes (tidak ikut dimuat browser)
 ```
 
@@ -103,6 +106,59 @@ ada di komentar kepala `data/manifest.js`.
 Artinya kartu yang sama di dua deck memakai satu jadwal belajar, dan menyisipkan kartu di tengah deck tidak merusak progres.
 Konsekuensinya: kalau kamu mengubah tulisan `front` atau `back` sebuah kartu, ia dianggap kartu baru. Mengubah `backSub` (arti) aman.
 
+## Deck Saya: siswa bikin deck sendiri
+
+Siapa pun yang memakai aplikasi bisa membuat deck sendiri langsung dari web, tanpa coding dan tanpa minta ke pemilik situs.
+Deck buatan sendiri memakai mesin yang sama dengan deck bawaan (jadwal FSRS-7, sesi harian, bintang, statistik, mode offline).
+
+**Cara pakai (untuk siswa)**
+
+1. Buka tab **Deck** → bagian **Deck Saya** → **Buat deck**, lalu beri nama.
+2. Isi kartunya dengan salah satu cara:
+   - **Satu per satu** di editor: tulisan Jepang → cara baca → arti, Enter untuk pindah kolom. Cara baca boleh dikosongkan
+     kalau katanya hanya hiragana/katakana (otomatis diisi sama dengan tulisannya).
+   - **Tempel banyak**: tempel daftar dari catatan, WhatsApp, Excel, atau Google Sheets. Pratinjau menunjukkan kartu yang akan masuk
+     dan baris yang tidak terbaca beserta alasannya.
+   - **Impor deck dari teks** (di tab Deck): sama, tetapi langsung membuat deck baru. Bisa juga memilih berkas `.txt` atau `.csv`.
+3. Deck baru otomatis ikut sesi harian di Beranda (bisa dimatikan di editor). Kartu bisa diubah lagi kapan saja,
+   termasuk dari menu ⋯ di tengah sesi belajar.
+4. **Bagikan deck** menghasilkan teks untuk dikirim lewat WhatsApp; penerima cukup memakai *Impor deck dari teks*.
+
+**Format teks tempelan** (satu kartu per baris, pemisah dikenali otomatis):
+
+```
+# Deck: Kosakata kantor
+# Keterangan: Bab 5
+会社 | かいしゃ | perusahaan
+ごみ | ごみ | sampah
+食べる | たべる | makan | 毎日ごはんを食べます。 | Saya makan nasi setiap hari. | verb
+```
+
+- Kolom: `tulisan Jepang | cara baca | arti | contoh kalimat | arti contoh | jenis kata`. Hanya dua yang pertama wajib:
+  dua kolom dibaca `tulisan Jepang | arti`.
+- Jenis kata yang dikenal: `noun`, `verb`, `i-adj`, `na-adj`, `pronoun`, `adjective`, `kanji`.
+- Pemisah: `|` (atau `｜`), Tab (hasil salin dari Excel/Google Sheets), titik koma atau koma (CSV), dan tabel Markdown.
+  Baris yang diawali `#` diabaikan; `# Deck:` dan `# Keterangan:` mengisi nama deck. Baris yang tidak terbaca dilewati dan dijelaskan di pratinjau.
+- Kartu yang persis sama (tulisan, cara baca, arti) di dalam satu deck dilewati.
+
+**Batas**: 100 deck; 3.000 kartu per deck; nama deck 60 karakter, keterangan 80, tulisan Jepang 100, cara baca 150,
+arti 300, contoh kalimat dan artinya masing-masing 300; satu tempelan maksimal 600.000 karakter.
+
+**Di balik layar**
+
+- Setiap deck disimpan sebagai satu entri `ud:<id>` di tabel `kv` IndexedDB (skema database tidak berubah).
+  Kodenya ada di `js/core/userdecks.js` (data, penyimpanan, pembaca teks) dan `js/ui/mydecks.js` (tampilan).
+- Kartu punya nomor tetap `<id deck>.<urutan>`, jadi **mengubah tulisan sebuah kartu tidak mengulang jadwalnya**
+  (beda dengan deck bawaan yang mengenali kartu dari isinya). Menghapus kartu atau deck ikut menghapus jadwal dan bintangnya;
+  tombol **Urungkan** mengembalikan semuanya.
+- Apa pun yang dibaca dari penyimpanan atau berkas cadangan dibersihkan lagi (karakter kontrol, batas panjang), dan isi kartu hanya
+  ditampilkan sebagai teks, jadi tulisan yang berisi kode HTML tidak dijalankan.
+- Deck buatan sendiri **ikut cadangan JSON**. Pulihkan → *Gabung* menambahkan deck dari cadangan (yang lebih baru menang);
+  *Ganti* menghapus progres lebih dulu, tetapi deck yang hanya ada di perangkat itu tetap dipertahankan.
+  *Hapus semua progres* tidak menghapus deck buatan sendiri, hanya jadwal belajarnya.
+- Deck hanya ada di browser pemakainya. Kalau sebuah deck bagus ingin dijadikan deck resmi untuk semua siswa,
+  minta pembuatnya memakai **Bagikan deck**, lalu masukkan teksnya sebagai deck bawaan (bagian di atas).
+
 ## Gembok deck dan kuis
 
 Diatur di `data/locks.js`. Ini **gembok lunak di sisi browser**: password dan isi deck tetap bisa dibaca lewat View Source,
@@ -113,6 +169,7 @@ kecuali sudah dibuka pada sesi halaman itu.
 
 - Progres disimpan di **IndexedDB** (`akatsuki-fc`) di browser masing-masing: jadwal tiap kartu, riwayat jawaban,
   kartu bintang, batas harian. Pengaturan kecil ada di `localStorage`.
+- Deck buatan sendiri (Deck Saya) ada di tabel `kv` yang sama dan ikut dalam cadangan JSON.
 - **Pengaturan → Data dan cadangan** menyediakan cadangan JSON (bisa digabung atau menimpa) dan riwayat CSV.
   Progres hanya ada di perangkat itu; pindah HP atau hapus data situs berarti hilang kalau belum dicadangkan.
 - Pengguna versi lama dimigrasi otomatis saat pertama membuka: kartu bintang (⭐), mode furigana, dan arah kartu dibawa ke
@@ -141,5 +198,6 @@ node tools/test-fsrs.js                    # FSRS-7 vs nilai rujukan
 node tools/test-scheduler.js               # penjadwal: langkah belajar, lapse, undo, fuzz
 TZ=Asia/Jakarta node tools/test-core.js    # store, sesi harian, batas, backup, migrasi
 node tools/test-furigana.js                # mesin furigana vs hasil versi lama
+node tools/test-userdecks.js               # deck buatan pengguna: pembaca teks, batas, simpan/muat, undo, cadangan, keamanan
 node tools/verify-data.js "<folder versi lama>"   # (opsional) bukti pemecahan data tidak menghilangkan kartu
 ```
