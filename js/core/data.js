@@ -3,6 +3,7 @@
    Manifest + gembok dimuat di awal (kecil). Isi kartu ada di data/decks/<shard>.js dan hanya diunduh
    saat dibutuhkan. Penyelesai deck sama dengan tools/_lib.js (induk/gabungan = gabungan anak,
    duplikat depan|baca dibuang — pertama menang — lalu kartu revisi `patch` menggantikan yang berkunci sama).
+   Deck buatan pengguna (D.setUserDeck, dipasang oleh js/core/userdecks.js) ikut terdaftar di sini sebagai deck daun di memori.
    ===================================================================== */
 (function (root) {
   'use strict';
@@ -34,6 +35,9 @@
   };
 
   var D = { shards: shards, patchShards: new Set() };
+  // grup khusus untuk deck yang dibuat pengguna di browser (lihat js/core/userdecks.js); selalu ada, tampil paling atas
+  var USER_GROUP = { id: 'saya', title: 'Deck Saya', sub: '自作', icon: '✏️', user: true };
+  var USER_PREFIX = 'u_';
   D.cardKey = function (c) { return c.front + '|' + c.back; };
   function cidOf(c) {
     if (c._id) return c._id;
@@ -47,12 +51,13 @@
   D.init = function () {
     var m = D.manifest = FC.manifest, L = D.locks = FC.locks || { deck: {}, quiz: {}, text: {} };
     if (!m) throw new Error('data/manifest.js belum dimuat');
-    D.groups = m.groups; D.decks = m.decks; D.quizList = m.quiz;
+    // salinan: deck pengguna hanya ditambahkan ke daftar kerja ini, manifest bawaan tidak pernah disentuh
+    D.groups = [USER_GROUP].concat(m.groups); D.decks = m.decks.slice(); D.quizList = m.quiz;
     D.byId = new Map(m.decks.map(function (d) { return [d.id, d]; }));
     D.quizById = new Map(m.quiz.map(function (q) { return [q.id, q]; }));
     D.kids = {};
     m.decks.forEach(function (d) { if (d.parent) (D.kids[d.parent] = D.kids[d.parent] || []).push(d.id); });
-    D.groupById = new Map(m.groups.map(function (g) { return [g.id, g]; }));
+    D.groupById = new Map(D.groups.map(function (g) { return [g.id, g]; }));
     D.patchShards = new Set(m.decks.filter(function (d) { return d.patch; }).map(function (d) { return d.patch; }));
     return D;
   };
@@ -101,7 +106,11 @@
     document.head.appendChild(s);
     return p.promise;
   }
-  D.loadShard = function (id) { return loadScript('s', id, 'data/decks/' + id + '.js'); };
+  D.loadShard = function (id) {
+    // deck pengguna hidup di memori; yang sudah dihapus dianggap kosong (tanpa mengunduh berkas yang memang tidak ada)
+    if (D.isUserShard(id)) return Promise.resolve(shards[id] || {});
+    return loadScript('s', id, 'data/decks/' + id + '.js');
+  };
   D.loadQuiz = function (id) {
     var q = D.quizById.get(id); var file = q && q.shard ? q.shard : id;
     return loadScript('q', file, 'data/quiz/' + file + '.js').then(function () { return quizzes[file]; });
@@ -161,6 +170,57 @@
     pro: { label: 'PRO', icon: '🔒' },
     exclusive: { label: 'Exclusive', icon: '💎' },
     admin: { label: 'Admin', icon: '💀' }
+  };
+
+  /* ---------- deck buatan pengguna ---------- */
+  /* Dibuat di browser (js/core/userdecks.js) dan isinya ada di memori, bukan di berkas data/decks/*.js. Bentuknya deck "daun"
+     biasa (`shard` = id deck itu sendiri), jadi sesi belajar, statistik, bintang, dan cadangan memperlakukannya sama seperti
+     deck bawaan. Kartu pengguna membawa `_id` tetap (bukan hash isi), sehingga mengubah tulisan kartu tidak mengubah jadwalnya. */
+  D.USER_GROUP = USER_GROUP.id;
+  D.isUserShard = function (id) { return typeof id === 'string' && id.indexOf(USER_PREFIX) === 0; };
+  D.isUserDeck = function (id) { var d = D.byId && D.byId.get(id); return !!(d && d.user); };
+
+  var collator = (typeof Intl !== 'undefined' && Intl.Collator) ? new Intl.Collator('id', { numeric: true, sensitivity: 'base' }) : null;
+  var cmpText = function (a, b) { return collator ? collator.compare(a, b) : (a < b ? -1 : a > b ? 1 : 0); };
+  /** deck pengguna selalu di ujung daftar, urut nama (angka dibaca sebagai angka: "Bab 2" sebelum "Bab 10") */
+  function sortUserDecks() {
+    var rest = [], mine = [];
+    D.decks.forEach(function (d) { (d.user ? mine : rest).push(d); });
+    mine.sort(function (a, b) { return cmpText(a.title, b.title) || ((a.created || 0) - (b.created || 0)); });
+    D.decks.length = 0;
+    rest.concat(mine).forEach(function (d) { D.decks.push(d); });
+  }
+  var userIndexed = {};      // id deck → salinan daftar kartu yang terakhir didaftarkan (daftar hidup milik userdecks.js bisa sudah berubah)
+  function unindexCards(id, list) {
+    (list || []).forEach(function (c) {
+      var k = c._id;
+      if (shardOfCid.get(k) === id) shardOfCid.delete(k);
+      if (byCid.get(k) === c) byCid.delete(k);
+    });
+  }
+  /** Pasang atau perbarui satu deck pengguna. meta: {id,title,sub,created,updated}; cards: objek kartu yang masing-masing punya `_id`. */
+  D.setUserDeck = function (meta, cards) {
+    var id = meta.id, e = D.byId.get(id);
+    if (!D.isUserShard(id)) throw new Error('id deck pengguna harus diawali "' + USER_PREFIX + '": ' + id);
+    if (e && !e.user) throw new Error('id deck bentrok dengan deck bawaan: ' + id);
+    unindexCards(id, userIndexed[id]);
+    cards.forEach(function (c) { byCid.set(c._id, c); shardOfCid.set(c._id, id); origin.set(c, id); });
+    userIndexed[id] = cards.slice();
+    var holder = {}; holder[id] = cards; shards[id] = holder;
+    delete memo[id];
+    if (!e) { e = { id: id, group: USER_GROUP.id, shard: id, user: true }; D.decks.push(e); D.byId.set(id, e); }
+    e.title = meta.title; e.sub = meta.sub || ''; e.count = cards.length; e.created = meta.created || 0; e.updated = meta.updated || 0;
+    sortUserDecks();
+    return e;
+  };
+  /** Lepas deck pengguna dari memori (data di penyimpanan dihapus oleh userdecks.js). */
+  D.dropUserDeck = function (id) {
+    var e = D.byId.get(id); if (!e || !e.user) return false;
+    unindexCards(id, userIndexed[id]); delete userIndexed[id];
+    delete shards[id]; delete memo[id];
+    D.byId.delete(id);
+    var i = D.decks.indexOf(e); if (i >= 0) D.decks.splice(i, 1);
+    return true;
   };
 
   /* ---------- pencarian deck ---------- */
