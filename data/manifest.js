@@ -319,6 +319,8 @@ FC.manifest = {
     { id: "padir", group: "pribadi", title: "KAMUS PRIBADI", sub: "PADIR", shard: "padir", count: 44 }
   ],
   quiz: [
+    { id: "shiken_bunpou_N4-1", title: "Shiken Bunpou N4", sub: "BASIC", shard: "shiken_bunpou_N4-1", count: 94 },
+    { id: "shiken_bunpou_N4_nextlevel", title: "Shiken Bunpou N4", sub: "NEXT LEVEL", shard: "shiken_bunpou_N4_nextlevel", count: 113 },
     { id: "Irodori_A2_07", title: "Shiken kanji", sub: "Irodori A2 bab 07", shard: "Irodori_A2_07", count: 27 },
     { id: "Irodori_A2_08", title: "Shiken kanji", sub: "Irodori A2 bab 08", shard: "Irodori_A2_08", count: 22 },
     { id: "kanji_n5", title: "Shiken kanji", sub: "Irodori A2 bab 09", shard: "kanji_n5", count: 42 },
