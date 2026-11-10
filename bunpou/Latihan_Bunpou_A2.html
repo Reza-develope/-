@@ -127,6 +127,12 @@ details[open]>summary::after{transform:rotate(-135deg);margin-bottom:-3px}
 .rv h2{margin:26px 2px 0;font-size:17px}
 .rv article{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-left:5px solid var(--ng);border-radius:12px;background:var(--card)}
 .allok{margin:22px 2px;color:var(--ok);font-weight:700}
+.fb.near{background:var(--warnbg);border-color:var(--warn)}.fb.near h3{color:var(--warn)}
+.fb h3 small{margin-left:4px;font-size:13px;font-weight:700}
+.nt{margin:8px 0 0;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:15px;line-height:1.9}
+.al mark{padding:0 .12em;border-radius:4px;background:var(--card);color:var(--warn);font-weight:900;box-shadow:inset 0 -2px 0 var(--warn)}
+.rv article.near{border-left-color:var(--warn)}
+.rv article .tag{display:inline-block;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -163,6 +169,82 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', 
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const kata2hira = s => s.replace(/[\u30A1-\u30F6]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60));
 const norm = s => kata2hira(String(s).normalize('NFKC')).toLowerCase().replace(/[\s。、，．,.!！?？「」『』（）()・~～〜…\-]/g, '');
+
+/* ---------- penilaian bertingkat ----------
+   〇 benar · 〇 benar + catatan (mis. kurang です) · △ hampir benar (½ poin) · × belum tepat */
+const OK = {lv: 'ok', cr: 1}, NG = {lv: 'ng', cr: 0};
+const plainOf = h => String(h).replace(/<rt>[\s\S]*?<\/rt>/g, '').replace(/<[^>]+>/g, '');
+const kanaOf = h => String(h).replace(/<ruby>([\s\S]*?)<rt>([\s\S]*?)<\/rt><\/ruby>/g, '$2').replace(/<[^>]+>/g, '');
+const fmt = x => { const r = Math.round(x * 2) / 2; return Number.isInteger(r) ? String(r) : String(r).replace('.', ','); };
+function dist(a, b) {
+  const A = Array.from(a), B = Array.from(b), m = A.length, n = B.length;
+  if (Math.abs(m - n) > 1) return 9;
+  const d = Array.from({length: m + 1}, (_, i) => { const r = new Array(n + 1).fill(0); r[0] = i; return r; });
+  for (let j = 1; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) {
+    d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (A[i - 1] === B[j - 1] ? 0 : 1));
+    if (i > 1 && j > 1 && A[i - 1] === B[j - 2] && A[i - 2] === B[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
+  }
+  return d[m][n];
+}
+/* semua bentuk jawaban yang sah: kunci, tulisan kanji, dan bacaan kana dari furigana (norm → tampilan HTML) */
+function formsOf(q) {
+  const m = new Map(), add = (x, raw) => { const k = norm(x); if (k && !m.has(k)) m.set(k, raw); };
+  add(plainOf(q.d), q.d); add(kanaOf(q.d), q.d);
+  q.a.forEach(a => add(a, esc(a)));
+  return m;
+}
+/* bentuk "lugas" dari jawaban sopan; hanya yang pasti: ～です / ～でした / ～ありません */
+function casualOf(f) {
+  if (/.{2,}です$/.test(f)) return f.slice(0, -2);
+  if (/.{1,}でした$/.test(f)) return f.slice(0, -3) + 'だった';
+  if (/.{1,}ありません$/.test(f)) return f.slice(0, -5) + 'ない';
+  return null;
+}
+function diffSpan(A, B) {
+  let i = 0; while (i < A.length && i < B.length && A[i] === B[i]) i++;
+  let j = 0; while (j < A.length - i && j < B.length - i && A[A.length - 1 - j] === B[B.length - 1 - j]) j++;
+  return [i, j];
+}
+const isKana = s => /^[ぁ-ゖー]*$/.test(s);
+/* salah ketik = beda SATU huruf kana pada jawaban ≥5 huruf (beda kanji = beda kata, bukan salah ketik) */
+function isTypo(nv, f) {
+  if (f.length < 5 || nv.slice(-1) !== f.slice(-1) || dist(nv, f) !== 1) return false;
+  const A = Array.from(nv), B = Array.from(f), [i, j] = diffSpan(A, B);
+  return isKana(A.slice(i, A.length - j).join('')) && isKana(B.slice(i, B.length - j).join(''));
+}
+function markDiff(v, nv, f) {
+  if (norm(v) !== v) return null;
+  const A = Array.from(nv), [i, j] = diffSpan(A, Array.from(f)), mid = A.slice(i, A.length - j).join('');
+  return esc(A.slice(0, i).join('')) + '<mark>' + (mid ? esc(mid) : '＿') + '</mark>' + esc(A.slice(A.length - j).join(''));
+}
+function gradeText(q, v) {
+  const nv = norm(v), F = formsOf(q);
+  if (F.has(nv)) return OK;
+  const askPolite = /sopan/i.test(plainOf(q.s));
+  for (const [f, raw] of F) {
+    const c = casualOf(f);
+    if (c && c === nv) {
+      return askPolite
+        ? {lv: 'near', cr: .5, fix: raw, msg: 'Isinya sudah benar, tapi soal ini meminta bentuk <b>sopan</b> (です／ます／ません).'}
+        : {lv: 'ok', cr: 1, note: `Jawabanmu sudah benar. Biar lebih sopan dan lebih lengkap, pakai bentuk ini: <b class="jp">${raw}</b>`};
+    }
+  }
+  for (const [f, raw] of F) {
+    if (isTypo(nv, f))
+      return {lv: 'near', cr: .5, fix: raw, mark: markDiff(v, nv, f), msg: 'Hampir! Ada satu huruf yang kurang pas (ditandai di jawabanmu).'};
+  }
+  return NG;
+}
+function gradeOrder(q) {
+  const seq = S.placed.map(i => q.p[i]), same = a => q.acc.some(x => norm(x) === norm(a.join('')));
+  if (same(seq)) return OK;
+  for (let i = 0; i + 1 < seq.length; i++) {
+    const t = seq.slice(); [t[i], t[i + 1]] = [t[i + 1], t[i]];
+    if (same(t)) return {lv: 'near', cr: .5, msg: 'Urutanmu hampir tepat — dua bagian yang bersebelahan tertukar tempat.'};
+  }
+  return NG;
+}
 
 const need = n => n - Math.floor(n / 5);
 function stOf(it) {
@@ -205,7 +287,7 @@ function home() {
 <input id="q" class="search" type="search" placeholder="Cari bunpou (mis. てください, あげます)" autocomplete="off" aria-label="Cari bunpou">
 <div class="chips" role="group" aria-label="Filter status">${chips}</div></div>${lessons}
 <p id="none" class="empty" hidden>Tidak ada bunpou yang cocok.</p>
-<p class="foot">Kuasai = benar sedikitnya 80% dari soal bunpou itu (bunpou dengan 1–4 soal harus benar semua). Progres tersimpan di browser ini. <button class="link" data-act="reset">Reset progres</button></p>`;
+<p class="foot">Kuasai = benar sedikitnya 80% dari soal bunpou itu (bunpou dengan 1–4 soal harus benar semua). Jawaban yang hampir benar (salah satu huruf, urutan bertukar, atau kurang sopan padahal diminta sopan) dihitung ½ poin; jawaban benar yang kurang sopan tetap dihitung benar. Progres tersimpan di browser ini. <button class="link" data-act="reset">Reset progres</button></p>`;
   applyFilter(); updateSummary();
 }
 function applyFilter() {
@@ -288,33 +370,40 @@ function answerM(i) {
   $$('.opt').forEach(b => { b.disabled = true; const oi = +b.dataset.i; if (oi === 0) b.classList.add('ok'); else if (oi === i) b.classList.add('ng'); });
   const bl = $$('#stem .bl');
   if (bl.length) { const parts = bl.length > 1 ? q.o[0].split('／') : [q.o[0]]; bl.forEach((b, k) => { b.innerHTML = parts[k] || ''; b.classList.add('ok'); }); }
-  finishQ(i === 0, q.o[i], '');
+  finishQ(i === 0 ? OK : NG, q.o[i], '');
 }
 function checkAnswer() {
   if (S.done) return; const q = S.queue[S.i].q;
   if (q.y === 't') {
     const inp = $('#in'), v = inp.value;
     if (!norm(v)) { inp.focus(); return; }
-    const ok = q.a.some(a => norm(a) === norm(v));
+    const g = gradeText(q, v), given = g.mark || esc(v);
     S.done = true; fillInput(q);
-    finishQ(ok, esc(v), ok ? '' : `<div class="al">Jawabanmu: <b>${esc(v)}</b></div><div class="al">Yang benar: <b class="jp">${q.d}</b></div>`);
+    let extra = '';
+    if (g.lv === 'ok') extra = g.note ? `<div class="nt">${g.note}</div>` : '';
+    else {
+      extra = `<div class="al">Jawabanmu: <b class="jp">${given}</b></div><div class="al">Yang benar: <b class="jp">${g.fix || q.d}</b></div>`;
+      if (g.msg) extra += `<div class="nt">${g.msg}</div>`;
+    }
+    finishQ(g, given, extra);
   } else if (q.y === 'o') {
     if (S.placed.length !== q.k.length) return;
-    const joined = S.placed.map(i => q.p[i]).join(''), ok = q.acc.some(a => norm(a) === norm(joined));
+    const g = gradeOrder(q), given = S.placed.map(i => q.k[i]).join('');
     S.done = true; $$('.tile').forEach(t => t.disabled = true);
-    finishQ(ok, S.placed.map(i => q.k[i]).join(''), ok ? '' : `<div class="al">Yang benar: <b class="jp">${q.k.join('')}</b></div>`);
+    finishQ(g, given, g.lv === 'ok' ? '' : `<div class="al">Yang benar: <b class="jp">${q.k.join('')}</b></div>` + (g.msg ? `<div class="nt">${g.msg}</div>` : ''));
   }
 }
 function giveUp() {
   if (S.done) return; const q = S.queue[S.i].q; S.done = true;
   fillInput(q); $$('.tile').forEach(t => t.disabled = true);
-  finishQ(false, '<i>(tidak dijawab)</i>', `<div class="al">Yang benar: <b class="jp">${correctOf(q)}</b></div>`);
+  finishQ(NG, '<i>(tidak dijawab)</i>', `<div class="al">Yang benar: <b class="jp">${correctOf(q)}</b></div>`);
 }
-function finishQ(ok, given, extra) {
+function finishQ(g, given, extra) {
   const {q, it} = S.queue[S.i], last = S.i + 1 >= S.queue.length;
-  S.results.push({q, it, ok, given});
+  S.results.push({q, it, ok: g.lv === 'ok', lv: g.lv, cr: g.cr, given, msg: g.msg || ''});
   $$('.row').forEach(r => r.hidden = true);
-  $('#fb').innerHTML = `<div class="fb ${ok ? 'ok' : 'ng'}" role="status"><h3>${ok ? '〇 Benar!' : '× Belum tepat'}</h3>${extra}<p class="jp">${q.e}</p></div>
+  const head = {ok: '〇 Benar!', near: '△ Hampir benar <small>(½ poin)</small>', ng: '× Belum tepat'}[g.lv];
+  $('#fb').innerHTML = `<div class="fb ${g.lv}" role="status"><h3>${head}</h3>${extra}<p class="jp">${q.e}</p></div>
 <button class="btn block nx" data-act="next">${last ? 'Lihat hasil' : 'Lanjut'}</button>`;
   const nx = $('.nx'); nx.focus({preventScroll: true}); nx.scrollIntoView({behavior: 'smooth', block: 'nearest'});
 }
@@ -323,25 +412,25 @@ function next() { if (S.i + 1 >= S.queue.length) result(); else { S.i++; showQ()
 /* ---------- result ---------- */
 function result() {
   view = 'result'; window.scrollTo(0, 0);
-  const R = S.results, n = R.length, c = R.filter(r => r.ok).length, by = new Map();
-  R.forEach(r => { let o = by.get(r.it.id); if (!o) { o = {it: r.it, c: 0, n: 0}; by.set(r.it.id, o); } o.n++; if (r.ok) o.c++; });
+  const R = S.results, n = R.length, c = R.reduce((a, r) => a + r.cr, 0), by = new Map();
+  R.forEach(r => { let o = by.get(r.it.id); if (!o) { o = {it: r.it, c: 0, n: 0}; by.set(r.it.id, o); } o.n++; o.c += r.cr; });
   if (S.full) { by.forEach(o => { if (o.n === o.it.qs.length) store.items[o.it.id] = {c: o.c, n: o.n, t: Date.now()}; }); save(); }
   updateSummary();
   let head;
   if (S.mode === 'item') {
     const st = stOf(S.queue[0].it);
     const msg = {pass: 'Kuasai! Kamu sudah paham bunpou ini.', near: 'Hampir! Tinggal sedikit lagi. Baca penjelasan soal yang salah, lalu ulangi.', retry: 'Belum kuasai. Baca penjelasan di bawah, lalu coba lagi.'}[st];
-    head = `<div class="score"><div><div class="big">${c}<small>/${n}</small></div><div class="msg">${msg}</div></div>${st === 'pass' ? '<div class="seal" aria-hidden="true">習得</div>' : ''}</div>`;
+    head = `<div class="score"><div><div class="big">${fmt(c)}<small>/${n}</small></div><div class="msg">${msg}</div></div>${st === 'pass' ? '<div class="seal" aria-hidden="true">習得</div>' : ''}</div>`;
   } else {
     const list = [...by.values()], passed = S.full ? list.filter(o => stOf(o.it) === 'pass').length : 0;
-    const rows = list.map(o => `<li><span class="jp">${o.it.pat}</span><span class="sc">${o.c}/${o.n}</span>${S.full ? `<span class="tag ${stOf(o.it)}">${ST[stOf(o.it)]}</span>` : ''}</li>`).join('');
-    head = `<div class="score"><div><div class="big">${c}<small>/${n}</small></div><div class="msg">${S.full ? passed + ' dari ' + list.length + ' bunpou kuasai.' : 'Latihan ini tidak mengubah status kuasai.'}</div></div></div><ul>${rows}</ul>`;
+    const rows = list.map(o => `<li><span class="jp">${o.it.pat}</span><span class="sc">${fmt(o.c)}/${o.n}</span>${S.full ? `<span class="tag ${stOf(o.it)}">${ST[stOf(o.it)]}</span>` : ''}</li>`).join('');
+    head = `<div class="score"><div><div class="big">${fmt(c)}<small>/${n}</small></div><div class="msg">${S.full ? passed + ' dari ' + list.length + ' bunpou kuasai.' : 'Latihan ini tidak mengubah status kuasai.'}</div></div></div><ul>${rows}</ul>`;
   }
   const wrong = R.filter(r => !r.ok);
-  const review = wrong.length ? `<div class="rv"><h2>Perlu dipelajari lagi (${wrong.length})</h2>${wrong.map(r => `<article>${S.mode !== 'item' ? `<div class="ctx jp">${r.it.pat}</div>` : ''}<div class="stem sm jp">${r.q.s}</div>
-<div class="al">Jawabanmu: <b class="jp">${r.given}</b></div><div class="al">Yang benar: <b class="jp">${correctOf(r.q)}</b></div><p class="jp">${r.q.e}</p></article>`).join('')}</div>` : '<p class="allok">Semua jawaban benar.</p>';
+  const review = wrong.length ? `<div class="rv"><h2>Perlu dipelajari lagi (${wrong.length})</h2>${wrong.map(r => `<article class="${r.lv}">${r.lv === 'near' ? '<span class="tag near">Hampir benar · ½ poin</span>' : ''}${S.mode !== 'item' ? `<div class="ctx jp">${r.it.pat}</div>` : ''}<div class="stem sm jp">${r.q.s}</div>
+<div class="al">Jawabanmu: <b class="jp">${r.given}</b></div><div class="al">Yang benar: <b class="jp">${correctOf(r.q)}</b></div>${r.msg ? `<div class="nt">${r.msg}</div>` : ''}<p class="jp">${r.q.e}</p></article>`).join('')}</div>` : '<p class="allok">Semua jawaban benar.</p>';
   app.innerHTML = `<div class="res">${head}</div>${review}
-<div class="row">${wrong.length ? `<button class="btn" data-act="wrong">Ulangi yang salah (${wrong.length})</button>` : ''}<button class="btn ghost" data-act="again">Tes ulang</button><button class="btn ghost" data-act="home">Kembali ke daftar</button></div>`;
+<div class="row">${wrong.length ? `<button class="btn" data-act="wrong">Ulangi yang belum tepat (${wrong.length})</button>` : ''}<button class="btn ghost" data-act="again">Tes ulang</button><button class="btn ghost" data-act="home">Kembali ke daftar</button></div>`;
 }
 
 /* ---------- events ---------- */
