@@ -73,6 +73,10 @@ body.layer-full #toasts { bottom: calc(var(--safe-b) + 176px); }
 .count + .count { border-left: 1px solid var(--line); }
 .count-n { font-size: 1.85rem; font-weight: 700; line-height: 1.15; }
 .count-l { font-size: var(--t-small); color: var(--ink-2); }
+button.count { display: block; width: 100%; color: inherit; }
+button.count:hover { background: color-mix(in srgb, var(--surface-2) 60%, transparent); }
+button.count:active { background: var(--surface-2); }
+button.count:focus-visible { outline: 2px solid var(--indigo); outline-offset: -2px; }
 .count.k-new .count-n { color: var(--c-new); } .count.k-learn .count-n { color: var(--c-learn); } .count.k-review .count-n { color: var(--c-review); }
 .cta { min-height: 56px; font-size: 1.05rem; }
 .banner { margin-top: var(--s4); }
