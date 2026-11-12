@@ -6,7 +6,7 @@
    Saat data/kode berubah, naikkan BUILD di sini DAN di index.html (jalankan: node tools/bump-build.js).
    ===================================================================== */
 'use strict';
-const BUILD = '2026.11.10';
+const BUILD = '2026.11.12-2048';
 const SHELL = 'fc-shell-' + BUILD, DATA = 'fc-data-' + BUILD, FONTS = 'fc-fonts-v1';
 const SHELL_FILES = [
   './', 'index.html', 'manifest.webmanifest', 'assets/icon.svg', 'assets/icons/icon-192.png',
