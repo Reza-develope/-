@@ -243,12 +243,12 @@
       h('div.citem-end', due ? h('span.citem-due', due) : null, UI.starButton(c)));
   }
 
-  DU.openCardList = function (title, cards) {
+  DU.openCardList = function (title, cards, opts) {
     var PAGE = 40, shown = 0, filtered = cards, dir = dirNow();
     UI.layer('full', function (L) {
       var list = h('div.citems'), sentinel = h('div.sentinel', { hidden: true }, h('button.btn.btn-quiet', { type: 'button', onclick: more }, 'Tampilkan lebih banyak'));
       var count = h('p.muted.small.result-count');
-      var input = h('input.input', { type: 'search', placeholder: 'Cari di deck ini', 'aria-label': 'Cari kartu', autocomplete: 'off' });
+      var input = h('input.input', { type: 'search', placeholder: (opts && opts.placeholder) || 'Cari di deck ini', 'aria-label': 'Cari kartu', autocomplete: 'off' });
       var body = h('div.full-body', h('div.full-inner', h('div.search', UI.iconEl('search'), input), count, list, sentinel));
       var bar = UI.fullBar({ title: 'Daftar kartu', sub: title, onBack: function () { L.close(); }, actions: [UI.furiButton()] });
       L.el.appendChild(bar); L.el.appendChild(body);

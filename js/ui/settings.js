@@ -113,7 +113,7 @@
     ]));
 
     el.appendChild(group('Sesi harian', 'Batas ini berlaku untuk semua deck sekaligus.', [
-      row('Kartu baru per hari', null, stepper('kartu baru per hari', 'newPerDay', 0, 300, 5)),
+      row('Kartu baru per hari', null, stepper('kartu baru per hari', 'newPerDay', 0, 500, 5)),
       row('Review maksimal per hari', null, stepper('review maksimal per hari', 'revPerDay', 0, 2000, 25)),
       row('Urutan kartu baru', null, seg('Urutan kartu baru', 'newOrder', [{ v: 'urut', t: 'Berurutan' }, { v: 'acak', t: 'Acak' }]), true),
       row('Campuran kartu', null, seg('Campuran kartu', 'mix', [{ v: 'campur', t: 'Campur' }, { v: 'setelah', t: 'Review dulu' }, { v: 'sebelum', t: 'Baru dulu' }]), true),

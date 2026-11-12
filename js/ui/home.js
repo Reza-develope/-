@@ -26,7 +26,25 @@
   }
 
   function count(n, label, cls, hint) {
-    return h('div.count.k-' + cls, { title: hint || '' }, h('div.count-n.num', n == null ? '–' : U.fmtNum(n)), h('div.count-l', label));
+    return h('button.count.k-' + cls, { type: 'button', title: hint || '', 'aria-label': label + ': ' + (n == null ? 'memuat' : U.fmtNum(n)) + ' kartu. Ketuk untuk melihat daftarnya.', onclick: function () { openCards(cls); } },
+      h('div.count-n.num', n == null ? '–' : U.fmtNum(n)), h('div.count-l', label));
+  }
+
+  /** Ketuk Baru / Belajar / Review → daftar kartunya. Memakai antrean sesi yang sama dengan "Mulai belajar", jadi isinya cocok dengan angkanya. */
+  var CARD_LISTS = {
+    new: { title: 'Kartu baru hari ini', empty: 'Tidak ada kartu baru untuk hari ini.' },
+    learn: { title: 'Kartu yang sedang dipelajari', empty: 'Tidak ada kartu belajar yang menunggu.' },
+    review: { title: 'Kartu review hari ini', empty: 'Tidak ada kartu review untuk hari ini.' }
+  };
+  var listing = false;
+  function openCards(kind) {
+    if (listing) return; listing = true;
+    FC.session.build({ scope: { type: 'all' } }).then(function (sess) {
+      var q = kind === 'learn' ? sess.learnQ : sess.mainQ.filter(function (i) { return i.kind === (kind === 'new' ? 'n' : 'r'); });
+      var cards = q.map(function (i) { return i.card; }), meta = CARD_LISTS[kind];
+      if (!cards.length) { UI.toast(meta.empty); return; }
+      FC.decksUI.openCardList(meta.title, cards, { placeholder: 'Cari di daftar ini' });
+    }).catch(function () { UI.toast('Kartu gagal dimuat. Coba lagi.'); }).then(function () { listing = false; });
   }
 
   function tomorrowDue() {
