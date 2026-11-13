@@ -43,7 +43,7 @@ FC.defineShard("Irodori_A2_18", {
     { front: "それなら", back: "それなら", backSub: "kalau begitu" },
     { front: "デジタルフォトフレーム", back: "デジタルフォトフレーム", backSub: "bingkai foto digital" },
     { front: "選ぶ", back: "えらぶ", backSub: "memilih" },
-    { front: "それでは", back: "それでは", backSub: "sekarang" },
+    { front: "それでは", back: "それでは", backSub: "sekarang / kalau begitu; baiklah" },
     { front: "あいさつ", back: "あいさつ", backSub: "sambutan; salam (perpisahan)" },
     { front: "はじめ", back: "はじめ", backSub: "pertama-tama" },
     { front: "友だちができる", back: "ともだちができる", backSub: "mendapat teman" },

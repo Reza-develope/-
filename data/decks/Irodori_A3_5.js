@@ -89,7 +89,7 @@ FC.defineShard("Irodori_A3_5", {
     { front: "宿泊", back: "しゅくはく", backSub: "akomodasi;penginapan" },
     { front: "観光", back: "かんこう", backSub: "wisata" },
     { front: "グルメ", back: "グルメ", backSub: "kuliner" },
-    { front: "旅券", back: "りょけん", backSub: "tiket transportasi" },
+    { front: "旅券", back: "りょけん", backSub: "tiket transportasi / paspor" },
     { front: "口コミ", back: "くちコミ", backSub: "ulasan dari mulut ke mulut" },
     { front: "投稿する", back: "とうこうする", backSub: "membuat posting" },
     { front: "～のまわり (湖のまわり)", back: "～のまわり (みずうみのまわり)", backSub: "sekitar～ (cth: sekitar danau)" },

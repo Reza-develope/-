@@ -37,7 +37,7 @@ FC.defineShard("Irodori_A1_18", {
     { front: "ドラえもん", back: "ドラえもん", backSub: "Doraemon" },
     { front: "写真", back: "しゃしん", backSub: "foto" },
     { front: "動画", back: "どうが", backSub: "video" },
-    { front: "友達をタグ付づけ", back: "ともだちをタグづけ", backSub: "tandai teman" },
+    { front: "友達をタグ付け",  back: "ともだちをタグづけ",  backSub: "tandai teman"},
     { front: "気分", back: "きぶん", backSub: "perasaan" },
     { front: "アクティビティ", back: "アクティビティ", backSub: "aktivitas" },
     { front: "チェックイン", back: "チェックイン", backSub: "singgah; check-in" },

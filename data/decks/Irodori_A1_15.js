@@ -62,7 +62,7 @@ FC.defineShard("Irodori_A1_15", {
     { front: "こちら", back: "こちら", backSub: "di sebelah sini" },
     { front: "～でございます", back: "～でございます", backSub: "bentuk sopan dari です" },
     { front: "ご案内します／ご案内いたします", back: "ごあんないします／ごあんないいたします", backSub: "Akan saya antarkan. (ungkapan sopan)" },
-    { front: "～になります", back: "～になります", backSub: "bentuk sopan dari です" },
+    { front: "～になります", back: "～になります", backSub: "menjadi ～; (ragam pelayan toko) totalnya ～" },
     { front: "1階", back: "いっかい", backSub: "lantai satu" },
     { front: "2階", back: "にかい", backSub: "lantai dua" },
     { front: "3階", back: "さんかい／さんがい", backSub: "lantai tiga" },

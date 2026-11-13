@@ -18,7 +18,7 @@ FC.defineShard("Irodori_A1_12", {
     { front: "映画上映会", back: "えいがじょうえいかい", backSub: "pemutaran film" },
     { front: "プログラム", back: "プログラム", backSub: "program" },
     { front: "上映作品", back: "じょうえいさくひん", backSub: "film yang ditayangkan" },
-    { front: "お問い合わせ", back: "お問い合わせ", backSub: "pertanyaan" }
+    { front: "お問い合わせ", back: "おといあわせ", backSub: "pertanyaan" }
   ],
   "Irodori_A1_12_2": [
     { front: "楽しもう！", back: "たのしもう！", backSub: "Mari nikmati ～." },

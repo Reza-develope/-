@@ -94,7 +94,7 @@ FC.defineShard("Irodori_A2_13", {
     { front: "差出人", back: "さしだしにん", backSub: "pengirim" },
     { front: "日付", back: "ひづけ", backSub: "tanggal" },
     { front: "皆様", back: "みなさま", backSub: "Anda sekalian (bentuk sopan)" },
-    { front: "なお", back: "なお", backSub: "untuk itu; oleh karena itu" },
+    { front: "なお", back: "なお", backSub: "untuk itu; oleh karena itu / selain itu; sebagai tambahan" },
     { front: "お知らせします", back: "おしらせします", backSub: "menyampaikan pemberitahuan" },
     { front: "ご連絡ください", back: "ごれんらくください", backSub: "mohon hubungi~" },
     { front: "ご注意ください", back: "ごちゅういください", backSub: "mohon perhatikan~" }

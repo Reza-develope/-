@@ -19,7 +19,7 @@ FC.defineShard("Irodori_A1_10", {
     { front: "～枚", back: "～まい", backSub: "～ lembar" },
     { front: "コピー", back: "コピー", backSub: "fotokopi" },
     { front: "隣", back: "となり", backSub: "sebelah" },
-    { front: "～までに", back: "～までに", backSub: "sampai ～" },
+    { front: "～までに", back: "～までに", backSub: "sampai ～/paling lambat / sebelum ～" },
     { front: "あとで", back: "あとで", backSub: "nanti" },
     { front: "もしもし", back: "もしもし", backSub: "Halo (untuk di telepon)" },
     { front: "来てください", back: "きてください", backSub: "Tolong datang." },

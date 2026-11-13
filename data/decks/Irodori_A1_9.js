@@ -14,7 +14,7 @@ FC.defineShard("Irodori_A1_9", {
     { front: "3時", back: "さんじ", backSub: "pukul tiga; jam tiga" },
     { front: "4時", back: "よじ", backSub: "pukul empat; jam empat" },
     { front: "5時", back: "ごじ", backSub: "pukul lima; jam lima" },
-    { front: "30分", back: "さんじゅっぷん", backSub: "～:30 / setengah ～" },
+    { front: "30分", back: "さんじゅっぷん", backSub: "30 menit" },
     { front: "45分", back: "よんじゅうごふん", backSub: "～:45 / ～ kurang lima belas menit" },
     { front: "半", back: "はん", backSub: "～:30 / setengah ～" },
     { front: "起きる / 起きます", back: "おきる / おきます", backSub: "bangun" },
