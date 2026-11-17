@@ -19,6 +19,8 @@ dan dipasang di layar utama HP sebagai aplikasi (PWA, bisa offline).
   (satu per satu, tempel dari Excel/WhatsApp, atau impor `.txt`/`.csv`). Deck buatan sendiri memakai mesin yang sama dengan deck
   bawaan: jadwal FSRS-7, sesi harian, bintang, statistik, offline, dan cadangan. Lihat [Deck Saya](#deck-saya-siswa-bikin-deck-sendiri).
 - **Pilihan ganda & Bunpou.** Kuis pilihan ganda dengan skor terbaik tersimpan, plus latihan tata bahasa A1/A2/A2.2.
+- **Buku Bunpou.** Penjelasan tata bahasa Irodori yang gampang, per pola: intinya, rumus, penjelasan, contoh bersuara, dan jebakan yang
+  sering terjadi. Sekarang berisi A2.2 (初級2) Bab 1–12 (59 pola). Lihat [Buku Bunpou](#buku-bunpou-penjelasan-gampang-per-pola).
 - **Statistik.** Heatmap 20 minggu, perkiraan ulasan ke depan, sebaran status kartu, retensi 30 hari vs target, sebaran jawaban.
   Setiap grafik punya versi tabel.
 - **Furigana, arah kartu (JP→ID / ID→JP), mode gelap, suara, getar** — semuanya di Pengaturan.
@@ -71,8 +73,10 @@ data/
   locks.js              gembok deck dan kuis
   decks/*.js            isi kartu, satu berkas per deck (dimuat saat dibutuhkan)
   quiz/*.js             isi soal pilihan ganda, satu berkas per kuis
-js/core/                mesin: util, fsrs, scheduler, store (IndexedDB), data, session, furigana, tts, userdecks (deck buatan pengguna)
-js/ui/                  tampilan: app (rute, tema), kit (komponen), home, decks, mydecks (editor Deck Saya), study, practice, stats, settings
+  buku/index.js         daftar level dan bab Buku Bunpou
+  buku/<level>_<nn>.js  isi Buku Bunpou, satu berkas per bab (dimuat saat bab dibuka), mis. a22_01.js
+js/core/                mesin: util, fsrs, scheduler, store (IndexedDB), data, session, furigana, tts, userdecks (deck buatan pengguna), buku (pemuat Buku Bunpou)
+js/ui/                  tampilan: app (rute, tema), kit (komponen), home, decks, mydecks (editor Deck Saya), study, practice, buku (Buku Bunpou), stats, settings
 tools/                  skrip pembangun dan tes (tidak ikut dimuat browser)
 ```
 
@@ -159,6 +163,29 @@ arti 300, contoh kalimat dan artinya masing-masing 300; satu tempelan maksimal 6
 - Deck hanya ada di browser pemakainya. Kalau sebuah deck bagus ingin dijadikan deck resmi untuk semua siswa,
   minta pembuatnya memakai **Bagikan deck**, lalu masukkan teksnya sebagai deck bawaan (bagian di atas).
 
+## Buku Bunpou: penjelasan gampang per pola
+
+Dibuka dari **Latihan → Buku Bunpou**. Daftar bab → ketuk satu bab → baca ringkasannya, lalu geser per pola dengan tombol bawah
+(atau panah kiri/kanan di keyboard). Tiap pola berisi: **Intinya** (satu kalimat), **Rumus** (bagian tetap berwarna merah, bagian yang
+diisi berwarna abu), tabel bentuk bila perlu, **Penjelasan**, 4–6 **Contoh** (ada tombol suara, terjemahan, dan bagian pola disorot),
+**Awas!** (kesalahan yang sering terjadi), dan tombol **Tandai sudah paham**. Tombol **ふ** menyalakan furigana, ada kotak cari
+(nama pola, kata kunci, arti, atau “bab 4”). Contoh kalimat dan penjelasannya ditulis sendiri, bukan salinan buku pelajaran.
+
+**Menambah bab** (misalnya Bab 13 untuk A2.2):
+
+1. Salin `data/buku/a22_01.js` menjadi `data/buku/a22_13.js`, ubah `n: 13` lalu isi judul, “bisa”, dan pola-polanya. Format penandanya
+   dijelaskan di kepala berkas `a22_01.js`: `漢字[よみ]` untuk furigana (setiap kanji harus punya bacaan), `{sorot}`, `**tebal**`,
+   `「kutipan Jepang」`; di rumus, token berawalan `=` adalah bagian tetap.
+2. Tambahkan angka bab ke daftar `babs` level itu di `data/buku/index.js`.
+3. Jalankan `node tools/verify-buku.js` (struktur, kanji tanpa furigana, kurung tak seimbang, jumlah baris contoh vs terjemahan,
+   bacaan yang tidak cocok dengan mesin furigana). Tambahkan `--list` untuk mencetak semua kalimat beserta bacaan kana-nya supaya
+   bisa dibaca ulang.
+4. `node tools/bump-build.js` supaya pengguna mendapat versi terbaru.
+
+**Menambah level baru** (misalnya A2 atau A1): tambahkan satu objek di `levels` pada `data/buku/index.js`
+(`id` huruf kecil/angka, `title`, `sub`, `total` bab, `babs` yang sudah ada) dan berkas `data/buku/<id>_<nn>.js`
+yang memanggil `FC.defineBuku('<id>', { n: … })`. Tidak ada kode lain yang perlu diubah.
+
 ## Gembok deck dan kuis
 
 Diatur di `data/locks.js`. Ini **gembok lunak di sisi browser**: password dan isi deck tetap bisa dibaca lewat View Source,
@@ -170,6 +197,7 @@ kecuali sudah dibuka pada sesi halaman itu.
 - Progres disimpan di **IndexedDB** (`akatsuki-fc`) di browser masing-masing: jadwal tiap kartu, riwayat jawaban,
   kartu bintang, batas harian. Pengaturan kecil ada di `localStorage`.
 - Deck buatan sendiri (Deck Saya) ada di tabel `kv` yang sama dan ikut dalam cadangan JSON.
+- Tanda “sudah paham” di Buku Bunpou ada di `localStorage` (kunci `bunpou:buku`) dan ikut dalam cadangan JSON.
 - **Pengaturan → Data dan cadangan** menyediakan cadangan JSON (bisa digabung atau menimpa) dan riwayat CSV.
   Progres hanya ada di perangkat itu; pindah HP atau hapus data situs berarti hilang kalau belum dicadangkan.
 - Pengguna versi lama dimigrasi otomatis saat pertama membuka: kartu bintang (⭐), mode furigana, dan arah kartu dibawa ke
@@ -199,5 +227,6 @@ node tools/test-scheduler.js               # penjadwal: langkah belajar, lapse, 
 TZ=Asia/Jakarta node tools/test-core.js    # store, sesi harian, batas, backup, migrasi
 node tools/test-furigana.js                # mesin furigana vs hasil versi lama
 node tools/test-userdecks.js               # deck buatan pengguna: pembaca teks, batas, simpan/muat, undo, cadangan, keamanan
+node tools/verify-buku.js                  # isi Buku Bunpou: struktur, furigana, penanda, jumlah contoh (--list untuk baca ulang)
 node tools/verify-data.js "<folder versi lama>"   # (opsional) bukti pemecahan data tidak menghilangkan kartu
 ```

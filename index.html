@@ -14,7 +14,7 @@
   <script>
     (function () {
       window.FC = window.FC || {};
-      FC.BUILD = '2026.11.12-2048';   // naikkan angka ini saat data/kode berubah (sw.js memakai versi yang sama)
+      FC.BUILD = '2026.11.17-1321';   // naikkan angka ini saat data/kode berubah (sw.js memakai versi yang sama)
       try {
         var s = JSON.parse(localStorage.getItem('fc.settings.v2') || '{}');
         if (s.theme === 'dark' || s.theme === 'light') document.documentElement.setAttribute('data-theme', s.theme);
@@ -45,6 +45,8 @@
   <!-- data kecil di awal; isi kartu & soal diunduh per deck saat dibutuhkan -->
   <script src="data/manifest.js"></script>
   <script src="data/locks.js"></script>
+  <script src="data/buku/index.js"></script>   <!-- daftar level & bab "Buku Bunpou"; isi tiap bab dimuat saat dibuka -->
+
   <!-- inti -->
   <script src="js/core/util.js"></script>
   <script src="js/core/fsrs.js"></script>
@@ -56,6 +58,8 @@
   <script src="js/core/furigana-data.js"></script>
   <script src="js/core/furigana.js"></script>
   <script src="js/core/tts.js"></script>
+  <script src="js/core/buku.js"></script>   <!-- "Buku Bunpou": pemuat bab, pembaca penanda furigana/sorot, pencarian, catatan sudah paham -->
+
   <!-- antarmuka -->
   <script src="js/ui/kit.js"></script>
   <script src="js/ui/cardface.js"></script>
@@ -65,6 +69,8 @@
   <script src="js/ui/mydecks.js"></script>   <!-- editor "Deck Saya": bikin deck, tambah/ubah kartu, tempel banyak, bagikan -->
   <script src="js/ui/study.js"></script>
   <script src="js/ui/practice.js"></script>
+  <script src="js/ui/buku.js"></script>   <!-- tampilan Buku Bunpou (daftar di tab Latihan + layar baca per bab) -->
+
   <script src="js/ui/stats.js"></script>
   <script src="js/ui/settings.js"></script>
 </body>

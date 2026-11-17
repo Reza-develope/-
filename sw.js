@@ -1,20 +1,20 @@
 /* =====================================================================
    sw.js — layanan offline.
    • Cangkang aplikasi (HTML/CSS/JS/manifest/ikon): jaringan dulu (maks. 4 detik), jatuh ke salinan tersimpan bila offline.
-   • Isi deck & kuis (data/decks, data/quiz): salinan tersimpan dulu — nama berkasnya membawa ?v=BUILD sehingga tak pernah basi.
+   • Isi deck, kuis & bab Buku Bunpou (data/decks, data/quiz, data/buku/<level>_<nn>.js): salinan tersimpan dulu — nama berkasnya membawa ?v=BUILD sehingga tak pernah basi.
    • Huruf Google Fonts: tampilkan salinan lalu perbarui di latar.
    Saat data/kode berubah, naikkan BUILD di sini DAN di index.html (jalankan: node tools/bump-build.js).
    ===================================================================== */
 'use strict';
-const BUILD = '2026.11.14-2048';
+const BUILD = '2026.11.17-1321';
 const SHELL = 'fc-shell-' + BUILD, DATA = 'fc-data-' + BUILD, FONTS = 'fc-fonts-v1';
 const SHELL_FILES = [
   './', 'index.html', 'manifest.webmanifest', 'assets/icon.svg', 'assets/icons/icon-192.png',
   'css/tokens.css', 'css/base.css', 'css/screens.css',
-  'data/manifest.js', 'data/locks.js',
+  'data/manifest.js', 'data/locks.js', 'data/buku/index.js',
   'js/core/util.js', 'js/core/fsrs.js', 'js/core/scheduler.js', 'js/core/store.js', 'js/core/data.js', 'js/core/session.js', 'js/core/userdecks.js',
-  'js/core/furigana-data.js', 'js/core/furigana.js', 'js/core/tts.js',
-  'js/ui/kit.js', 'js/ui/cardface.js', 'js/ui/app.js', 'js/ui/home.js', 'js/ui/decks.js', 'js/ui/mydecks.js', 'js/ui/study.js', 'js/ui/practice.js', 'js/ui/stats.js', 'js/ui/settings.js'
+  'js/core/furigana-data.js', 'js/core/furigana.js', 'js/core/tts.js', 'js/core/buku.js',
+  'js/ui/kit.js', 'js/ui/cardface.js', 'js/ui/app.js', 'js/ui/home.js', 'js/ui/decks.js', 'js/ui/mydecks.js', 'js/ui/study.js', 'js/ui/practice.js', 'js/ui/buku.js', 'js/ui/stats.js', 'js/ui/settings.js'
 ];
 
 self.addEventListener('install', (e) => {
@@ -62,7 +62,7 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin === self.location.origin) {
-    if (/\/data\/(decks|quiz)\//.test(url.pathname)) e.respondWith(cacheFirst(req, DATA));
+    if (/\/data\/(decks|quiz)\/|\/data\/buku\/[a-z0-9]+_\d+\.js$/.test(url.pathname)) e.respondWith(cacheFirst(req, DATA));
     else e.respondWith(networkFirst(req, SHELL));
   } else if (url.hostname === 'fonts.googleapis.com' || url.hostname === 'fonts.gstatic.com') {
     e.respondWith(staleWhileRevalidate(req, FONTS));
