@@ -465,3 +465,106 @@ kbd { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 500; line-height
 .my-share { display: grid; gap: var(--s3); }
 .my-share .sheet-actions { margin-top: var(--s1); }
 .my-share .textarea { min-height: 150px; }
+
+/* =====================================================================
+   BUKU BUNPOU (js/ui/buku.js) — penjelasan bunpou Irodori: daftar bab di tab Latihan + layar baca per bab.
+   Stempel merah (hanko) = nomor pola · chip merah muda = bagian tata bahasa yang tetap · nila = rumus & kutipan Jepang.
+   ===================================================================== */
+.seg.seg-3 > button { padding: 0 6px; line-height: 1.2; }
+
+/* daftar bab */
+.bk-level { margin-top: var(--s5); }
+.bk-level .section-title { margin-bottom: var(--s2); }
+.bk-lvsub { font-weight: 500; font-size: 0.9rem; }
+.bk-bno { flex: none; width: 36px; height: 36px; display: grid; place-items: center; border-radius: 10px; background: var(--indigo-soft); color: var(--indigo); font-weight: 700; font-variant-numeric: tabular-nums; }
+.bk-prog { color: var(--ink-2); font-weight: 700; }
+.bk-prog.all { color: var(--c-review); }
+.bk-soon { margin-top: var(--s3); color: var(--ink-3); font-size: var(--t-small); }
+.bk-okmark { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--c-review-soft); color: var(--c-review); }
+.bk-okmark .ico { width: 14px; height: 14px; stroke-width: 2.4; }
+.bk-furi .row-title.jp { line-height: 2; }
+
+/* layar baca */
+.bk-tabs { flex: none; display: flex; gap: var(--s2); overflow-x: auto; padding: 10px var(--gutter); background: var(--paper); border-bottom: 1px solid var(--line); scrollbar-width: none; overscroll-behavior-x: contain; }
+.bk-tabs::-webkit-scrollbar { display: none; }
+.bk-tab { flex: none; gap: 7px; height: auto; min-height: 36px; padding-block: 2px; }
+.bk-furi .bk-tab { line-height: 1.9; }
+.bk-cn { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--surface-2); color: var(--ink-2); font-size: 0.74rem; font-weight: 700; }
+.bk-tab[aria-selected='true'] .bk-cn { background: var(--seal); color: var(--seal-ink); }
+.bk-tab[data-done]::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--c-review); }
+.bk-inner { padding-top: var(--s5); padding-bottom: var(--s7); }
+
+.bk-phead { display: flex; gap: var(--s3); align-items: flex-start; }
+.bk-no { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 11px; background: var(--seal); color: var(--seal-ink); font-size: 1.2rem; font-weight: 700; font-variant-numeric: tabular-nums; box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--seal-ink) 28%, transparent); }
+.bk-no.sm { width: 32px; height: 32px; border-radius: 9px; font-size: 1rem; }
+.bk-ptitle { min-width: 0; flex: 1; }
+.bk-name { font-size: clamp(1.4rem, 6vw, 1.85rem); font-weight: 700; line-height: 1.4; letter-spacing: -0.005em; }
+.bk-arti { margin-top: 4px; color: var(--indigo); font-weight: 600; }
+.bk-label { font-size: var(--t-caption); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--indigo); }
+.bk-inti { margin-top: var(--s4); padding: var(--s3) var(--s4); background: var(--indigo-soft); border-radius: var(--r-md); }
+.bk-inti p { margin-top: 2px; font-size: 1.06rem; line-height: 1.65; }
+
+.bk-formula { margin-top: var(--s4); padding: var(--s3) var(--s4) var(--s4); background: var(--surface); border: 1.5px solid var(--line-2); border-radius: var(--r-md); }
+.bk-fline { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin-top: var(--s2); font-size: 1.1rem; line-height: 1.9; }
+.bk-chip { display: inline-block; padding: 2px 11px; border-radius: 9px; font-weight: 600; }
+.bk-chip.var { background: var(--surface-2); border: 1px solid var(--line-2); }
+.bk-chip.fix { background: var(--seal-soft); color: var(--seal); border: 1px solid color-mix(in srgb, var(--seal) 35%, transparent); font-weight: 700; }
+.bk-op { color: var(--ink-3); font-weight: 600; }
+.bk-fnote { margin-top: var(--s2); color: var(--ink-2); font-size: var(--t-small); }
+
+.bk-tbl { margin-top: var(--s4); }
+.bk-tbl-t { margin-bottom: var(--s2); font-size: var(--t-small); font-weight: 700; }
+.bk-tbl-s { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); }
+.bk-tbl table { width: 100%; border-collapse: collapse; }
+.bk-tbl th { padding: 8px 8px; background: var(--surface-2); color: var(--ink-2); font-size: var(--t-caption); font-weight: 700; text-align: left; vertical-align: bottom; }
+.bk-tbl td { padding: 6px 8px; border-top: 1px solid var(--line); font-size: 0.92rem; line-height: 1.8; vertical-align: middle; }
+.bk-tbl td:not(.tn) { min-width: 4.5em; }
+.bk-tbl .tn { white-space: nowrap; }
+.bk-tbl td.tl { color: var(--ink-2); font-size: var(--t-small); }
+.bk-furi .bk-tbl td { line-height: 2.1; }
+
+.bk-sec { margin-top: var(--s6); }
+.bk-h { display: flex; align-items: center; gap: var(--s3); margin-bottom: var(--s3); color: var(--indigo); font-size: var(--t-small); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+.bk-h::after { content: ''; flex: 1; height: 1px; background: var(--line-2); }
+.bk-ul { display: grid; gap: var(--s3); }
+.bk-ul > li { position: relative; padding-left: 20px; line-height: 1.75; }
+.bk-ul > li::before { content: ''; position: absolute; left: 3px; top: 0.78em; width: 7px; height: 7px; border-radius: 50%; background: var(--seal); }
+.kt { color: var(--indigo); font-weight: 600; }
+
+.bk-exs { border-top: 1px solid var(--line); }
+.bk-ex { display: grid; grid-template-columns: 26px minmax(0, 1fr) 44px; gap: var(--s3); align-items: start; padding: var(--s3) 0; border-bottom: 1px solid var(--line); }
+.bk-exn { margin-top: 5px; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-2); color: var(--ink-2); font-size: var(--t-caption); font-weight: 700; }
+.bk-jp { font-size: 1.2rem; line-height: 1.7; }
+.bk-furi .bk-jp { line-height: 2.25; }
+.bk-line + .bk-line { margin-top: 2px; }
+.bk-spk { margin-right: 2px; color: var(--ink-3); font-weight: 700; }
+.bk-id { margin-top: 2px; color: var(--ink-2); font-size: var(--t-small); line-height: 1.55; }
+.bk-say { width: 44px; height: 44px; margin-top: -4px; display: grid; place-items: center; border-radius: var(--r-md); color: var(--indigo); }
+.bk-say:hover { background: var(--indigo-soft); }
+
+.bk-awas { padding: var(--s3) var(--s4) var(--s4); background: color-mix(in srgb, var(--seal) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--seal) 25%, transparent); border-radius: var(--r-md); }
+.bk-awas .bk-h { color: var(--seal); }
+.bk-awas .bk-h::after { background: color-mix(in srgb, var(--seal) 30%, transparent); }
+.bk-donebtn { margin-top: var(--s6); }
+.bk-donebtn[aria-pressed='true'] { background: var(--c-review-soft); border-color: var(--c-review); color: var(--c-review); }
+
+.bk-sum-tags { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.bk-sum-title { margin-top: var(--s4); font-size: clamp(1.5rem, 6.4vw, 2rem); font-weight: 700; line-height: 1.5; }
+.bk-sum-arti { margin-top: var(--s2); color: var(--indigo); font-size: 1.05rem; font-weight: 600; }
+.bk-sum-topic { margin-top: 2px; color: var(--ink-3); font-size: var(--t-small); }
+.bk-practice { margin-top: var(--s6); display: grid; gap: var(--s3); }
+
+.bk-nav { flex: none; padding: 10px var(--gutter) calc(10px + var(--safe-b)); background: var(--paper); border-top: 1px solid var(--line); }
+.bk-nav-in { max-width: 640px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.25fr; gap: var(--s3); }
+.bk-nav .btn { min-width: 0; padding: 0 var(--s3); }
+.bk-nav .btn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 380px) { .bk-nav .btn { padding: 0 8px; gap: 4px; } }
+
+@media (min-width: 700px) {
+  .bk-jp { font-size: 1.4rem; }
+  .bk-inti p, .bk-ul > li { font-size: 1.08rem; }
+}
+@media (min-width: 900px) {
+  .bk-inner.full-inner, .bk-nav-in { max-width: 760px; }
+  .bk-name { font-size: 2.1rem; }
+}
