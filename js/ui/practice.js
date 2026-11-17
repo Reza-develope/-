@@ -1,6 +1,7 @@
 /* =====================================================================
    js/ui/practice.js — tab Latihan: Shiken Pilihan Ganda (aturan lama: skor /250, lulus ≥200, jawaban benar/salah
-   disorot 1,2 detik, evaluasi jawaban salah) + Latihan Bunpou (halaman mandiri di folder bunpou/ lewat iframe).
+   disorot 1,2 detik, evaluasi jawaban salah) + Latihan Bunpou (halaman mandiri di folder bunpou/ lewat iframe)
+   + Buku Bunpou (penjelasan gampang per pola — daftar & layar baca ada di js/ui/buku.js, dipasang di sini lewat FC.bukuUI.mountList).
    Skor terbaik tiap kuis disimpan di penyimpanan (kv "quizBest") dan ikut cadangan.
    ===================================================================== */
 (function (root) {
@@ -33,10 +34,11 @@
 
   function render(el) {
     U.clear(el); refs = {};
-    el.appendChild(h('div.screen-head', h('div', h('h1.screen-title', 'Latihan'), h('p.screen-sub', 'Uji pemahamanmu dengan soal pilihan ganda atau latihan bunpou.'))));
-    var seg = h('div.seg', { role: 'tablist', 'aria-label': 'Jenis latihan' },
+    el.appendChild(h('div.screen-head', h('div', h('h1.screen-title', 'Latihan'), h('p.screen-sub', 'Soal pilihan ganda, latihan bunpou, dan buku penjelasan bunpou.'))));
+    var seg = h('div.seg.seg-3', { role: 'tablist', 'aria-label': 'Jenis latihan' },
       h('button', { type: 'button', role: 'tab', 'aria-selected': tab === 'mc' ? 'true' : 'false', onclick: function () { tab = 'mc'; render(el); } }, 'Pilihan ganda'),
-      h('button', { type: 'button', role: 'tab', 'aria-selected': tab === 'bp' ? 'true' : 'false', onclick: function () { tab = 'bp'; render(el); } }, 'Bunpou'));
+      h('button', { type: 'button', role: 'tab', 'aria-selected': tab === 'bp' ? 'true' : 'false', onclick: function () { tab = 'bp'; render(el); } }, 'Bunpou'),
+      h('button', { type: 'button', role: 'tab', 'aria-selected': tab === 'bk' ? 'true' : 'false', onclick: function () { tab = 'bk'; render(el); } }, 'Buku Bunpou'));
     el.appendChild(seg);
     if (tab === 'mc') {
       refs.input = h('input.input', { type: 'search', placeholder: 'Cari kuis', 'aria-label': 'Cari kuis', autocomplete: 'off', value: q });
@@ -45,6 +47,10 @@
       el.appendChild(h('p.screen-sub.how', 'Baca pertanyaannya, lalu pilih jawaban yang benar. Nilai penuh 250, lulus di 200.'));
       el.appendChild(h('div.search', UI.iconEl('search'), refs.input));
       el.appendChild(refs.list); fillQuizList();
+    } else if (tab === 'bk') {
+      // "Buku Bunpou" (js/ui/buku.js): penjelasan gampang + contoh per pola, per bab
+      if (FC.bukuUI) FC.bukuUI.mountList(el);
+      else el.appendChild(h('div.empty', h('h3', 'Buku Bunpou belum termuat'), h('p', 'Muat ulang halaman ini lalu coba lagi.')));
     } else {
       el.appendChild(h('p.screen-sub.how', 'Pilih level yang mau dilatih: satu bunpou, satu bab, atau campuran. Progres tersimpan di browser ini.'));
       el.appendChild(h('div.rows', BUNPOU.map(function (b) {
@@ -61,6 +67,8 @@
     if (t === 'dark' || t === 'light') return t;
     return root.matchMedia && root.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
+  /** dipakai Buku Bunpou (js/ui/buku.js): tombol "Latihan bab ini" membuka halaman latihan level yang sama */
+  FC.practice = { openBunpou: function (id) { var b = BUNPOU.filter(function (x) { return x.id === id; })[0]; if (b) openBunpou(b); } };
   function openBunpou(b) {
     UI.layer('full', function (L) {
       var url = new URL(b.file, document.baseURI).href + (b.file.indexOf('?') < 0 ? '?' : '&') + 'theme=' + themeNow();

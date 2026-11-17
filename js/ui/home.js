@@ -124,7 +124,7 @@
     var seg = h('div.seg', { role: 'radiogroup', 'aria-label': 'Arah kartu' },
       h('button', { type: 'button', role: 'radio', 'aria-checked': dir === 'f' ? 'true' : 'false', onclick: function () { S.set('dir', 'f'); } }, 'Jepang ke Indonesia'),
       h('button', { type: 'button', role: 'radio', 'aria-checked': dir === 'r' ? 'true' : 'false', onclick: function () { S.set('dir', 'r'); } }, 'Indonesia ke Jepang'));
-    el.appendChild(h('div.section.dir-block', h('div.field', h('div.field-label', 'Arah kartu'), seg, h('p.field-hint', 'Jadwal tiap arah dicatat terpisah, jadi ganti arah tidak menghapus progres.'))));
+    el.appendChild(h('div.section.dir-block', h('div.field', h('div.field-label', 'Arah kartu'), seg, h('p.field-hint', 'DISCLAIMER!!, web ini tidak untuk di perjual belikan, admin/developer mengizinkan siapapun menggunakan web ini GRATIS, Tolong di laporkan jika ada orang yang memperjual belikan tanpa izin admin, kirim laporan ke email admin : rezaputrapratama375@gmail.com'))));
 
     /* deck aktif */
     var LS = FC.session.leafStats();
