@@ -1,16 +1,16 @@
 {
   "name": "Belajar Bahasa Jepang kelas 赤月",
-  "short_name": "赤月 Flashcard",
-  "description": "Flashcard bahasa Jepang dengan jadwal ulang pintar (FSRS-7), kuis pilihan ganda, dan latihan bunpou.",
+  "short_name": "Akatsuki",
+  "description": "Flashcard bahasa Jepang dengan jadwal ulang pintar (FSRS-7), latihan pilihan ganda, dan latihan bunpou.",
   "lang": "id",
-  "dir": "ltr",
-  "id": "./",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
+  "id": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#0d1322",
-  "theme_color": "#0d1322",
+  "orientation": "portrait",
+  "background_color": "#f5f6fa",
+  "theme_color": "#f5f6fa",
+  "categories": ["education"],
   "icons": [
     { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
@@ -18,8 +18,9 @@
     { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ],
   "shortcuts": [
-    { "name": "Mulai belajar", "url": "./index.html#/home", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Deck", "url": "./index.html#/decks", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Latihan", "url": "./index.html#/practice", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] }
+    { "name": "Belajar hari ini", "short_name": "Belajar", "url": "./#/home", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Deck", "short_name": "Deck", "url": "./#/decks", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Latihan", "short_name": "Latihan", "url": "./#/practice", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Statistik", "short_name": "Statistik", "url": "./#/stats", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
   ]
 }

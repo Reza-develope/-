@@ -14,7 +14,7 @@
   <script>
     (function () {
       window.FC = window.FC || {};
-      FC.BUILD = '2026.11.17-1321';   // naikkan angka ini saat data/kode berubah (sw.js memakai versi yang sama)
+      FC.BUILD = '2026.11.25-0335';   // naikkan angka ini saat data/kode berubah (sw.js memakai versi yang sama)
       try {
         var s = JSON.parse(localStorage.getItem('fc.settings.v2') || '{}');
         if (s.theme === 'dark' || s.theme === 'light') document.documentElement.setAttribute('data-theme', s.theme);
@@ -73,5 +73,6 @@
 
   <script src="js/ui/stats.js"></script>
   <script src="js/ui/settings.js"></script>
+  <script src="js/ui/safety.js"></script>   <!-- pengaman progres: cadangan 1 ketuk, pengingat, pemulihan, titik pemulihan, catatan penyimpanan -->
 </body>
 </html>
