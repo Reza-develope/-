@@ -13,6 +13,7 @@ window.FC = window.FC || {};
 FC.bukuIndex = {
   version: 1,
   levels: [
+    { id: "a2", title: "Irodori A2", sub: "初級1", total: 18, babs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] },
     { id: "a22", title: "Irodori A2.2", sub: "初級2", total: 18, babs: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] }
   ]
 };
