@@ -192,9 +192,18 @@
       h('div.row-main', h('div.row-title', 'Daftar kartu'), h('div.row-sub', U.fmtNum(cards.length) + ' kartu, ketuk untuk melihat detail jadwal')), h('div.row-end', UI.iconEl('chev', 'sm')))));
     if (n.fresh < n.total) {
       body.appendChild(h('button.btn.btn-quiet.btn-danger-quiet.btn-block', { type: 'button', onclick: function () {
-        UI.confirm({ title: 'Atur ulang progres deck ini?', text: 'Semua kartu di deck ini kembali jadi baru, di kedua arah. Riwayat review di Statistik tetap tersimpan.', ok: 'Atur ulang', danger: true }).then(function (ok) {
-          if (!ok) return;
-          FC.session.resetDeck(id).then(function (k) { UI.toast(k + ' catatan kartu direset'); FC.bus.emit('progress'); fill(L, body, id, cards); });
+        // kartu dikenali dari isinya: kartu yang sama di dua deck berbagi satu jadwal, jadi resetnya ikut berlaku di deck lain — beri tahu dulu
+        D.loadShared().catch(function () {}).then(function () { return FC.session.resetInfo(id); }).then(function (info) {
+          var extra = info.shared ? ' ' + U.fmtNum(info.shared) + ' kartu di deck ini juga ada di deck lain; jadwalnya satu, jadi di sana ikut kembali jadi baru.' : '';
+          UI.confirm({ title: 'Atur ulang progres deck ini?', text: 'Semua kartu di deck ini kembali jadi baru, di kedua arah.' + extra + ' Riwayat review di Statistik tetap tersimpan. Bisa diurungkan sesaat setelahnya.', ok: 'Atur ulang', danger: true }).then(function (ok) {
+            if (!ok) return;
+            FC.session.resetDeck(id).then(function (res) {
+              FC.bus.emit('progress'); if (!L.closed) fill(L, body, id, cards);
+              UI.toast(res.count + ' catatan kartu direset', { ms: 9000, action: { label: 'Urungkan', onclick: function () {
+                res.undo().then(function () { FC.bus.emit('progress'); if (!L.closed) fill(L, body, id, cards); UI.toast('Dikembalikan.'); });
+              } } });
+            });
+          });
         });
       } }, 'Atur ulang progres deck'));
     }

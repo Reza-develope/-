@@ -247,7 +247,7 @@
   UI.download = function (filename, text, type) {
     var blob = new Blob([text], { type: type || 'application/json' }), a = document.createElement('a');
     a.href = URL.createObjectURL(blob); a.download = filename; document.body.appendChild(a); a.click();
-    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 60000);      // jangan dicabut terlalu cepat: berkas besar bisa terpotong
   };
   UI.pickFile = function (accept) {
     return new Promise(function (resolve) {

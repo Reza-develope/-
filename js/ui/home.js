@@ -12,6 +12,8 @@
   FC.bus.on('stars', function () { if (FC.app.current() === 'home') render(U.$('#screen-home')); });
   FC.bus.on('furigana', function () { /* beranda tidak menampilkan kartu */ });
 
+  /** Catatan kaki dari pembuat. Tampil di SEMUA keadaan Beranda (juga untuk pengguna baru), bukan menempel pada kontrol "Arah kartu". */
+  function notice() { return h('p.home-note.muted.small', 'DISCLAIMER: web ini tidak untuk diperjualbelikan. Admin/developer mengizinkan siapa pun memakainya GRATIS. Tolong laporkan bila ada yang menjualnya tanpa izin admin, kirim ke email admin: rezaputrapratama375@gmail.com'); }
   function activeDecks() { return (FC.store.get('active') || []).filter(function (id) { return D.deck(id) && !D.deck(id).soon; }); }
 
   /** muat kartu deck aktif di latar belakang supaya jumlah "baru" bisa dihitung, lalu gambar ulang */
@@ -80,7 +82,7 @@
     if (!el) return;
     var S = FC.store, r = FC.session.today(), active = activeDecks(), hasRecords = S.allCards().size > 0;
     U.clear(el);
-    if (!active.length && !hasRecords) { state.lastP = 0; return onboarding(el); }
+    if (!active.length && !hasRecords) { state.lastP = 0; onboarding(el); el.appendChild(notice()); return; }
     preload(active.filter(function (id) { return !D.lockOf(id) || D.isUnlocked('deck:' + id); }));
 
     var unknownNew = r.newShown === null && !state.failed;
@@ -124,7 +126,7 @@
     var seg = h('div.seg', { role: 'radiogroup', 'aria-label': 'Arah kartu' },
       h('button', { type: 'button', role: 'radio', 'aria-checked': dir === 'f' ? 'true' : 'false', onclick: function () { S.set('dir', 'f'); } }, 'Jepang ke Indonesia'),
       h('button', { type: 'button', role: 'radio', 'aria-checked': dir === 'r' ? 'true' : 'false', onclick: function () { S.set('dir', 'r'); } }, 'Indonesia ke Jepang'));
-    el.appendChild(h('div.section.dir-block', h('div.field', h('div.field-label', 'Arah kartu'), seg, h('p.field-hint', 'DISCLAIMER!!, web ini tidak untuk di perjual belikan, admin/developer mengizinkan siapapun menggunakan web ini GRATIS, Tolong di laporkan jika ada orang yang memperjual belikan tanpa izin admin, kirim laporan ke email admin : rezaputrapratama375@gmail.com'))));
+    el.appendChild(h('div.section.dir-block', h('div.field', h('div.field-label', 'Arah kartu'), seg)));
 
     /* deck aktif */
     var LS = FC.session.leafStats();
@@ -134,6 +136,9 @@
     el.appendChild(sec);
 
     if (S.starCount()) el.appendChild(h('section.section', h('h2.section-title', 'Kartu Susah'), h('div.rows', FC.decksUI.starRow())));
+
+    // catatan kaki: dulu menempel sebagai petunjuk di bawah "Arah kartu" sehingga terbaca seperti penjelasan kontrol itu
+    el.appendChild(notice());
   }
 
   FC.app.register('home', { render: render, show: function (el) { render(el); } });

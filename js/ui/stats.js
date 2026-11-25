@@ -43,6 +43,12 @@
         var wk = Math.floor((today - i) / 7); if (wk >= 0 && wk < 8) { weeks[wk].n++; if (l.g > 1) weeks[wk].ok++; }
       }
     });
+    var led = S.getKv('days') || {};                      // catatan hari belajar terpisah dari riwayat: menjaga hari beruntun bila riwayat hilang
+    Object.keys(led).forEach(function (k) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(k); if (!m) return;
+      var idx = Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / U.DAY), o = perDay.get(idx), n = +led[k] || 0;
+      if (!o || o.n < n) perDay.set(idx, Object.assign(o || { ms: 0, again: 0 }, { n: n }));
+    });
     var days = Array.from(perDay.keys()).filter(function (i) { return perDay.get(i).n > 0; }).sort(function (a, b) { return a - b; });
     var longest = 0, run = 0, prev = null;
     days.forEach(function (i) { run = prev !== null && i === prev + 1 ? run + 1 : 1; if (run > longest) longest = run; prev = i; });

@@ -88,14 +88,51 @@
       route();
       if (rep && rep.stars) UI.toast(rep.stars + ' kartu bintang dari versi lama dipindahkan.', { ms: 5000 });
       if (ud.skipped) UI.toast(ud.skipped + ' deck buatan sendiri rusak dan dilewati. Bila punya cadangan, pulihkan dari Pengaturan.', { ms: 8000 });
+      // indeks kartu yang dipakai bersama antar-deck (kecil): setelah termuat, angka progres per deck dihitung ulang
+      if (FC.data.loadShared) FC.data.loadShared().then(function () { FC.bus.emit('progress'); }, function () {});
+      if (FC.store.settingsMigrated) UI.toast('Pembaruan: Lompatan awal FSRS dan auto-bintang kartu bandel kini mati secara bawaan. Bisa dinyalakan lagi di Pengaturan.', { ms: 9000 });
       registerSW();
       FC.ready = true; FC.bus.emit('ready');
     }).catch(function (e) { fatal('Aplikasi gagal dimulai', e); });
   }
+  /** Jalan keluar saat aplikasi gagal mulai: baca langsung dari IndexedDB (tanpa lewat store.js yang mungkin justru bermasalah) dan salin
+      sebagai teks cadangan, supaya progres bisa diselamatkan SEBELUM apa pun dihapus. */
+  function rescue(btn, box) {
+    var out = { format: 'akatsuki-fc-backup', version: 2, exportedAt: Date.now(), settings: {}, cards: [], log: [], marks: [], kv: {}, bunpou: {} };
+    try { out.settings = JSON.parse(localStorage.getItem('fc.settings.v2') || '{}'); } catch (e) {}
+    try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf('bunpou:') === 0) out.bunpou[k] = localStorage.getItem(k); } } catch (e) {}
+    var fail = function () { btn.textContent = 'Penyimpanan tidak bisa dibaca'; btn.disabled = false; };
+    var req; try { req = indexedDB.open('akatsuki-fc'); } catch (e) { return fail(); }
+    req.onerror = fail;
+    req.onsuccess = function () {
+      var db = req.result, names = ['cards', 'log', 'marks', 'kv'].filter(function (n) { return db.objectStoreNames.contains(n); });
+      if (!names.length) { db.close(); btn.textContent = 'Penyimpanan kosong'; return; }
+      var tx = db.transaction(names, 'readonly'), left = names.length;
+      tx.onerror = function () { db.close(); fail(); };
+      names.forEach(function (n) {
+        var r = tx.objectStore(n).getAll();
+        r.onsuccess = function () {
+          if (n === 'kv') r.result.forEach(function (x) { out.kv[x.key] = x.val; }); else out[n] = r.result;
+          if (--left) return;
+          db.close();
+          var text = JSON.stringify(out), done = function (msg) { btn.textContent = msg; };
+          var ta = h('textarea.input.paste-box', { readonly: true, rows: 5, 'aria-label': 'Teks cadangan darurat' }); ta.value = text;
+          ta.addEventListener('focus', function () { ta.select(); });
+          var show = function () { box.appendChild(ta); ta.focus(); };
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done('Tersalin: tempel ke Catatan atau email ke dirimu sendiri'); }, function () { done('Salin manual dari kotak di bawah'); show(); });
+          else { done('Salin manual dari kotak di bawah'); show(); }
+        };
+      });
+    };
+  }
   function fatal(title, e) {
     console.error(e);
     var m = U.$('#screens'); m.innerHTML = '';
-    m.appendChild(h('div.empty', h('h3', title), h('p', String(e && e.message || e)), h('p.small', 'Muat ulang halaman. Bila tetap gagal, hapus data situs di pengaturan browser lalu coba lagi.')));
+    var box = h('div'), save = h('button.btn.btn-block', { type: 'button' }, 'Selamatkan data: salin sebagai teks cadangan');
+    save.addEventListener('click', function () { save.disabled = true; rescue(save, box); });
+    m.appendChild(h('div.empty', h('h3', title), h('p', String(e && e.message || e)),
+      h('p.small', 'Muat ulang halaman dulu. Jangan hapus data situs atau data aplikasi: progres belajarmu masih tersimpan di sana dan akan ikut hilang. Bila tetap gagal, salin dulu cadangan darurat di bawah dan simpan di tempat aman.'),
+      h('div.sheet-actions', h('button.btn.btn-primary.btn-block', { type: 'button', onclick: function () { location.reload(); } }, 'Muat ulang'), save), box));
     U.$('#screen-home').classList.add('on');
   }
   A.boot = boot;

@@ -28,7 +28,7 @@
   function fillQuizList() {
     var list = U.clear(refs.list), term = U.norm(q).trim().split(/\s+/).filter(Boolean);
     var hits = D.quizList.filter(function (it) { var hay = U.norm(it.title + ' ' + it.sub); return term.every(function (t) { return hay.indexOf(t) >= 0; }); });
-    if (!hits.length) { list.appendChild(h('div.empty', h('h3', 'Deck ga ketemu nih 😅'), h('p', 'Coba kata kunci lain.'))); return; }
+    if (!hits.length) { list.appendChild(h('div.empty', h('h3', 'Kuis ga ketemu nih 😅'), h('p', 'Coba kata kunci lain.'))); return; }
     list.appendChild(h('div.rows', hits.map(quizRow)));
   }
 
@@ -68,7 +68,10 @@
     return root.matchMedia && root.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
   /** dipakai Buku Bunpou (js/ui/buku.js): tombol "Latihan bab ini" membuka halaman latihan level yang sama */
-  FC.practice = { openBunpou: function (id) { var b = BUNPOU.filter(function (x) { return x.id === id; })[0]; if (b) openBunpou(b); } };
+  FC.practice = {
+    openBunpou: function (id) { var b = BUNPOU.filter(function (x) { return x.id === id; })[0]; if (b) openBunpou(b); },
+    pages: function () { return BUNPOU.map(function (b) { return b.file; }); }       // dipakai pengunduh offline di Pengaturan
+  };
   function openBunpou(b) {
     UI.layer('full', function (L) {
       var url = new URL(b.file, document.baseURI).href + (b.file.indexOf('?') < 0 ? '?' : '&') + 'theme=' + themeNow();
@@ -84,7 +87,7 @@
   function openQuiz(item) {
     var lock = D.quizLockOf(item.id);
     var go = function () {
-      if (!item.count) { UI.alert('Segera hadir', 'early acces, bentar saya coba sempurnain'); return; }
+      if (!item.count) { UI.alert('Segera hadir', 'Early access, bentar saya coba sempurnain.'); return; }
       play(item);
     };
     if (lock && !D.isUnlocked('quiz:' + item.id)) UI.askPassword(item.title + ' ' + item.sub, 'quiz', lock, 'quiz:' + item.id).then(function (ok) { if (ok) go(); });
@@ -107,7 +110,7 @@
       U.clear(V.inner); V.inner.appendChild(h('div.study-msg', h('div.spinner', { 'aria-hidden': 'true' }), h('p', 'Memuat soal…')));
       D.loadQuiz(item.id).then(function (arr) {
         if (st.dead) return;
-        if (!arr || !arr.length) { V.layer.close(); UI.alert('Segera hadir', 'early acces, bentar saya coba sempurnain'); return; }
+        if (!arr || !arr.length) { V.layer.close(); UI.alert('Segera hadir', 'Early access, bentar saya coba sempurnain.'); return; }
         start(arr);
       }, function (e) {
         if (st.dead) return; U.clear(V.inner);
@@ -121,7 +124,9 @@
       var it = st.arr[st.i]; if (!it) return result();
       st.answered = false; U.clear(V.inner); V.body.scrollTop = 0;
       V.prog.firstChild.style.width = (st.i / st.arr.length * 100) + '%';
-      var opts = U.shuffle([it.correct].concat(it.wrong || []), Math.random);
+      // opsi kembar (data salah ketik: jawaban benar atau pengecoh yang sama muncul dua kali) dibuang — yang benar selalu dipertahankan
+      var seenOpt = {}, pool = [it.correct].concat(it.wrong || []).filter(function (o) { o = String(o); if (seenOpt[o]) return false; seenOpt[o] = 1; return true; });
+      var opts = U.shuffle(pool, Math.random);
       V.btns = opts.map(function (o, k) {
         var b = h('button.opt', { type: 'button', 'data-l': LABELS[k] || String(k + 1) }, h('span.opt-l', LABELS[k] || String(k + 1)), h('span.opt-t.jp', o));
         b.addEventListener('click', function () { pick(b, o, it); });
