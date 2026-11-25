@@ -276,50 +276,59 @@
           }
       }
   
-      let pointer = 0;
-      let html = '';
-      let failed = false;
-  
-      for (let i = 0; i < segments.length; i++) {
+      // Cari SEMUA cara memotong 'back' mengikuti bagian literal di 'front' (maks. 2 dicatat). Dulu batas kanji→okurigana
+      // diambil dari kemunculan PERTAMA kana okurigana di 'back' dan sisa bacaan di ujung tak pernah diperiksa, sehingga
+      // 黄色い (きいろい) hanya menampilkan "き" dan 新築祝い kehilangan "いわ" — melanggar janji "total bacaan = data back".
+      // Sekarang sebuah potongan hanya sah bila seluruh 'back' habis terpakai. Satu potongan sah → dipakai; nol atau ambigu (>1)
+      // → fallback aman (satu <ruby> di seluruh kata). Tidak pernah menebak.
+      const plans = [];
+      const walk = (i, pointer, acc) => {
+          if (plans.length >= 2) return;
+          if (i === segments.length) { if (pointer === back.length) plans.push(acc.slice()); return; }
           const seg = segments[i];
           if (!seg.needsReading) {
-              // bagian literal (hiragana/katakana/simbol) harus persis sama di posisi ini
-              const slice = back.slice(pointer, pointer + seg.text.length);
-              if (slice !== seg.text) { failed = true; break; }
-              html += seg.text;
-              pointer += seg.text.length;
-          } else {
-              // cari batas akhir: posisi mulainya bagian literal berikutnya (kalau ada) di 'back'
-              let boundary = back.length;
-              const nextLiteral = segments.slice(i + 1).find(s => !s.needsReading);
-              if (nextLiteral) {
-                  const found = back.indexOf(nextLiteral.text, pointer);
-                  if (found === -1) { failed = true; break; }
-                  boundary = found;
-              }
-              const segReading = back.slice(pointer, boundary);
-              if (!segReading) { failed = true; break; }
-              // Batas segmen ini sendiri udah pasti benar (segReading = bacaan lengkap
-              // yang 100% akurat buat seg.text, dari pencocokan literal di atas). Sekarang
-              // coba pecah LEBIH LANJUT per-kanji lewat kamus cara baca — kalau pasti &
-              // tunggal, tiap kanji dapet <ruby> sendiri; kalau ragu/ambigu, JANGAN NEBAK,
-              // pakai fallback aman (satu <ruby> di seluruh kelompok, seperti sebelumnya).
-              const matchResult = matchSegment(seg.text, segReading);
-              if (matchResult.status === 'ok' && matchResult.pieces && matchResult.pieces.length > 0) {
-                  html += matchResult.pieces.map(([pt, pr]) => `<ruby>${pt}<rt>${pr}</rt></ruby>`).join('');
-              } else {
-                  html += `<ruby>${seg.text}<rt>${segReading}</rt></ruby>`;
-              }
-              pointer = boundary;
+              if (back.slice(pointer, pointer + seg.text.length) !== seg.text) return;     // literal harus persis sama di posisi ini
+              acc.push(null);
+              walk(i + 1, pointer + seg.text.length, acc);
+              acc.pop();
+              return;
           }
-      }
-  
-      // Kalau ada bagian yang gagal dicocokin (data ga standar), fallback aman:
+          const nextLiteral = segments.slice(i + 1).find(s2 => !s2.needsReading);
+          if (!nextLiteral) {                                                                 // kanji di ujung: bacaan = sisa 'back'
+              const rest = back.slice(pointer);
+              if (!rest) return;
+              acc.push(rest); walk(i + 1, back.length, acc); acc.pop();
+              return;
+          }
+          let found = back.indexOf(nextLiteral.text, pointer + 1);                            // bacaan kanji minimal 1 huruf
+          while (found !== -1 && plans.length < 2) {
+              acc.push(back.slice(pointer, found)); walk(i + 1, found, acc); acc.pop();
+              found = back.indexOf(nextLiteral.text, found + 1);
+          }
+      };
+      walk(0, 0, []);
+
+      // Kalau ada bagian yang gagal dicocokin atau ambigu (data ga standar), fallback aman:
       // satu furigana gede di atas semua kanji, drpd hasilnya salah potong/rusak.
-      if (failed) {
+      if (plans.length !== 1) {
           return `<ruby>${front}<rt>${back}</rt></ruby>`;
       }
-  
+
+      // Batas tiap segmen sudah pasti (segReading = bacaan lengkap yang 100% akurat buat seg.text). Sekarang coba pecah LEBIH
+      // LANJUT per-kanji lewat kamus cara baca — kalau pasti & tunggal, tiap kanji dapet <ruby> sendiri; kalau ragu/ambigu,
+      // JANGAN NEBAK, pakai fallback aman (satu <ruby> di seluruh kelompok, seperti sebelumnya).
+      let html = '';
+      segments.forEach((seg, i) => {
+          const segReading = plans[0][i];
+          if (!seg.needsReading) { html += seg.text; return; }
+          const matchResult = matchSegment(seg.text, segReading);
+          if (matchResult.status === 'ok' && matchResult.pieces && matchResult.pieces.length > 0) {
+              html += matchResult.pieces.map(([pt, pr]) => `<ruby>${pt}<rt>${pr}</rt></ruby>`).join('');
+          } else {
+              html += `<ruby>${seg.text}<rt>${segReading}</rt></ruby>`;
+          }
+      });
+
       return html;
   }
 

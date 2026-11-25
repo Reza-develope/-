@@ -9,9 +9,17 @@
   function load() { try { voices = synth.getVoices() || []; if (voices.length) T.hasJa = voices.some(function (v) { return /^ja/i.test(v.lang); }); } catch (e) {} }
   if (T.supported) { load(); try { synth.addEventListener('voiceschanged', load); } catch (e) { synth.onvoiceschanged = load; } }
 
-  /** teks yang enak diucapkan: bacaan tanpa tanda ～, tanpa isi kurung, hanya alternatif pertama sebelum ／ */
+  /** teks yang enak diucapkan: bacaan tanpa tanda ～, tanpa isi kurung, hanya alternatif pertama sebelum ／.
+      Urutan penting: (1) okurigana yang ditulis dalam kurung ASCII menempel pada hurufnya — はし(る), ちい(さい) — digabung dulu
+      supaya terbaca はしる / ちいさい (dulu ekornya ikut terbuang jadi "はし"); (2) isi kurung lain dibuang (catatan, contoh,
+      bagian opsional seperti おはよう（ございます）); (3) baru ambil alternatif pertama — kalau dibalik, "／" di dalam kurung
+      memotong kurungnya dan sisa katanya ikut terucap. */
   T.clean = function (s) {
-    return String(s || '').split(/[／/]/)[0].replace(/[（(][^）)]*[）)]/g, '').replace(/[～〜~]/g, ' ').replace(/\s+/g, ' ').trim();
+    return String(s || '')
+      .replace(/([ぁ-ゟ一-龯々ァ-ヿー])\(([ぁ-ゟ]+)\)/g, function (m, a, b) { return b === 'な' ? m : a + b; })   // (な) = penanda kata sifat-na, bukan bagian bacaan
+      .replace(/[（(][^）)]*[）)]/g, '')
+      .split(/[／/]/)[0]
+      .replace(/[～〜~]/g, ' ').replace(/\s+/g, ' ').trim();
   };
   T.speak = function (text, opts) {
     if (!T.supported) return false;

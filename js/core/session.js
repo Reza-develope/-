@@ -173,11 +173,10 @@
 
   P.counts = function () {
     var n = 0, r = 0, l = this.learnQ.length;
-    this.mainQ.forEach(function (i) { if (i.kind === 'n') n++; else r++; });
+    this.mainQ.forEach(function (i) { if (i.kind === 'n') n++; else if (i.kind === 'l') l++; else r++; });      // kartu belajar yang dikembalikan oleh Urungkan ikut tercatat di mainQ
     var c = this.cur; if (c) { if (c.kind === 'n') n++; else if (c.kind === 'r') r++; else l++; }
     return { n: n, l: l, r: r, total: n + l + r };
   };
-  P.remaining = function () { return this.counts().total; };
 
   /** Pilih & kembalikan kartu berikutnya (atau null bila selesai). */
   P.next = function (now) {
@@ -190,7 +189,6 @@
     return it;
   };
   /** Kapan kartu belajar berikutnya jatuh tempo (untuk layar "tunggu sebentar"), atau null. */
-  P.nextLearnDue = function () { return this.learnQ.length ? this.learnQ[0].rec.due : null; };
 
   /** Pratinjau 4 tombol untuk kartu sekarang: [{grade,label,ivl,due}] */
   P.preview = function (now) {
@@ -279,23 +277,33 @@
     return r;
   };
 
-  /** Statistik per deck daun dari catatan SRS: {dk → {learned, due, learn}} (arah sekarang). */
+  /** Statistik per deck daun dari catatan SRS (arah sekarang): {id deck daun → {learned, due, mature, sh}}.
+      Kartu yang hanya ada di satu deck dihitung ke deck asalnya (`dk`). Kartu yang ada di BEBERAPA deck (±15% kartu) dicatat di
+      `sh` untuk SETIAP deck yang memuatnya (indeks data/shared.js) — dulu hanya deck tempat kartu pertama kali dipelajari yang
+      kebagian, sehingga baris deck lain tampak kosong padahal lembar deck-nya (yang menghitung per isi kartu) menunjukkan sebaliknya.
+      Indeks belum termuat → jatuh ke cara lama (semua ke `dk`). */
   SESS.leafStats = function (now) {
     now = now || Date.now();
     var st = FC.store, dir = dirOf(), day = dayNow(now), rollover = st.get('rollover'), out = {};
+    var leaf = function (id) { return out[id] || (out[id] = { learned: 0, due: 0, mature: 0, sh: new Map() }); };
     st.allCards().forEach(function (c) {
       if (c.dir !== dir || !c.dk) return;
-      var o = out[c.dk] || (out[c.dk] = { learned: 0, due: 0, mature: 0 });
-      o.learned++;
-      if (c.st === ST.REVIEW && U.dayIndex(c.due, rollover) <= day) o.due++;
-      else if ((c.st === ST.LEARN || c.st === ST.RELEARN) && c.due <= now + LEARN_AHEAD) o.due++;
-      if (c.st === ST.REVIEW && (c.ivl || 0) >= 21) o.mature++;
+      var due = (c.st === ST.REVIEW && U.dayIndex(c.due, rollover) <= day) || ((c.st === ST.LEARN || c.st === ST.RELEARN) && c.due <= now + LEARN_AHEAD);
+      var mature = c.st === ST.REVIEW && (c.ivl || 0) >= 21;
+      var shared = FC.data.sharedLeaves ? FC.data.sharedLeaves(c.id) : null;
+      if (shared) { shared.forEach(function (lf) { leaf(lf).sh.set(c.id, { due: due, mature: mature }); }); return; }
+      var o = leaf(c.dk); o.learned++; if (due) o.due++; if (mature) o.mature++;
     });
     return out;
   };
+  /** Jumlah dipelajari / jatuh tempo / matang untuk satu deck (daun, induk, atau paket). Kartu bersama dihitung sekali per deck. */
   SESS.deckStats = function (deckId, leafStats) {
-    var o = { learned: 0, due: 0, mature: 0 };
-    FC.data.leavesOf(deckId).forEach(function (l) { var s = leafStats[l]; if (s) { o.learned += s.learned; o.due += s.due; o.mature += s.mature; } });
+    var o = { learned: 0, due: 0, mature: 0 }, seen = new Set();
+    FC.data.leavesOf(deckId).forEach(function (l) {
+      var s = leafStats[l]; if (!s) return;
+      o.learned += s.learned; o.due += s.due; o.mature += s.mature;
+      if (s.sh) s.sh.forEach(function (f, cid) { if (seen.has(cid)) return; seen.add(cid); o.learned++; if (f.due) o.due++; if (f.mature) o.mature++; });
+    });
     return o;
   };
 
@@ -318,11 +326,29 @@
     return FC.data.resolve(scope.id).then(function (c) { return c.slice(); });
   };
 
-  /** Atur ulang kemajuan satu deck (semua arah) — kartu jadi baru lagi. */
-  SESS.resetDeck = function (deckId) {
+  /** Apa yang akan terhapus bila deck ini diatur ulang: kunci catatan kartu + berapa kartu yang JUGA ada di deck lain.
+      (Kartu dikenali dari isinya, jadi kartu yang sama di dua deck berbagi satu jadwal.) */
+  SESS.resetInfo = function (deckId) {
     return FC.data.resolve(deckId).then(function (cards) {
-      var keys = []; cards.forEach(function (c) { var id = FC.data.cid(c); ['f', 'r'].forEach(function (d) { var k = keyOf(id, d); if (FC.store.getCard(k)) keys.push(k); }); });
-      return FC.store.deleteCards(keys).then(function () { return keys.length; });
+      var own = new Set(FC.data.leavesOf(deckId)), keys = [], shared = 0;
+      cards.forEach(function (c) {
+        var id = FC.data.cid(c), has = false;
+        ['f', 'r'].forEach(function (d) { var k = keyOf(id, d); if (FC.store.getCard(k)) { keys.push(k); has = true; } });
+        var sl = FC.data.sharedLeaves ? FC.data.sharedLeaves(id) : null;
+        if (has && sl && sl.some(function (lf) { return !own.has(lf); })) shared++;
+      });
+      return { keys: keys, shared: shared };
+    });
+  };
+  /** Atur ulang kemajuan satu deck (semua arah) — kartu jadi baru lagi. Titik pemulihan dibuat dulu, dan hasilnya membawa
+      `undo()` yang mengembalikan catatan persis seperti semula (riwayat di Statistik memang tidak pernah dihapus). */
+  SESS.resetDeck = function (deckId) {
+    return SESS.resetInfo(deckId).then(function (info) {
+      var recs = info.keys.map(function (k) { return FC.store.getCard(k); }).filter(Boolean);
+      var snap = FC.store.snapshot ? FC.store.snapshot('pre-reset').catch(function () {}) : Promise.resolve();
+      return snap.then(function () { return FC.store.deleteCards(info.keys); }).then(function () {
+        return { count: info.keys.length, shared: info.shared, undo: function () { return Promise.all(recs.map(function (r) { return FC.store.putCard(r); })); } };
+      });
     });
   };
 

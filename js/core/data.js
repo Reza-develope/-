@@ -12,6 +12,7 @@
   var U = FC.util;
 
   var shards = {}, quizzes = {}, pending = {}, unlocked = new Set();
+  var sharedIdx = null;                       // cid → [id deck daun] untuk kartu yang ada di lebih dari satu deck (data/shared.js)
   var origin = new WeakMap();                 // kartu → id deck daun asalnya
   var byCid = new Map(), shardOfCid = new Map();
 
@@ -32,6 +33,11 @@
   FC.defineQuiz = function (id, arr) {
     quizzes[id] = arr;
     var p = pending['q:' + id]; if (p) { delete pending['q:' + id]; p.resolve(arr); }
+  };
+  FC.defineShared = function (obj) {
+    var m = {}; Object.keys(obj || {}).forEach(function (k) { m[k] = String(obj[k]).split(' '); });
+    sharedIdx = m;
+    var p = pending['x:shared']; if (p) { delete pending['x:shared']; p.resolve(m); }
   };
 
   var D = { shards: shards, patchShards: new Set() };
@@ -84,7 +90,6 @@
     })(id);
     return need;
   };
-  D.isParentOf = function (parentId, id) { var d = D.byId.get(id); return !!d && d.parent === parentId; };
   D.groupOf = function (id) { var d = D.byId.get(id); return d ? D.groupById.get(d.group) : null; };
   D.titleOf = function (id) {
     var d = D.byId.get(id); if (!d) return id;
@@ -98,11 +103,15 @@
     var key = kind + ':' + id;
     if (kind === 's' && shards[id]) return Promise.resolve(shards[id]);
     if (kind === 'q' && quizzes[id]) return Promise.resolve(quizzes[id]);
+    if (kind === 'x' && sharedIdx) return Promise.resolve(sharedIdx);
     if (pending[key]) return pending[key].promise;
     var p = {}; p.promise = new Promise(function (res, rej) { p.resolve = res; p.reject = rej; });
     pending[key] = p;
-    var s = document.createElement('script'); s.src = url + BUILD(); s.async = true;
+    var s = document.createElement('script'); s.src = url + (kind === 'x' ? '' : BUILD()); s.async = true;      // indeks bersama = bagian cangkang (SW: jaringan dulu, sudah di-precache), jadi tanpa ?v=
     s.onerror = function () { delete pending[key]; s.remove(); var e = new Error((kind === 'q' ? 'Soal' : 'Kartu') + ' belum bisa dimuat. Periksa koneksi internet lalu coba lagi.'); e.shard = id; p.reject(e); };
+    // berkas terunduh tapi tidak memanggil FC.define… dengan id yang benar (salah ketik id / galat sintaks di tengah berkas):
+    // dulu janjinya menggantung selamanya dan layar berputar tanpa akhir; sekarang gagal dengan pesan yang jelas
+    s.onload = function () { if (!pending[key]) return; delete pending[key]; var e = new Error('Berkas ' + url + ' termuat tetapi isinya tidak terdaftar. Periksa id di FC.define…'); e.shard = id; p.reject(e); };
     document.head.appendChild(s);
     return p.promise;
   }
@@ -116,6 +125,10 @@
     return loadScript('q', file, 'data/quiz/' + file + '.js').then(function () { return quizzes[file]; });
   };
   D.loadShards = function (ids) { return Promise.all(ids.map(D.loadShard)); };
+  /** indeks kartu bersama (kecil, ±30 KB). Gagal/hilang → statistik deck jatuh ke cara lama (per deck asal), tidak ada yang rusak. */
+  D.loadShared = function () { return loadScript('x', 'shared', 'data/shared.js'); };
+  D.sharedLeaves = function (cid) { return sharedIdx && sharedIdx[cid] || null; };
+  D.sharedReady = function () { return !!sharedIdx; };
   D.loadAll = function (onProgress) {
     var ids = []; D.decks.forEach(function (d) { if (d.shard && ids.indexOf(d.shard) < 0) ids.push(d.shard); if (d.patch && ids.indexOf(d.patch) < 0) ids.push(d.patch); });
     var done = 0;

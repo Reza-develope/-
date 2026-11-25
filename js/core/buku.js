@@ -41,6 +41,8 @@
     pending[key] = p;
     var s = document.createElement('script'); s.src = 'data/buku/' + B.fileOf(levelId, n) + '.js' + BUILD(); s.async = true;
     s.onerror = function () { delete pending[key]; s.remove(); var e = new Error('Isi bab belum bisa dimuat. Periksa koneksi internet lalu coba lagi.'); e.bab = n; p.reject(e); };
+    // berkas terunduh tapi FC.defineBuku tidak dipanggil dengan level & nomor yang sama (salah ketik) → dulu menggantung selamanya
+    s.onload = function () { if (!pending[key]) return; delete pending[key]; var e = new Error('Berkas bab ' + levelId + ' ' + n + ' termuat tetapi isinya tidak terdaftar. Periksa level dan nomor di FC.defineBuku.'); e.bab = n; p.reject(e); };
     document.head.appendChild(s);
     return p.promise;
   }
@@ -145,7 +147,7 @@
     bab.pola.forEach(function (p, i) { if (d[B.polaId(levelId, bab.n, i)]) n++; });
     return n;
   };
-  /** buang ingatan di memori (setelah cadangan dipulihkan, misalnya) */
+  /** buang ingatan di memori (dipanggil store.js setelah cadangan dipulihkan / progres dihapus) */
   B.reloadDone = function () { memo = null; };
 
   if (typeof module !== 'undefined' && module.exports) module.exports = B;
