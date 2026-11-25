@@ -19,7 +19,7 @@ FC.defineQuiz("kanji_n5", [
   { question: "かんじ", correct: "漢字", wrong: ["感じ", "漢学", "漢寺"] },
   { question: "かいわ", correct: "会話", wrong: ["会話す", "会詰", "会読"] },
   { question: "おぼえる", correct: "覚える", wrong: ["党える", "覚る", "学える"] },
-  { question: "おしえる", correct: "教える", wrong: ["数える", "教る", "数える"] },
+  { question: "おしえる", correct: "教える", wrong: ["数える", "教る", "教えう"] },
   { question: "じしょ", correct: "辞書", wrong: ["字書", "辞典", "辞暑"] },
   { question: "かす", correct: "貸す", wrong: ["貨す", "賃す", "貸し"] },
   { question: "みせる", correct: "見せる", wrong: ["看せる", "見える", "視せる"] },
@@ -36,10 +36,10 @@ FC.defineQuiz("kanji_n5", [
   { question: "なんかいも", correct: "何回も", wrong: ["何度も", "何会も", "何階も"] },
   { question: "きょうしつ", correct: "教室", wrong: ["教屋", "教事", "教室う"] },
   { question: "むりょう", correct: "無料", wrong: ["無科", "無料う", "無費"] },
-  { question: "せんせい", correct: "先生", wrong: ["先生", "先生い", "学生"] },
+  { question: "せんせい", correct: "先生", wrong: ["光生", "先生い", "学生"] },
   { question: "ちえ", correct: "知恵", wrong: ["智慧", "知思", "知識"] },
   { question: "はいしゃくする", correct: "拝借する", wrong: ["拝貸する", "借用する", "排借する"] },
-  { question: "けんさく", correct: "検索", wrong: ["検察", "検索", "検索す"] },
+  { question: "けんさく", correct: "検索", wrong: ["検察", "険索", "検索す"] },
   { question: "しつもん", correct: "質問", wrong: ["質門", "質問する", "問質"] },
-  { question: "そうだん", correct: "相談", wrong: ["相談", "相談する", "相談者"] }
+  { question: "そうだん", correct: "相談", wrong: ["想談", "相談する", "相談者"] }
 ]);
