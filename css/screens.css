@@ -568,3 +568,10 @@ kbd { font-family: var(--f-ui); font-size: 0.7rem; font-weight: 500; line-height
   .bk-inner.full-inner, .bk-nav-in { max-width: 760px; }
   .bk-name { font-size: 2.1rem; }
 }
+
+/* ---- v28: catatan kaki Beranda, lembar cadangan, kotak tempel teks cadangan ---- */
+.home-note { margin: var(--s6) 0 var(--s4); line-height: 1.5; }
+.backup-sheet p { margin: 0 0 var(--s3); line-height: 1.5; }
+.backup-sheet .sheet-actions { margin-top: var(--s4); }
+.paste-box { width: 100%; min-height: 150px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: var(--t-caption); line-height: 1.4; }
+.paste-sheet .sheet-actions { margin-top: var(--s4); }
