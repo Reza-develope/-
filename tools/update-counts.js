@@ -5,7 +5,7 @@
    mengedit/menambah kartu di data/decks/*.js atau soal di data/quiz/*.js.
 
    Pakai:   node tools/update-counts.js
-   Hanya `count` yang berubah. File ditulis ulang dengan format yang sama (satu deck per baris).
+   `count` di manifest diperbarui (satu deck per baris), dan data/shared.js (indeks kartu yang dipakai bersama antar-deck) dibuat ulang.
    ===================================================================== */
 const fs = require('fs');
 const path = require('path');
@@ -31,3 +31,11 @@ m.quiz.forEach(x => {
 });
 fs.writeFileSync(path.join(L.DATA_DIR, 'manifest.js'), L.fmtManifest(m));
 console.log(changed ? 'Selesai: ' + changed + ' angka diperbarui.' : 'Semua angka sudah benar.');
+
+// indeks kartu bersama antar-deck (data/shared.js) — disegarkan bersama angka count supaya tak pernah basi
+const shared = L.computeShared(m, data.shards);
+const sharedText = L.fmtShared(shared);
+const sharedPath = path.join(L.DATA_DIR, 'shared.js');
+const before = fs.existsSync(sharedPath) ? fs.readFileSync(sharedPath, 'utf8') : '';
+if (before !== sharedText) { fs.writeFileSync(sharedPath, sharedText); console.log('data/shared.js diperbarui: ' + Object.keys(shared).length + ' kartu dipakai bersama.'); }
+else console.log('data/shared.js sudah benar (' + Object.keys(shared).length + ' kartu dipakai bersama).');

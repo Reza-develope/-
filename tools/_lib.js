@@ -1,13 +1,13 @@
 'use strict';
 /* =====================================================================
-   tools/_lib.js — fungsi bersama untuk tools/legacy-split.js, tools/verify-data.js
-   dan tools/update-counts.js (pembaca data lama, penulis berkas data baru,
-   pemuat data baru, penyelesai deck, pemeriksa struktur).
+   tools/_lib.js — fungsi bersama untuk tools/update-counts.js dan tools/check-data.js
+   (pemuat data, penyelesai deck, pemeriksa struktur, pembuat indeks kartu bersama, penulis manifest).
    Tidak perlu dijalankan sendiri.
    ===================================================================== */
 const fs = require('fs');
 const path = require('path');
 const vm = require('vm');
+const U = require('../js/core/util.js');      // cardId() yang sama dengan yang dipakai aplikasi
 
 const ROOT = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(ROOT, 'data');
@@ -82,9 +82,10 @@ const QUIZ_KEYS = ['id', 'title', 'sub', 'shard', 'count'];
 const MANIFEST_HEADER = [
   '/* =====================================================================',
   '   data/manifest.js — DAFTAR deck & kuis. Isi kartu ada di data/decks/*.js dan data/quiz/*.js.',
-  '   Dibuat oleh tools/legacy-split.js; setelah mengedit kartu di shard, jalankan',
+  '   Setelah mengedit kartu di shard atau daftar ini, jalankan',
   '       node tools/update-counts.js',
-  '   untuk menyegarkan angka `count` (file ini ditulis ulang dengan format yang sama).',
+  '   untuk menyegarkan angka `count` dan data/shared.js (file ini ditulis ulang dengan format yang sama),',
+  '   lalu `node tools/check-data.js` untuk memastikan tidak ada yang rusak.',
   '',
   '   Kolom deck:',
   '     id        id deck (dipakai juga sebagai kunci data lama)       group    id grup (lihat `groups`)',
@@ -321,6 +322,31 @@ function checkStructure(L) {
   return P;
 }
 
+/** Kartu yang muncul di lebih dari satu deck daun: {cid: "idDaunA idDaunB"}. Dipakai aplikasi (data/shared.js) supaya kemajuan
+    per deck dihitung dari ISI kartu — kartu yang sama di dua deck berbagi satu jadwal, jadi keduanya harus ikut terhitung. */
+function computeShared(manifest, shards) {
+  const where = new Map();
+  manifest.decks.forEach(d => {
+    if (!d.shard || d.soon) return;
+    const arr = (shards.get(d.shard) || {})[d.id] || [], here = new Set();
+    arr.forEach(c => {
+      const id = U.cardId(c.front, c.back);
+      if (here.has(id)) return;
+      here.add(id);
+      if (!where.has(id)) where.set(id, []);
+      where.get(id).push(d.id);
+    });
+  });
+  const out = {};
+  Array.from(where.entries()).filter(e => e[1].length > 1).sort((a, b) => (a[0] < b[0] ? -1 : 1)).forEach(e => { out[e[0]] = e[1].join(' '); });
+  return out;
+}
+function fmtShared(obj) {
+  const rows = Object.keys(obj).map(k => '  ' + q(k) + ': ' + q(obj[k]));
+  return '/* data/shared.js — DIBUAT OTOMATIS oleh `node tools/update-counts.js`. Jangan diedit tangan.\n   Kartu yang ada di lebih dari satu deck daun (cid → id deck), dipakai untuk menghitung kemajuan per deck. */\n' +
+    'FC.defineShared({\n' + rows.join(',\n') + '\n});\n';
+}
+
 function dirBytes(dir) {
   let n = 0;
   if (!fs.existsSync(dir)) return 0;
@@ -332,5 +358,5 @@ module.exports = {
   ROOT, DATA_DIR, DEFAULT_FRONT_SUB, DROPPED_IDS, CARD_KEYS,
   cardKey, normCard, cardSig, dedupeByKey, normQuiz, quizSig,
   q, fmtCard, fmtShard, fmtQuizShard, fmtManifest, fmtLocks,
-  readLegacy, loadNewData, makeResolver, checkStructure, dirBytes, listJs
+  readLegacy, loadNewData, makeResolver, checkStructure, dirBytes, listJs, computeShared, fmtShared
 };

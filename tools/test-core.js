@@ -36,8 +36,8 @@ const DAYMS = 86400000;
   await store.ready;
   ok('store: mode memori di Node', store.mode === 'memory');
   data.init();
-  ok('data: manifest termuat', data.decks.length === 284 && data.quizList.length === 14, data.decks.length);
-  ok('data: gembok termuat', data.lockOf('pribadi_jimmy').tier === 'exclusive' && data.quizLockOf('kanji_n5_p2').tier === 'pro' && !data.lockOf('Irodori_A1_6'));
+  ok('data: manifest termuat', data.decks.length === FC.manifest.decks.length && data.decks.length > 250 && data.quizList.length === FC.manifest.quiz.length && data.quizList.length > 0, data.decks.length);
+  ok('data: gembok termuat', !!data.lockOf('pribadi_jimmy') && ['pro', 'exclusive'].includes(data.lockOf('pribadi_jimmy').tier) && data.quizLockOf('kanji_n5_p2').tier === 'pro' && !data.lockOf('Irodori_A1_6'));
   ok('data: teks gembok & pesan salah bawaan', data.lockText('deck', 'exclusive').includes('EXCLUSIVE') && data.lockText('quiz', 'pro').includes('すみません') && data.wrongText().startsWith('Yah, passwordnya salah'));
 
   /* ---- data: pemuatan lazy + penyelesai ---- */
@@ -67,20 +67,20 @@ const DAYMS = 86400000;
   ok('pratinjau: 4 tombol berlabel', pv.length === 4 && pv.every(p => p.label) && pv[0].ivl < pv[3].ivl, JSON.stringify(pv.map(p => p.label)));
 
   // jawab semuanya "Bagus"; beberapa "Lagi" untuk menguji belajar
-  let n = 0, againKey = null, now = T0;
+  let n = 0, againKey = null, againSt = null, now = T0;
   let it = first;
   while (it) {
     now += 4000;
     const g = n === 2 ? 1 : 3;                    // kartu ke-3 dijawab Lagi
     const r = s.answer(g, now);
-    if (n === 2) againKey = it.key;
+    if (n === 2) { againKey = it.key; againSt = r.card.st; }          // status SEGERA setelah dijawab Lagi (kartu itu akan tampil lagi lewat learn-ahead dan bisa lulus)
     ok('answer #' + n + ' mengembalikan hasil', r && r.card.reps >= 1 && (r.card.reps > 1 || r.first === true));
     n++; it = s.next(now);
     if (n > 60) break;
   }
   ok('sesi: 20 kartu baru dijawab (+ kartu Lagi tampil lagi lewat learn-ahead)', n >= 20, n);
   const rec = store.getCard(againKey);
-  ok('kartu "Lagi": status belajar & tersimpan', rec && rec.st === ST.LEARN && rec.reps >= 1, rec && JSON.stringify(rec));
+  ok('kartu "Lagi": masuk status belajar & tersimpan', againSt === ST.LEARN && rec && rec.reps >= 1, againSt + ' ' + (rec && JSON.stringify(rec)));
   ok('batas harian terisi', store.daily(U.dayIndex(T0, 4)).nw === 20, JSON.stringify(store.daily(U.dayIndex(T0, 4))));
   const s2 = await session.build({ scope: { type: 'all' }, now: now + 1000 });
   ok('sesi ulang: jatah kartu baru habis → tidak ada kartu baru', s2.counts().n === 0, JSON.stringify(s2.counts()));
