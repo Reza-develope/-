@@ -52,7 +52,6 @@ FC.defineShard("pribadi_admin", {
     { front: "実現する", back: "じつげんする", backSub: "mewujudkan; merealisasikan" },
     { front: "こと", back: "こと", backSub: "hal; perkara; sesuatu" },
     { front: "ため", back: "ため", backSub: "untuk; demi; karena, tergantung pola" },
-    { front: "だけ", back: "だけ", backSub: "hanya" },
-    { front: "自分自身", back: "じぶんじしん", backSub: "diri sendiri" }
+    { front: "だけ", back: "だけ", backSub: "hanya" }
   ]
 });
