@@ -1,8 +1,9 @@
 /* =====================================================================
    data/manifest.js — DAFTAR deck & kuis. Isi kartu ada di data/decks/*.js dan data/quiz/*.js.
-   Dibuat oleh tools/legacy-split.js; setelah mengedit kartu di shard, jalankan
+   Setelah mengedit kartu di shard atau daftar ini, jalankan
        node tools/update-counts.js
-   untuk menyegarkan angka `count` (file ini ditulis ulang dengan format yang sama).
+   untuk menyegarkan angka `count` dan data/shared.js (file ini ditulis ulang dengan format yang sama),
+   lalu `node tools/check-data.js` untuk memastikan tidak ada yang rusak.
 
    Kolom deck:
      id        id deck (dipakai juga sebagai kunci data lama)       group    id grup (lihat `groups`)
@@ -22,12 +23,13 @@ FC.manifest = {
     { id: "a2", title: "Irodori A2", sub: "初級1", icon: "📙" },
     { id: "a22", title: "Irodori A2.2", sub: "初級2", icon: "📒" },
     { id: "kanji", title: "Kanji", sub: "N5 & Irodori", icon: "漢" },
+    { id: "n3", title: "Kotoba N3", sub: "JLPT N3", icon: "📗" },
     { id: "lainnya", title: "Lainnya", sub: "Tema & kosakata", icon: "💬" },
     { id: "pribadi", title: "Pribadi", sub: "Deck khusus", icon: "🔐" }
   ],
   decks: [
     // ---- a1 · Irodori A1 ----
-    { id: "Irodori_A1_1", group: "a1", title: "Bab 1", shard: "Irodori_A1_1", count: 24 },
+    { id: "Irodori_A1_1", group: "a1", title: "Bab 1", shard: "Irodori_A1_1", count: 23 },
     { id: "Irodori_A1_2", group: "a1", title: "Bab 2", count: 50, children: ["Irodori_A1_2_1", "Irodori_A1_2_2"] },
     { id: "Irodori_A1_2_1", group: "a1", title: "Part 1", shard: "Irodori_A1_2", count: 25, parent: "Irodori_A1_2" },
     { id: "Irodori_A1_2_2", group: "a1", title: "Part 2", shard: "Irodori_A1_2", count: 25, parent: "Irodori_A1_2" },
@@ -216,7 +218,7 @@ FC.manifest = {
     { id: "Irodori_A3_8", group: "a22", title: "Bab 8", count: 105, children: ["Irodori_A3_8_1", "Irodori_A3_8_2", "Irodori_A3_8_3", "Irodori_A3_8_4", "Irodori_A3_8_5"] },
     { id: "Irodori_A3_8_1", group: "a22", title: "Part 1", shard: "Irodori_A3_8", count: 22, parent: "Irodori_A3_8" },
     { id: "Irodori_A3_8_2", group: "a22", title: "Part 2", shard: "Irodori_A3_8", count: 21, parent: "Irodori_A3_8" },
-    { id: "Irodori_A3_8_3", group: "a22", title: "Part 3", shard: "Irodori_A3_8", count: 21, parent: "Irodori_A3_8" },
+    { id: "Irodori_A3_8_3", group: "a22", title: "Part 3", shard: "Irodori_A3_8", count: 20, parent: "Irodori_A3_8" },
     { id: "Irodori_A3_8_4", group: "a22", title: "Part 4", shard: "Irodori_A3_8", count: 21, parent: "Irodori_A3_8" },
     { id: "Irodori_A3_8_5", group: "a22", title: "Part 5", shard: "Irodori_A3_8", count: 21, parent: "Irodori_A3_8" },
     { id: "Irodori_A3_9", group: "a22", title: "Bab 9", count: 112, children: ["Irodori_A3_9_1", "Irodori_A3_9_2", "Irodori_A3_9_3", "Irodori_A3_9_4", "Irodori_A3_9_5"] },
@@ -294,19 +296,35 @@ FC.manifest = {
     { id: "kanji_idr_A22_7_3", group: "kanji", title: "Part 3", shard: "kanji_idr_A22_7", count: 26, parent: "kanji_idr_A22_7" },
     { id: "kanji_idr_A22_7_4", group: "kanji", title: "Part 4", shard: "kanji_idr_A22_7", count: 26, parent: "kanji_idr_A22_7" },
     { id: "kanji_idr_A22_7_5", group: "kanji", title: "Part 5", shard: "kanji_idr_A22_7", count: 30, parent: "kanji_idr_A22_7" },
-    { id: "kanji_N5_P1", group: "kanji", title: "50 kanji N5", sub: "Part 1", count: 0, soon: true },
-    { id: "kanji_N5_P2", group: "kanji", title: "50 kanji N5", sub: "Part 2", count: 0, soon: true },
-    { id: "kanji_N5_P3", group: "kanji", title: "50 kanji N5", sub: "Part 3", count: 0, soon: true },
-    { id: "kanji_N5_P4", group: "kanji", title: "50 kanji N5", sub: "Part 4", count: 0, soon: true },
-    { id: "kanji_N5_P5", group: "kanji", title: "50 kanji N5", sub: "Part 5", count: 0, soon: true },
-    { id: "kanji_N5_P6", group: "kanji", title: "50 kanji N5-4", sub: "Part 6", count: 0, soon: true },
-    { id: "kanji_N5_P7", group: "kanji", title: "50 kanji N5-4", sub: "Part 7", count: 0, soon: true },
-    { id: "kanji_N5_P8", group: "kanji", title: "50 kanji N5-4", sub: "Part 8", count: 0, soon: true },
-    { id: "kanji_N5_P9", group: "kanji", title: "50 kanji N5-4", sub: "Part 9", count: 0, soon: true },
-    { id: "kanji_N5_P10", group: "kanji", title: "50 kanji N5-4", sub: "Part 10", count: 0, soon: true },
     { id: "serupa_tapi_tak_sama", group: "kanji", title: "serupa tapi tak sama", count: 57, children: ["serupa_tapi_tak_sama_p1", "serupa_tapi_tak_sama_p2"] },
     { id: "serupa_tapi_tak_sama_p1", group: "kanji", title: "Part 1", shard: "tematik", count: 40, parent: "serupa_tapi_tak_sama" },
     { id: "serupa_tapi_tak_sama_p2", group: "kanji", title: "Part 2", shard: "tematik", count: 17, parent: "serupa_tapi_tak_sama" },
+    // ---- n3 · Kotoba N3 ----
+    { id: "N3_kotoba", group: "n3", title: "Kotoba N3", sub: "24 bagian", count: 582, children: ["N3_kotoba_1", "N3_kotoba_2", "N3_kotoba_3", "N3_kotoba_4", "N3_kotoba_5", "N3_kotoba_6", "N3_kotoba_7", "N3_kotoba_8", "N3_kotoba_9", "N3_kotoba_10", "N3_kotoba_11", "N3_kotoba_12", "N3_kotoba_13", "N3_kotoba_14", "N3_kotoba_15", "N3_kotoba_16", "N3_kotoba_17", "N3_kotoba_18", "N3_kotoba_19", "N3_kotoba_20", "N3_kotoba_21", "N3_kotoba_22", "N3_kotoba_23", "N3_kotoba_24"], keywords: "n3 jlpt kosakata kata kerja sifat keterangan" },
+    { id: "N3_kotoba_1", group: "n3", title: "Kata kerja formal (1/2)", shard: "N3_kotoba", count: 29, parent: "N3_kotoba" },
+    { id: "N3_kotoba_2", group: "n3", title: "Kata kerja formal (2/2)", shard: "N3_kotoba", count: 29, parent: "N3_kotoba" },
+    { id: "N3_kotoba_3", group: "n3", title: "Kata kerja sehari-hari (1/3)", shard: "N3_kotoba", count: 30, parent: "N3_kotoba" },
+    { id: "N3_kotoba_4", group: "n3", title: "Kata kerja sehari-hari (2/3)", shard: "N3_kotoba", count: 30, parent: "N3_kotoba" },
+    { id: "N3_kotoba_5", group: "n3", title: "Kata kerja sehari-hari (3/3)", shard: "N3_kotoba", count: 29, parent: "N3_kotoba" },
+    { id: "N3_kotoba_6", group: "n3", title: "Kata sifat (1/2)", shard: "N3_kotoba", count: 24, parent: "N3_kotoba" },
+    { id: "N3_kotoba_7", group: "n3", title: "Kata sifat (2/2)", shard: "N3_kotoba", count: 24, parent: "N3_kotoba" },
+    { id: "N3_kotoba_8", group: "n3", title: "Kata keterangan (1/2)", shard: "N3_kotoba", count: 29, parent: "N3_kotoba" },
+    { id: "N3_kotoba_9", group: "n3", title: "Kata keterangan (2/2)", shard: "N3_kotoba", count: 29, parent: "N3_kotoba" },
+    { id: "N3_kotoba_10", group: "n3", title: "Kata hubung & ungkapan", shard: "N3_kotoba", count: 17, parent: "N3_kotoba" },
+    { id: "N3_kotoba_11", group: "n3", title: "Kata mimesis & keadaan", shard: "N3_kotoba", count: 24, parent: "N3_kotoba" },
+    { id: "N3_kotoba_12", group: "n3", title: "Politik & pemerintahan", shard: "N3_kotoba", count: 26, parent: "N3_kotoba" },
+    { id: "N3_kotoba_13", group: "n3", title: "Hukum, keamanan & militer", shard: "N3_kotoba", count: 19, parent: "N3_kotoba" },
+    { id: "N3_kotoba_14", group: "n3", title: "Ekonomi & bisnis", shard: "N3_kotoba", count: 27, parent: "N3_kotoba" },
+    { id: "N3_kotoba_15", group: "n3", title: "Organisasi & pekerjaan", shard: "N3_kotoba", count: 17, parent: "N3_kotoba" },
+    { id: "N3_kotoba_16", group: "n3", title: "Proses & kegiatan (1/2)", shard: "N3_kotoba", count: 19, parent: "N3_kotoba" },
+    { id: "N3_kotoba_17", group: "n3", title: "Proses & kegiatan (2/2)", shard: "N3_kotoba", count: 18, parent: "N3_kotoba" },
+    { id: "N3_kotoba_18", group: "n3", title: "Keadaan & hasil (1/2)", shard: "N3_kotoba", count: 18, parent: "N3_kotoba" },
+    { id: "N3_kotoba_19", group: "n3", title: "Keadaan & hasil (2/2)", shard: "N3_kotoba", count: 17, parent: "N3_kotoba" },
+    { id: "N3_kotoba_20", group: "n3", title: "Waktu & urutan", shard: "N3_kotoba", count: 17, parent: "N3_kotoba" },
+    { id: "N3_kotoba_21", group: "n3", title: "Pikiran & penilaian", shard: "N3_kotoba", count: 30, parent: "N3_kotoba" },
+    { id: "N3_kotoba_22", group: "n3", title: "Orang & hubungan", shard: "N3_kotoba", count: 26, parent: "N3_kotoba" },
+    { id: "N3_kotoba_23", group: "n3", title: "Hidup, tubuh, alam & budaya (1/2)", shard: "N3_kotoba", count: 27, parent: "N3_kotoba" },
+    { id: "N3_kotoba_24", group: "n3", title: "Hidup, tubuh, alam & budaya (2/2)", shard: "N3_kotoba", count: 27, parent: "N3_kotoba" },
     // ---- lainnya · Lainnya ----
     { id: "buah_basic", group: "lainnya", title: "果物", sub: "Basic wajib", shard: "tematik", count: 15 },
     { id: "buah_improve", group: "lainnya", title: "果物", sub: "N4-N3", shard: "tematik", count: 41 },
@@ -321,15 +339,15 @@ FC.manifest = {
     { id: "kata_kerja_P4", group: "lainnya", title: "kata kerja", sub: "part 4", count: 0, soon: true },
     { id: "kata_kerja_P5", group: "lainnya", title: "kata kerja", sub: "part 5", count: 0, soon: true },
     { id: "kata_kerja_P6", group: "lainnya", title: "kata kerja", sub: "part 6", count: 0, soon: true },
-    { id: "kata_sifat", group: "lainnya", title: "kata sifat", sub: "part 1", count: 0, soon: true },
-    { id: "kata_sifat_P1", group: "lainnya", title: "kata sifat", sub: "part 2", count: 0, soon: true },
-    { id: "kata_sifat_P2", group: "lainnya", title: "kata sifat", sub: "part 3", count: 0, soon: true },
-    { id: "kata_sifat_P3", group: "lainnya", title: "kata sifat", sub: "part 4", count: 0, soon: true },
+    { id: "kata_sifat_P1", group: "lainnya", title: "kata sifat", sub: "part 1", count: 0, soon: true },
+    { id: "kata_sifat_P2", group: "lainnya", title: "kata sifat", sub: "part 2", count: 0, soon: true },
+    { id: "kata_sifat_P3", group: "lainnya", title: "kata sifat", sub: "part 3", count: 0, soon: true },
+    { id: "kata_sifat_P4", group: "lainnya", title: "kata sifat", sub: "part 4", count: 0, soon: true },
     { id: "kata_benda", group: "lainnya", title: "kata benda", sub: "N5-N3(tipis)", count: 0, soon: true },
     { id: "kenjougo", group: "lainnya", title: "謙譲語", sub: "merendahkan diri", count: 0, soon: true },
     { id: "sonkeigo", group: "lainnya", title: "尊敬語", sub: "menaikkan lawan bicara.", count: 0, soon: true },
     // ---- pribadi · Pribadi ----
-    { id: "pribadi_admin", group: "pribadi", title: "KAMUS PRIBADI", sub: "💀 ADMIN 💀", shard: "pribadi_admin", count: 53 },
+    { id: "pribadi_admin", group: "pribadi", title: "KAMUS PRIBADI", sub: "💀 ADMIN 💀", shard: "pribadi_admin", count: 52 },
     { id: "pribadi_jimmy", group: "pribadi", title: "KAMUS PRIBADI", sub: "JIMMY", shard: "pribadi_jimmy", count: 89 },
     { id: "padir", group: "pribadi", title: "KAMUS PRIBADI", sub: "PADIR", shard: "padir", count: 44 }
   ],
